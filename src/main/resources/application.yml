@@ -1,0 +1,16 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        #         show_sql: true
+        format_sql: true
+
+  profiles:
+    include: db
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+#    org.hibernate.type: trace

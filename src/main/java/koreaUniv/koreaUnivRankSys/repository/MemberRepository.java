@@ -1,0 +1,16 @@
+package koreaUniv.koreaUnivRankSys.repository;
+
+import koreaUniv.koreaUnivRankSys.domain.Member;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface MemberRepository {
+
+    void save(Member member);
+
+    Optional<Member> findOne(Long id);
+
+    List<Member> findAll();
+
+}
