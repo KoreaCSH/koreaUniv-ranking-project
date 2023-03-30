@@ -25,7 +25,7 @@ public class MemorialHall {
     protected MemorialHall() {
     }
 
-    public MemorialHall createMemorialHallStudyingRecord(Member member) {
+    public static MemorialHall createMemorialHallStudyingRecord(Member member) {
         MemorialHall memorialHall = new MemorialHall();
         memorialHall.member = member;
         memorialHall.startTime = 0L;
@@ -34,4 +34,15 @@ public class MemorialHall {
         return memorialHall;
     }
 
+    public void recordStartTime() {
+        this.startTime = System.currentTimeMillis();
+    }
+
+    public void recordFinishTime() {
+        this.finishTime = System.currentTimeMillis();
+    }
+
+    public void recordStudyingTime() {
+        this.studyingTime += this.finishTime - this.startTime;
+    }
 }
