@@ -11,6 +11,8 @@ public interface MemberRepository {
 
     Optional<Member> findOne(Long id);
 
+    Optional<Member> findById(String id);
+
     List<Member> findAll();
 
 }

@@ -15,11 +15,20 @@ public class Member {
 
     private String string_id;
     private String password;
-    private String name;
+    private String nickName;
 
-    public Member(String string_id, String password, String name) {
+    protected Member() {
+    }
+
+    public Member(String string_id, String password, String nickName) {
         this.string_id = string_id;
         this.password = password;
-        this.name = name;
+        this.nickName = nickName;
     }
+
+    /*
+    * 비밀번호 변경 로직
+    * */
+
+
 }

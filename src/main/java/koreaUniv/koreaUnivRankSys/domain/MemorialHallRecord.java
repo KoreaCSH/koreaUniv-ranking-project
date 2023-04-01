@@ -1,17 +1,16 @@
 package koreaUniv.koreaUnivRankSys.domain;
 
 import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-public class MemorialHall {
+public class MemorialHallRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "memorial_hall_record_id")
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -22,16 +21,16 @@ public class MemorialHall {
     private long finishTime;
     private long studyingTime;
 
-    protected MemorialHall() {
+    protected MemorialHallRecord() {
     }
 
-    public static MemorialHall createMemorialHallStudyingRecord(Member member) {
-        MemorialHall memorialHall = new MemorialHall();
-        memorialHall.member = member;
-        memorialHall.startTime = 0L;
-        memorialHall.finishTime = 0L;
-        memorialHall.studyingTime = 0L;
-        return memorialHall;
+    public static MemorialHallRecord createMemorialHallRecord(Member member) {
+        MemorialHallRecord memorialHallRecord = new MemorialHallRecord();
+        memorialHallRecord.member = member;
+        memorialHallRecord.startTime = 0L;
+        memorialHallRecord.finishTime = 0L;
+        memorialHallRecord.studyingTime = 0L;
+        return memorialHallRecord;
     }
 
     public void recordStartTime() {

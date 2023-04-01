@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class H2MemberRepository implements MemberRepository {
+public class JpaMemberRepository implements MemberRepository {
 
     private final EntityManager em;
 
@@ -23,6 +23,15 @@ public class H2MemberRepository implements MemberRepository {
     public Optional<Member> findOne(Long id) {
         Member findMember = em.find(Member.class, id);
         return Optional.ofNullable(findMember);
+    }
+
+    @Override
+    public Optional<Member> findById(String id) {
+        List<Member> result = em.createQuery("select m from Member m where m.string_id =: id", Member.class)
+                .setParameter("id", id)
+                .getResultList();
+
+        return result.stream().findAny();
     }
 
     @Override

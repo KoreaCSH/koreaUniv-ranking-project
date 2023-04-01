@@ -1,7 +1,7 @@
 package koreaUniv.koreaUnivRankSys.service;
 
 import koreaUniv.koreaUnivRankSys.domain.Member;
-import koreaUniv.koreaUnivRankSys.repository.H2MemberRepository;
+import koreaUniv.koreaUnivRankSys.repository.JpaMemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ class MemberServiceTest {
     MemberService memberService;
 
     @Autowired
-    H2MemberRepository memberRepository;
+    JpaMemberRepository memberRepository;
 
     @Test
     void 회원가입() {
@@ -33,6 +33,33 @@ class MemberServiceTest {
         // then
         Member findMember = memberService.findOne(member.getId()).get();
         Assertions.assertThat(member.getId()).isEqualTo(findMember.getId());
+    }
+
+    @Test
+    void 회원찾기() {
+        // given
+        Member member = new Member("test", "1", "A");
+        memberService.join(member);
+
+        // when
+        Member findMember = memberService.findById(member.getString_id()).get();
+
+        // then
+        Assertions.assertThat(member.getId()).isEqualTo(findMember.getId());
+    }
+
+    @Test
+    void 회원가입_중복예외처리() {
+        // given
+        Member member1 = new Member("test2", "1", "A");
+        memberService.join(member1);
+
+        // when
+        Member member2 = new Member("test2", "2", "B");
+
+        // then
+        assertThrows(IllegalStateException.class,
+                () -> memberService.join(member2));
     }
 
 }

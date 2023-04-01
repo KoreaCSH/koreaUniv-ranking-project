@@ -1,30 +1,28 @@
 package koreaUniv.koreaUnivRankSys.service;
 
 
-import koreaUniv.koreaUnivRankSys.domain.MemorialHall;
-import koreaUniv.koreaUnivRankSys.repository.H2MemorialHallRepository;
+import koreaUniv.koreaUnivRankSys.domain.MemorialHallRecord;
+import koreaUniv.koreaUnivRankSys.repository.JpaMemorialHallRecordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class MemorialService {
+public class MemorialHallRecordService {
 
-    private final H2MemorialHallRepository memorialHallRepository;
+    private final JpaMemorialHallRecordRepository memorialHallRepository;
 
     @Transactional
-    public Long makeRecode(MemorialHall memorialHall) {
-        memorialHallRepository.save(memorialHall);
-        return memorialHall.getId();
+    public Long makeRecode(MemorialHallRecord memorialHallRecord) {
+        memorialHallRepository.save(memorialHallRecord);
+        return memorialHallRecord.getId();
     }
 
     @Transactional
     public Long updateStartTime(Long id) {
-        MemorialHall findRecord = memorialHallRepository.findOne(id)
+        MemorialHallRecord findRecord = memorialHallRepository.findOne(id)
                 .orElseThrow(() -> new IllegalStateException("없는 기록입니다."));
 
         findRecord.recordStartTime();
@@ -33,7 +31,7 @@ public class MemorialService {
 
     @Transactional
     public Long updateFinishTime(Long id) {
-        MemorialHall findRecord = memorialHallRepository.findOne(id)
+        MemorialHallRecord findRecord = memorialHallRepository.findOne(id)
                 .orElseThrow(() -> new IllegalStateException("없는 기록입니다."));
 
         findRecord.recordFinishTime();
@@ -42,7 +40,7 @@ public class MemorialService {
 
     @Transactional
     public Long updateStudyingTime(Long id) {
-        MemorialHall findRecord = memorialHallRepository.findOne(id)
+        MemorialHallRecord findRecord = memorialHallRepository.findOne(id)
                 .orElseThrow(() -> new IllegalStateException("없는 기록입니다."));
 
         findRecord.recordStudyingTime();
