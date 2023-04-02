@@ -29,7 +29,7 @@ class MemorialHallRecordServiceTest {
     void 공부_기록_등록() {
 
         // given
-        Member member = new Member("test", "1", "hi");
+        Member member = new Member("test", "1", "hi", 3);
         em.persist(member);
 
         // when
@@ -45,7 +45,7 @@ class MemorialHallRecordServiceTest {
     @Test
     void 공부_기록_조회() {
         // given
-        Member member = new Member("test", "1", "aaa");
+        Member member = new Member("test", "1", "aaa", 3);
         em.persist(member);
 
         MemorialHallRecord memorialHallRecord = MemorialHallRecord.createMemorialHallRecord(member);
@@ -61,7 +61,7 @@ class MemorialHallRecordServiceTest {
     @Test
     void 공부_기록_측정() throws InterruptedException {
         // given
-        Member member = new Member("test", "1", "hi");
+        Member member = new Member("test", "1", "hi", 3);
         em.persist(member);
 
         MemorialHallRecord memorialHallRecord = MemorialHallRecord.createMemorialHallRecord(member);

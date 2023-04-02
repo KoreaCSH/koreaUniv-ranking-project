@@ -1,6 +1,7 @@
 package koreaUniv.koreaUnivRankSys.service;
 
 import koreaUniv.koreaUnivRankSys.domain.Member;
+import koreaUniv.koreaUnivRankSys.exception.NotMatchPasswordException;
 import koreaUniv.koreaUnivRankSys.repository.JpaMemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -25,7 +26,7 @@ class MemberServiceTest {
     @Test
     void 회원가입() {
         // given
-        Member member = new Member("test", "1", "최승헌");
+        Member member = new Member("test", "1", "최승헌", 3);
 
         // when
         memberService.join(member);
@@ -38,7 +39,7 @@ class MemberServiceTest {
     @Test
     void 회원찾기() {
         // given
-        Member member = new Member("test", "1", "A");
+        Member member = new Member("test", "1", "A", 3);
         memberService.join(member);
 
         // when
@@ -51,15 +52,41 @@ class MemberServiceTest {
     @Test
     void 회원가입_중복예외처리() {
         // given
-        Member member1 = new Member("test2", "1", "A");
+        Member member1 = new Member("test2", "1", "A", 3);
         memberService.join(member1);
 
         // when
-        Member member2 = new Member("test2", "2", "B");
+        Member member2 = new Member("test2", "2", "B", 3);
 
         // then
         assertThrows(IllegalStateException.class,
                 () -> memberService.join(member2));
+    }
+
+    @Test
+    void 비밀번호_변경성공() {
+        // given
+        Member member = new Member("test", "1", "hi", 3);
+        memberService.join(member);
+
+        // when
+        memberService.updatePassword(member.getId(), "1", "2");
+
+        // then
+        Assertions.assertThat(member.getPassword()).isEqualTo("2");
+    }
+
+    @Test
+    void 비밀번호_변경실패() {
+        // given
+        Member member = new Member("test", "1", "hi", 3);
+        memberService.join(member);
+
+        // when
+        assertThrows(NotMatchPasswordException.class,
+                () -> memberService.updatePassword(member.getId(), "2", "3"));
+
+        // then
     }
 
 }

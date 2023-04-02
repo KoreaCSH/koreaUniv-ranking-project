@@ -10,5 +10,6 @@ public class MemberForm {
     private String string_id;
     private String password;
     private String name;
+    private int grade;
 
 }

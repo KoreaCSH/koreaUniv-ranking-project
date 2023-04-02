@@ -29,6 +29,15 @@ public class MemberService {
         );
     }
 
+    @Transactional
+    public Long updatePassword(Long id, String oldPassword, String newPassword) {
+        Member findMember = memberRepository.findOne(id)
+                .orElseThrow(() -> new IllegalStateException("사용자를 찾을 수 없습니다."));
+
+        findMember.changePassword(oldPassword, newPassword);
+        return findMember.getId();
+    }
+
     public Optional<Member> findOne(Long id) {
         return memberRepository.findOne(id);
     }
