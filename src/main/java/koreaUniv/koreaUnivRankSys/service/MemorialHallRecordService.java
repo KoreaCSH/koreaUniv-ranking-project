@@ -23,7 +23,7 @@ public class MemorialHallRecordService {
     @Transactional
     public Long updateStartTime(Long id) {
         MemorialHallRecord findRecord = memorialHallRepository.findOne(id)
-                .orElseThrow(() -> new IllegalStateException("없는 기록입니다."));
+                .orElseThrow(() -> new IllegalStateException("없는 공부 기록입니다."));
 
         findRecord.recordStartTime();
         return findRecord.getId();

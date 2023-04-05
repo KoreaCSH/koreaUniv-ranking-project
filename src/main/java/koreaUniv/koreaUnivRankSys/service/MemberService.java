@@ -1,6 +1,8 @@
 package koreaUniv.koreaUnivRankSys.service;
 
 import koreaUniv.koreaUnivRankSys.domain.Member;
+import koreaUniv.koreaUnivRankSys.exception.DuplicateMemberIdException;
+import koreaUniv.koreaUnivRankSys.exception.DuplicateMemberNickNameException;
 import koreaUniv.koreaUnivRankSys.repository.JpaMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,13 +21,20 @@ public class MemberService {
     @Transactional
     public Long join(Member member) {
         validateDuplicateMember(member);
+        validateDuplicateMemberNickName(member);
 
         memberRepository.save(member);
         return member.getId();
     }
     private void validateDuplicateMember(Member member) {
         memberRepository.findById(member.getString_id()).ifPresent(
-                m -> {throw new IllegalStateException("이미 가입된 아이디입니다.");}
+                m -> {throw new DuplicateMemberIdException();}
+        );
+    }
+
+    private void validateDuplicateMemberNickName(Member member) {
+        memberRepository.findByNickName(member.getNickName()).ifPresent(
+                m -> {throw new DuplicateMemberNickNameException();}
         );
     }
 
@@ -44,6 +53,10 @@ public class MemberService {
 
     public Optional<Member> findById(String id) {
         return memberRepository.findById(id);
+    }
+
+    public Optional<Member> findByNickName(String nickName) {
+        return memberRepository.findByNickName(nickName);
     }
 
     public List<Member> findAll() {
