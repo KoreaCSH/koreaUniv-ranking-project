@@ -1,6 +1,7 @@
-package koreaUniv.koreaUnivRankSys.repository;
+package koreaUniv.koreaUnivRankSys.repository.building;
 
-import koreaUniv.koreaUnivRankSys.domain.CentralLibraryRecord;
+import koreaUniv.koreaUnivRankSys.domain.building.CentralLibraryRecord;
+import koreaUniv.koreaUnivRankSys.repository.interfaces.CentralLibraryRecordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -13,12 +14,6 @@ import java.util.Optional;
 public class JpaCentralLibraryRecordRepository implements CentralLibraryRecordRepository {
 
     private final EntityManager em;
-
-    @Override
-    public Long save(CentralLibraryRecord centralLibraryRecord) {
-        em.persist(centralLibraryRecord);
-        return centralLibraryRecord.getId();
-    }
 
     @Override
     public Optional<CentralLibraryRecord> findByOne(Long id) {

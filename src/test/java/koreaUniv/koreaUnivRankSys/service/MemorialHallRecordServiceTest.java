@@ -1,8 +1,9 @@
 package koreaUniv.koreaUnivRankSys.service;
 
 import koreaUniv.koreaUnivRankSys.domain.Member;
-import koreaUniv.koreaUnivRankSys.domain.MemorialHallRecord;
-import koreaUniv.koreaUnivRankSys.repository.JpaMemorialHallRecordRepository;
+import koreaUniv.koreaUnivRankSys.domain.building.MemorialHallRecord;
+import koreaUniv.koreaUnivRankSys.repository.building.JpaMemorialHallRecordRepository;
+import koreaUniv.koreaUnivRankSys.service.building.MemorialHallRecordService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

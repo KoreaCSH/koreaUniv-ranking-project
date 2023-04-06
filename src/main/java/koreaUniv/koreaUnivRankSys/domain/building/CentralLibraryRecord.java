@@ -1,5 +1,6 @@
-package koreaUniv.koreaUnivRankSys.domain;
+package koreaUniv.koreaUnivRankSys.domain.building;
 
+import koreaUniv.koreaUnivRankSys.domain.Member;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -13,20 +14,22 @@ public class CentralLibraryRecord {
     @Column(name = "central_library_record_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @OneToOne(mappedBy = "centralLibraryRecord", fetch = FetchType.LAZY)
     private Member member;
 
     private long startTime;
     private long finishTime;
     private long studyingTime;
 
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
     protected CentralLibraryRecord() {
     }
 
-    public static CentralLibraryRecord createCentralLibraryRecord(Member member) {
+    public static CentralLibraryRecord createCentralLibraryRecord() {
         CentralLibraryRecord centralLibraryRecord = new CentralLibraryRecord();
-        centralLibraryRecord.member = member;
         centralLibraryRecord.startTime = 0L;
         centralLibraryRecord.finishTime = 0L;
         centralLibraryRecord.studyingTime = 0L;
@@ -35,5 +38,13 @@ public class CentralLibraryRecord {
 
     public void recordStartTime() {
         this.startTime = System.currentTimeMillis();
+    }
+
+    public void recordFinishTime() {
+        this.finishTime = System.currentTimeMillis();
+    }
+
+    public void recordStudyingTime() {
+        this.studyingTime += this.finishTime - this.startTime;
     }
 }

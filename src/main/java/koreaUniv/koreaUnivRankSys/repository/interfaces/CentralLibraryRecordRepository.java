@@ -1,13 +1,11 @@
-package koreaUniv.koreaUnivRankSys.repository;
+package koreaUniv.koreaUnivRankSys.repository.interfaces;
 
-import koreaUniv.koreaUnivRankSys.domain.CentralLibraryRecord;
+import koreaUniv.koreaUnivRankSys.domain.building.CentralLibraryRecord;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface CentralLibraryRecordRepository {
-
-    Long save(CentralLibraryRecord centralLibraryRecord);
 
     Optional<CentralLibraryRecord> findByOne(Long id);
 

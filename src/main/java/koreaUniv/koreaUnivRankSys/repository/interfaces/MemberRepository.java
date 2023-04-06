@@ -1,4 +1,4 @@
-package koreaUniv.koreaUnivRankSys.repository;
+package koreaUniv.koreaUnivRankSys.repository.interfaces;
 
 import koreaUniv.koreaUnivRankSys.domain.Member;
 

@@ -1,6 +1,7 @@
-package koreaUniv.koreaUnivRankSys.repository;
+package koreaUniv.koreaUnivRankSys.repository.building;
 
-import koreaUniv.koreaUnivRankSys.domain.MemorialHallRecord;
+import koreaUniv.koreaUnivRankSys.domain.building.MemorialHallRecord;
+import koreaUniv.koreaUnivRankSys.repository.interfaces.MemorialHallRecordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,7 @@
 package koreaUniv.koreaUnivRankSys.repository;
 
 import koreaUniv.koreaUnivRankSys.domain.Member;
+import koreaUniv.koreaUnivRankSys.repository.interfaces.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

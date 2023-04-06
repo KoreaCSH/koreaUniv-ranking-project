@@ -1,6 +1,6 @@
-package koreaUniv.koreaUnivRankSys.repository;
+package koreaUniv.koreaUnivRankSys.repository.interfaces;
 
-import koreaUniv.koreaUnivRankSys.domain.MemorialHallRecord;
+import koreaUniv.koreaUnivRankSys.domain.building.MemorialHallRecord;
 
 import java.util.List;
 import java.util.Optional;

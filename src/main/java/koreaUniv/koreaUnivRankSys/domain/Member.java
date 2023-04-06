@@ -1,5 +1,6 @@
 package koreaUniv.koreaUnivRankSys.domain;
 
+import koreaUniv.koreaUnivRankSys.domain.building.CentralLibraryRecord;
 import koreaUniv.koreaUnivRankSys.exception.NotMatchPasswordException;
 import lombok.Getter;
 
@@ -18,6 +19,16 @@ public class Member {
     private String password;
     private String nickName;
     private int grade;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "central_library_record_id")
+    private CentralLibraryRecord centralLibraryRecord;
+
+    public void setCentralLibraryRecord(CentralLibraryRecord centralLibraryRecord) {
+        this.centralLibraryRecord = centralLibraryRecord;
+        centralLibraryRecord.setMember(this);
+    }
+
     // 단과대학 추가
     // 학과 추가
     // 프로필 사진 추가
@@ -30,6 +41,16 @@ public class Member {
         this.password = password;
         this.nickName = nickName;
         this.grade = grade;
+    }
+
+    public static Member createMember(String string_id, String password, String nickName, int grade, CentralLibraryRecord centralLibraryRecord) {
+        Member member = new Member();
+        member.string_id = string_id;
+        member.password = password;
+        member.nickName = nickName;
+        member.grade = grade;
+        member.setCentralLibraryRecord(centralLibraryRecord);
+        return member;
     }
 
 

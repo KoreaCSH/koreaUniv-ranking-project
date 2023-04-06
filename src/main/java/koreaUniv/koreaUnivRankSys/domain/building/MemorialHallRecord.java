@@ -1,5 +1,6 @@
-package koreaUniv.koreaUnivRankSys.domain;
+package koreaUniv.koreaUnivRankSys.domain.building;
 
+import koreaUniv.koreaUnivRankSys.domain.Member;
 import lombok.Getter;
 
 import javax.persistence.*;
