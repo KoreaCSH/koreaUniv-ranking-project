@@ -30,11 +30,11 @@ class CentralLibraryRecordServiceTest {
     void 공부_기록_측정() throws InterruptedException {
         // given
         CentralLibraryRecord centralLibraryRecord1 = CentralLibraryRecord.createCentralLibraryRecord();
-        Member member1 = Member.createMember("test1", "1", "Korea", 4, centralLibraryRecord1);
+        Member member1 = Member.createMember("test1", "test", "1", "Korea", 4, centralLibraryRecord1);
         em.persist(member1);
 
         CentralLibraryRecord centralLibraryRecord2 = CentralLibraryRecord.createCentralLibraryRecord();
-        Member member2 = Member.createMember("test2", "2", "Korea1", 4, centralLibraryRecord2);
+        Member member2 = Member.createMember("test2", "test", "2", "Korea1", 4, centralLibraryRecord2);
         em.persist(member2);
 
         CentralLibraryRecord member1Record = centralLibraryRecordService.findByStringId(member1.getString_id()).get();

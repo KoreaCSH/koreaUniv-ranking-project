@@ -16,6 +16,7 @@ public class Member {
     private Long id;
 
     private String string_id;
+    private String email;
     private String password;
     private String nickName;
     private int grade;
@@ -43,9 +44,10 @@ public class Member {
         this.grade = grade;
     }
 
-    public static Member createMember(String string_id, String password, String nickName, int grade, CentralLibraryRecord centralLibraryRecord) {
+    public static Member createMember(String string_id, String email, String password, String nickName, int grade, CentralLibraryRecord centralLibraryRecord) {
         Member member = new Member();
         member.string_id = string_id;
+        member.email = email;
         member.password = password;
         member.nickName = nickName;
         member.grade = grade;

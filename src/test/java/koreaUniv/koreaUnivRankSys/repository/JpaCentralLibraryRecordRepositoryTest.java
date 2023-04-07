@@ -26,6 +26,7 @@ class JpaCentralLibraryRecordRepositoryTest {
     void 공부_기록_생성() {
         CentralLibraryRecord centralLibraryRecord = CentralLibraryRecord.createCentralLibraryRecord();
         Member member = Member.createMember("test1",
+                "test",
                 "1",
                 "Korea",
                 4,

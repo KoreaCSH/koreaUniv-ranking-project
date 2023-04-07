@@ -1,6 +1,7 @@
 package koreaUniv.koreaUnivRankSys.controller;
 
 import koreaUniv.koreaUnivRankSys.domain.Member;
+import koreaUniv.koreaUnivRankSys.domain.building.CentralLibraryRecord;
 import koreaUniv.koreaUnivRankSys.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -22,11 +23,15 @@ public class MemberController {
 
     @PostMapping("members/new")
     public String createMember(MemberForm memberForm) {
-        Member member = new Member(
-                memberForm.getString_id(),
-                memberForm.getPassword(),
-                memberForm.getName(),
-                memberForm.getGrade());
+
+        Member member = Member.createMember(
+            memberForm.getString_id(),
+            memberForm.getEmail(),
+            memberForm.getPassword(),
+            memberForm.getNickName(),
+                memberForm.getGrade(),
+                CentralLibraryRecord.createCentralLibraryRecord()
+        );
 
         memberService.join(member);
         return "redirect:/";
