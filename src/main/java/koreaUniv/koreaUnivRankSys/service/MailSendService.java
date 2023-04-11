@@ -15,20 +15,20 @@ public class MailSendService {
 
     private final JavaMailSender javaMailSender;
     private final TemplateEngine templateEngine;
-    private String autoCode;
+    private String authCode;
 
     public String sendEmail(String toEmail) throws MessagingException {
 
         MimeMessage emailForm = createEmailForm(toEmail);
         javaMailSender.send(emailForm);
 
-        return autoCode;
+        return authCode;
     }
 
     private void createAuthCode() {
         java.util.Random generator = new java.util.Random();
         generator.setSeed(System.currentTimeMillis());
-        autoCode = String.valueOf(generator.nextInt(1000000) % 1000000);
+        authCode = String.valueOf(generator.nextInt(1000000) % 1000000);
     }
 
     private MimeMessage createEmailForm(String email) throws MessagingException {
@@ -42,7 +42,7 @@ public class MailSendService {
         mailForm.addRecipients(MimeMessage.RecipientType.TO, toEmail);
         mailForm.setSubject(title);
         mailForm.setFrom(setFrom);
-        mailForm.setText(setContext(autoCode), "utf-8", "html");
+        mailForm.setText(setContext(authCode), "utf-8", "html");
 
         return mailForm;
     }
