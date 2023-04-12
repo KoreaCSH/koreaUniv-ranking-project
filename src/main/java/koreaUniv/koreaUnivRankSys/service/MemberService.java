@@ -3,7 +3,7 @@ package koreaUniv.koreaUnivRankSys.service;
 import koreaUniv.koreaUnivRankSys.domain.Member;
 import koreaUniv.koreaUnivRankSys.exception.DuplicateMemberIdException;
 import koreaUniv.koreaUnivRankSys.exception.DuplicateMemberNickNameException;
-import koreaUniv.koreaUnivRankSys.repository.JpaMemberRepository;
+import koreaUniv.koreaUnivRankSys.repository.interfaces.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +16,7 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class MemberService {
 
-    private final JpaMemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
     @Transactional
     public Long join(Member member) {
@@ -47,16 +47,19 @@ public class MemberService {
         return findMember.getId();
     }
 
-    public Optional<Member> findOne(Long id) {
-        return memberRepository.findOne(id);
+    public Member findOne(Long id) {
+        return memberRepository.findOne(id)
+                .orElseThrow(() -> new IllegalStateException("사용자를 찾을 수 없습니다."));
     }
 
-    public Optional<Member> findById(String id) {
-        return memberRepository.findById(id);
+    public Member findById(String id) {
+        return memberRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("사용자를 찾을 수 없습니다."));
     }
 
-    public Optional<Member> findByNickName(String nickName) {
-        return memberRepository.findByNickName(nickName);
+    public Member findByNickName(String nickName) {
+        return memberRepository.findByNickName(nickName)
+                .orElseThrow(() -> new IllegalStateException("사용자를 찾을 수 없습니다."));
     }
 
     public List<Member> findAll() {

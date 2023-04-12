@@ -3,48 +3,26 @@ package koreaUniv.koreaUnivRankSys.service.building;
 
 import koreaUniv.koreaUnivRankSys.domain.building.MemorialHallRecord;
 import koreaUniv.koreaUnivRankSys.repository.building.JpaMemorialHallRecordRepository;
+import koreaUniv.koreaUnivRankSys.repository.interfaces.MemorialHallRecordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class MemorialHallRecordService {
 
-    private final JpaMemorialHallRecordRepository memorialHallRepository;
+    private final MemorialHallRecordRepository memorialHallRepository;
 
     @Transactional
-    public Long makeRecode(MemorialHallRecord memorialHallRecord) {
-        memorialHallRepository.save(memorialHallRecord);
-        return memorialHallRecord.getId();
-    }
+    public void recordStudyingTime(String stringId, long studyingTime) {
+        MemorialHallRecord findRecord = memorialHallRepository.findByStringId(stringId)
+                .orElseThrow(() -> new IllegalStateException("공부 기록이 존재하지 않습니다."));
 
-    @Transactional
-    public Long updateStartTime(Long id) {
-        MemorialHallRecord findRecord = memorialHallRepository.findOne(id)
-                .orElseThrow(() -> new IllegalStateException("없는 공부 기록입니다."));
-
-        findRecord.recordStartTime();
-        return findRecord.getId();
-    }
-
-    @Transactional
-    public Long updateFinishTime(Long id) {
-        MemorialHallRecord findRecord = memorialHallRepository.findOne(id)
-                .orElseThrow(() -> new IllegalStateException("없는 기록입니다."));
-
-        findRecord.recordFinishTime();
-        return findRecord.getId();
-    }
-
-    @Transactional
-    public Long updateStudyingTime(Long id) {
-        MemorialHallRecord findRecord = memorialHallRepository.findOne(id)
-                .orElseThrow(() -> new IllegalStateException("없는 기록입니다."));
-
-        findRecord.recordStudyingTime();
-        return findRecord.getId();
+        findRecord.updateStudyingTime(studyingTime);
     }
 
 }
