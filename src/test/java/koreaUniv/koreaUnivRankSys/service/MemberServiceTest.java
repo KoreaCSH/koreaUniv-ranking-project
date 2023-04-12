@@ -1,6 +1,8 @@
 package koreaUniv.koreaUnivRankSys.service;
 
 import koreaUniv.koreaUnivRankSys.domain.Member;
+import koreaUniv.koreaUnivRankSys.domain.building.CentralLibraryRecord;
+import koreaUniv.koreaUnivRankSys.domain.building.MemorialHallRecord;
 import koreaUniv.koreaUnivRankSys.exception.DuplicateMemberIdException;
 import koreaUniv.koreaUnivRankSys.exception.DuplicateMemberNickNameException;
 import koreaUniv.koreaUnivRankSys.exception.NotMatchPasswordException;
@@ -25,98 +27,165 @@ class MemberServiceTest {
 
     @Test
     void 회원가입() {
-        // given
-        Member member1 = new Member("test1", "1", "Korea1", 3);
-        Member member2 = new Member("test2", "2", "Korea2", 4);
+        //given
+        Member member = Member.builder()
+                .string_id("test1")
+                .email("test1@gmail.com")
+                .password("1234")
+                .nickName("korea")
+                .memorialHallRecord(MemorialHallRecord.createMemorialHallRecord())
+                .centralLibraryRecord(CentralLibraryRecord.createCentralLibraryRecord())
+                .build();
 
-        // when
-        memberService.join(member1);
-        memberService.join(member2);
+        //when
+        Long memberId = memberService.join(member);
 
-        // then
-        Member findMember1 = memberService.findOne(member1.getId()).get();
-        Assertions.assertThat(member1.getId()).isEqualTo(findMember1.getId());
-
-        Member findMember2 = memberService.findOne(member2.getId()).get();
-        Assertions.assertThat(member2.getId()).isEqualTo(findMember2.getId());
+        //then
+        Assertions.assertThat(member.getId()).isEqualTo(memberId);
     }
 
     @Test
     void 회원찾기_id() {
-        // given
-        Member member = new Member("test", "1", "A", 3);
-        memberService.join(member);
+        //given
+        Member member = Member.builder()
+                .string_id("test1")
+                .email("test1@gmail.com")
+                .password("1234")
+                .nickName("korea")
+                .memorialHallRecord(MemorialHallRecord.createMemorialHallRecord())
+                .centralLibraryRecord(CentralLibraryRecord.createCentralLibraryRecord())
+                .build();
 
-        // when
-        Member findMember = memberService.findById(member.getString_id()).get();
+        Long memberId = memberService.join(member);
 
-        // then
-        Assertions.assertThat(member.getId()).isEqualTo(findMember.getId());
+        //when
+        Member findMember = memberService.findOne(memberId);
+
+        //then
+        Assertions.assertThat(member).isSameAs(findMember);
     }
 
     @Test
     void 회원찾기_nickName() {
-        // given
-        Member member = new Member("test", "1", "Korea", 3);
-        memberService.join(member);
+        //given
+        Member member = Member.builder()
+                .string_id("test1")
+                .email("test1@gmail.com")
+                .password("1234")
+                .nickName("korea")
+                .memorialHallRecord(MemorialHallRecord.createMemorialHallRecord())
+                .centralLibraryRecord(CentralLibraryRecord.createCentralLibraryRecord())
+                .build();
 
-        // when
-        Member findMember = memberService.findByNickName(member.getNickName()).get();
+        Long memberId = memberService.join(member);
 
-        // then
-        Assertions.assertThat(member.getNickName()).isEqualTo(findMember.getNickName());
+        //when
+        Member findMember = memberService.findByNickName(member.getNickName());
+
+        //then
+        Assertions.assertThat(member.getId()).isEqualTo(findMember.getId());
     }
 
     @Test
     void 회원가입_중복예외처리_byId() {
         // given
-        Member member1 = new Member("test2", "1", "A", 3);
+        Member member1 = Member.builder()
+                .string_id("test1")
+                .email("test1@gmail.com")
+                .password("1234")
+                .nickName("korea")
+                .memorialHallRecord(MemorialHallRecord.createMemorialHallRecord())
+                .centralLibraryRecord(CentralLibraryRecord.createCentralLibraryRecord())
+                .build();
+
         memberService.join(member1);
 
-        // when
-        Member member2 = new Member("test2", "2", "B", 3);
+        Member member2 = Member.builder()
+                .string_id("test1")
+                .email("test1@gmail.com")
+                .password("1234")
+                .nickName("korea2")
+                .memorialHallRecord(MemorialHallRecord.createMemorialHallRecord())
+                .centralLibraryRecord(CentralLibraryRecord.createCentralLibraryRecord())
+                .build();
 
-        // then
+
+        // when
         assertThrows(DuplicateMemberIdException.class,
                 () -> memberService.join(member2));
+
+        // then
     }
 
     @Test
     void 회원가입_중복예외처리_byNickName() {
         // given
-        Member member1 = new Member("test1", "1", "Korea", 3);
+        Member member1 = Member.builder()
+                .string_id("test1")
+                .email("test1@gmail.com")
+                .password("1234")
+                .nickName("korea")
+                .memorialHallRecord(MemorialHallRecord.createMemorialHallRecord())
+                .centralLibraryRecord(CentralLibraryRecord.createCentralLibraryRecord())
+                .build();
+
         memberService.join(member1);
 
-        // when
-        Member member2 = new Member("test2", "2", "Korea", 3);
+        Member member2 = Member.builder()
+                .string_id("test2")
+                .email("test1@gmail.com")
+                .password("1234")
+                .nickName("korea")
+                .memorialHallRecord(MemorialHallRecord.createMemorialHallRecord())
+                .centralLibraryRecord(CentralLibraryRecord.createCentralLibraryRecord())
+                .build();
 
-        // then
+
+        // when
         assertThrows(DuplicateMemberNickNameException.class,
                 () -> memberService.join(member2));
+
+        // then
     }
 
     @Test
     void 비밀번호_변경성공() {
         // given
-        Member member = new Member("test", "1", "hi", 3);
-        memberService.join(member);
+        Member member1 = Member.builder()
+                .string_id("test1")
+                .email("test1@gmail.com")
+                .password("1234")
+                .nickName("korea")
+                .memorialHallRecord(MemorialHallRecord.createMemorialHallRecord())
+                .centralLibraryRecord(CentralLibraryRecord.createCentralLibraryRecord())
+                .build();
+
+        memberService.join(member1);
 
         // when
-        memberService.updatePassword(member.getId(), "1", "2");
+        memberService.updatePassword(member1.getId(), "1234", "1111");
 
         // then
-        Assertions.assertThat(member.getPassword()).isEqualTo("2");
+        Assertions.assertThat(member1.getPassword()).isEqualTo("1111");
     }
 
     @Test
     void 비밀번호_변경실패() {
         // given
-        Member member = new Member("test", "1", "hi", 3);
-        memberService.join(member);
+        Member member1 = Member.builder()
+                .string_id("test1")
+                .email("test1@gmail.com")
+                .password("1234")
+                .nickName("korea")
+                .memorialHallRecord(MemorialHallRecord.createMemorialHallRecord())
+                .centralLibraryRecord(CentralLibraryRecord.createCentralLibraryRecord())
+                .build();
+
+        memberService.join(member1);
 
         // when
         assertThrows(NotMatchPasswordException.class,
-                () -> memberService.updatePassword(member.getId(), "2", "3"));
+                () -> memberService.updatePassword(member1.getId(), "1111", "1234"));
 
         // then
     }

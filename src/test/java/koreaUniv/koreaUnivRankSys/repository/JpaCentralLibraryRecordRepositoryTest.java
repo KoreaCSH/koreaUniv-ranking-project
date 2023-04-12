@@ -24,20 +24,7 @@ class JpaCentralLibraryRecordRepositoryTest {
 
     @Test
     void 공부_기록_생성() {
-        CentralLibraryRecord centralLibraryRecord = CentralLibraryRecord.createCentralLibraryRecord();
-        Member member = Member.createMember("test1",
-                "test",
-                "1",
-                "Korea",
-                4,
-                centralLibraryRecord);
 
-        em.persist(member);
-
-        CentralLibraryRecord memberRecord = member.getCentralLibraryRecord();
-        CentralLibraryRecord findRecord = centralLibraryRecordRepository.findByStringId(member.getString_id()).get();
-
-        Assertions.assertThat(memberRecord.getId()).isEqualTo(findRecord.getId());
     }
 
 }

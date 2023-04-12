@@ -1,6 +1,7 @@
 package koreaUniv.koreaUnivRankSys.service;
 
 import koreaUniv.koreaUnivRankSys.domain.Member;
+import koreaUniv.koreaUnivRankSys.domain.building.CentralLibraryRecord;
 import koreaUniv.koreaUnivRankSys.domain.building.MemorialHallRecord;
 import koreaUniv.koreaUnivRankSys.repository.building.JpaMemorialHallRecordRepository;
 import koreaUniv.koreaUnivRankSys.service.building.MemorialHallRecordService;
@@ -30,57 +31,54 @@ class MemorialHallRecordServiceTest {
     void 공부_기록_등록() {
 
         // given
-        Member member = new Member("test", "1", "hi", 3);
+        Member member = Member.builder()
+                .string_id("test1")
+                .email("test1@gmail.com")
+                .password("1234")
+                .nickName("korea")
+                .memorialHallRecord(MemorialHallRecord.createMemorialHallRecord())
+                .centralLibraryRecord(CentralLibraryRecord.createCentralLibraryRecord())
+                .build();
+
         em.persist(member);
 
+        MemorialHallRecord findRecord = memorialHallRepository.findByStringId(member.getString_id()).get();
+
         // when
-        MemorialHallRecord memorialHallRecord = MemorialHallRecord.createMemorialHallRecord(member);
-        memorialHallRecordService.makeRecode(memorialHallRecord);
+        findRecord.updateStudyingTime(5);
 
         // then
-        Optional<MemorialHallRecord> findRecord = memorialHallRepository.findOne(memorialHallRecord.getId());
-        Assertions.assertThat(memorialHallRecord.getId()).isEqualTo(findRecord.get().getId());
+        Assertions.assertThat(findRecord.getDailyStudyingTime()).isEqualTo(5);
+        Assertions.assertThat(findRecord.getWeeklyStudyingTime()).isEqualTo(5);
+        Assertions.assertThat(findRecord.getMonthlyStudyingTime()).isEqualTo(5);
+        Assertions.assertThat(findRecord.getTotalStudyingTime()).isEqualTo(5);
+        Assertions.assertThat(member.getMemberTotalStudyingTime()).isEqualTo(5);
 
     }
 
     @Test
     void 공부_기록_조회() {
         // given
-        Member member = new Member("test", "1", "aaa", 3);
+        MemorialHallRecord memorialHallRecord = MemorialHallRecord.createMemorialHallRecord();
+
+        Member member = Member.builder()
+                .string_id("test1")
+                .email("test1@gmail.com")
+                .password("1234")
+                .nickName("korea")
+                .memorialHallRecord(memorialHallRecord)
+                .centralLibraryRecord(CentralLibraryRecord.createCentralLibraryRecord())
+                .build();
+
         em.persist(member);
 
-        MemorialHallRecord memorialHallRecord = MemorialHallRecord.createMemorialHallRecord(member);
-        memorialHallRecordService.makeRecode(memorialHallRecord);
-
         // when
-        Optional<MemorialHallRecord> findRecord = memorialHallRepository.findByStringId(member.getString_id());
+        MemorialHallRecord findRecord = memorialHallRepository.findByStringId(member.getString_id()).get();
 
         // then
-        Assertions.assertThat(memorialHallRecord.getId()).isEqualTo(findRecord.get().getId());
+        Assertions.assertThat(memorialHallRecord.getId()).isEqualTo(findRecord.getId());
+        Assertions.assertThat(memorialHallRecord).isSameAs(findRecord);
     }
 
-    @Test
-    void 공부_기록_측정() throws InterruptedException {
-        // given
-        Member member = new Member("test", "1", "hi", 3);
-        em.persist(member);
-
-        MemorialHallRecord memorialHallRecord = MemorialHallRecord.createMemorialHallRecord(member);
-        memorialHallRecordService.makeRecode(memorialHallRecord);
-
-        // when
-        memorialHallRecordService.updateStartTime(memorialHallRecord.getId());
-        Thread.sleep(5000);
-        memorialHallRecordService.updateFinishTime(memorialHallRecord.getId());
-        memorialHallRecordService.updateStudyingTime(memorialHallRecord.getId());
-
-        memorialHallRecordService.updateStartTime(memorialHallRecord.getId());
-        Thread.sleep(5000);
-        memorialHallRecordService.updateFinishTime(memorialHallRecord.getId());
-        memorialHallRecordService.updateStudyingTime(memorialHallRecord.getId());
-
-        // then
-        System.out.println(memorialHallRecord.getStudyingTime());
-    }
 
 }
