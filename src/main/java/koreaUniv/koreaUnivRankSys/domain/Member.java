@@ -1,13 +1,18 @@
 package koreaUniv.koreaUnivRankSys.domain;
 
 import koreaUniv.koreaUnivRankSys.domain.building.CentralLibraryRecord;
+import koreaUniv.koreaUnivRankSys.domain.building.MemorialHallRecord;
 import koreaUniv.koreaUnivRankSys.exception.NotMatchPasswordException;
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
     @Id
@@ -19,40 +24,41 @@ public class Member {
     private String email;
     private String password;
     private String nickName;
-    private int grade;
-
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "central_library_record_id")
-    private CentralLibraryRecord centralLibraryRecord;
-
-    public void setCentralLibraryRecord(CentralLibraryRecord centralLibraryRecord) {
-        this.centralLibraryRecord = centralLibraryRecord;
-        centralLibraryRecord.setMember(this);
-    }
+    private long memberTotalStudyingTime;
 
     // 단과대학 추가
     // 학과 추가
     // 프로필 사진 추가
 
-    protected Member() {
-    }
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
+    private MemorialHallRecord memorialHallRecord;
 
-    public Member(String string_id, String password, String nickName, int grade) {
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
+    private CentralLibraryRecord centralLibraryRecord;
+
+    // Builder 에 연관관계 편의 메서드 추가하면 어떻게 될ㄲ
+    @Builder
+    public Member(String string_id, String email, String password, String nickName,
+                  MemorialHallRecord memorialHallRecord, CentralLibraryRecord centralLibraryRecord) {
+
         this.string_id = string_id;
+        this.email = email;
         this.password = password;
         this.nickName = nickName;
-        this.grade = grade;
+        this.memberTotalStudyingTime = 0L;
+        this.setMemorialHallRecord(memorialHallRecord);
+        this.setCentralLibraryRecord(centralLibraryRecord);
+
     }
 
-    public static Member createMember(String string_id, String email, String password, String nickName, int grade, CentralLibraryRecord centralLibraryRecord) {
-        Member member = new Member();
-        member.string_id = string_id;
-        member.email = email;
-        member.password = password;
-        member.nickName = nickName;
-        member.grade = grade;
-        member.setCentralLibraryRecord(centralLibraryRecord);
-        return member;
+    // 연관관계 편의 메서드
+    public void setMemorialHallRecord(MemorialHallRecord memorialHallRecord) {
+        this.memorialHallRecord = memorialHallRecord;
+        memorialHallRecord.setMember(this);
+    }
+    public void setCentralLibraryRecord(CentralLibraryRecord centralLibraryRecord) {
+        this.centralLibraryRecord = centralLibraryRecord;
+        centralLibraryRecord.setMember(this);
     }
 
 
@@ -64,6 +70,13 @@ public class Member {
             throw new NotMatchPasswordException("현재 비밀번호와 일치하지 않습니다.");
         }
         this.password = newPassword;
+    }
+
+    /*
+     * memberTotalStudyingTime update 로직
+     * */
+    public void updateMemberTotalStudyingTime(long studyingTime) {
+        this.memberTotalStudyingTime += studyingTime;
     }
 
 }

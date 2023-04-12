@@ -39,4 +39,5 @@ public class JpaMemorialHallRecordRepository implements MemorialHallRecordReposi
     public List<MemorialHallRecord> findAll() {
         return em.createQuery("select m from MemorialHallRecord m", MemorialHallRecord.class).getResultList();
     }
+
 }

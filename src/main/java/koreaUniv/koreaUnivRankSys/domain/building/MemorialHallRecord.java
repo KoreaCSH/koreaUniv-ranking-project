@@ -1,12 +1,15 @@
 package koreaUniv.koreaUnivRankSys.domain.building;
 
 import koreaUniv.koreaUnivRankSys.domain.Member;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemorialHallRecord {
 
     @Id
@@ -18,31 +21,30 @@ public class MemorialHallRecord {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private long startTime;
-    private long finishTime;
-    private long studyingTime;
+    private long dailyStudyingTime;
+    private long weeklyStudyingTime;
+    private long monthlyStudyingTime;
+    private long totalStudyingTime;
 
-    protected MemorialHallRecord() {
+    public void setMember(Member member) {
+        this.member = member;
     }
 
-    public static MemorialHallRecord createMemorialHallRecord(Member member) {
+    public static MemorialHallRecord createMemorialHallRecord() {
         MemorialHallRecord memorialHallRecord = new MemorialHallRecord();
-        memorialHallRecord.member = member;
-        memorialHallRecord.startTime = 0L;
-        memorialHallRecord.finishTime = 0L;
-        memorialHallRecord.studyingTime = 0L;
+        memorialHallRecord.dailyStudyingTime = 0L;
+        memorialHallRecord.weeklyStudyingTime = 0L;
+        memorialHallRecord.monthlyStudyingTime = 0L;
+        memorialHallRecord.totalStudyingTime = 0L;
         return memorialHallRecord;
     }
 
-    public void recordStartTime() {
-        this.startTime = System.currentTimeMillis();
+    public void updateStudyingTime(long studyingTime) {
+        this.dailyStudyingTime += studyingTime;
+        this.weeklyStudyingTime += studyingTime;
+        this.monthlyStudyingTime += studyingTime;
+        this.totalStudyingTime += studyingTime;
+        this.member.updateMemberTotalStudyingTime(studyingTime);
     }
 
-    public void recordFinishTime() {
-        this.finishTime = System.currentTimeMillis();
-    }
-
-    public void recordStudyingTime() {
-        this.studyingTime += this.finishTime - this.startTime;
-    }
 }

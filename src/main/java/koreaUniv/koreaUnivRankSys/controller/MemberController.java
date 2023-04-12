@@ -24,16 +24,6 @@ public class MemberController {
     @PostMapping("members/new")
     public String createMember(MemberForm memberForm) {
 
-        Member member = Member.createMember(
-            memberForm.getString_id(),
-            memberForm.getEmail(),
-            memberForm.getPassword(),
-            memberForm.getNickName(),
-                memberForm.getGrade(),
-                CentralLibraryRecord.createCentralLibraryRecord()
-        );
-
-        memberService.join(member);
         return "redirect:/";
     }
 

@@ -1,12 +1,15 @@
 package koreaUniv.koreaUnivRankSys.domain.building;
 
 import koreaUniv.koreaUnivRankSys.domain.Member;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CentralLibraryRecord {
 
     @Id
@@ -14,37 +17,33 @@ public class CentralLibraryRecord {
     @Column(name = "central_library_record_id")
     private Long id;
 
-    @OneToOne(mappedBy = "centralLibraryRecord", fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
     private Member member;
 
-    private long startTime;
-    private long finishTime;
-    private long studyingTime;
+    private long dailyStudyingTime;
+    private long weeklyStudyingTime;
+    private long monthlyStudyingTime;
+    private long totalStudyingTime;
 
     public void setMember(Member member) {
         this.member = member;
     }
 
-    protected CentralLibraryRecord() {
-    }
-
     public static CentralLibraryRecord createCentralLibraryRecord() {
         CentralLibraryRecord centralLibraryRecord = new CentralLibraryRecord();
-        centralLibraryRecord.startTime = 0L;
-        centralLibraryRecord.finishTime = 0L;
-        centralLibraryRecord.studyingTime = 0L;
+        centralLibraryRecord.dailyStudyingTime = 0L;
+        centralLibraryRecord.weeklyStudyingTime = 0L;
+        centralLibraryRecord.monthlyStudyingTime = 0L;
+        centralLibraryRecord.totalStudyingTime = 0L;
         return centralLibraryRecord;
     }
 
-    public void recordStartTime() {
-        this.startTime = System.currentTimeMillis();
-    }
-
-    public void recordFinishTime() {
-        this.finishTime = System.currentTimeMillis();
-    }
-
-    public void recordStudyingTime() {
-        this.studyingTime += this.finishTime - this.startTime;
+    public void updateStudyingTime(Long studyingTime) {
+        this.dailyStudyingTime += studyingTime;
+        this.weeklyStudyingTime += studyingTime;
+        this.monthlyStudyingTime += studyingTime;
+        this.totalStudyingTime += studyingTime;
+        this.member.updateMemberTotalStudyingTime(studyingTime);
     }
 }
