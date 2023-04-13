@@ -4,6 +4,7 @@ import koreaUniv.koreaUnivRankSys.domain.Member;
 import koreaUniv.koreaUnivRankSys.domain.building.CentralLibraryRecord;
 import koreaUniv.koreaUnivRankSys.domain.building.MemorialHallRecord;
 import koreaUniv.koreaUnivRankSys.repository.building.JpaMemorialHallRecordRepository;
+import koreaUniv.koreaUnivRankSys.repository.interfaces.MemorialHallRecordRepository;
 import koreaUniv.koreaUnivRankSys.service.building.MemorialHallRecordService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -23,7 +24,7 @@ class MemorialHallRecordServiceTest {
     @Autowired
     MemorialHallRecordService memorialHallRecordService;
     @Autowired
-    JpaMemorialHallRecordRepository memorialHallRepository;
+    MemorialHallRecordRepository memorialHallRepository;
     @Autowired
     EntityManager em;
 

@@ -190,4 +190,26 @@ class MemberServiceTest {
         // then
     }
 
+    @Test
+    void memberTotalStudyingTime_조회() {
+        // given
+        Member member1 = Member.builder()
+                .string_id("test1")
+                .email("test1@gmail.com")
+                .password("1234")
+                .nickName("korea")
+                .memorialHallRecord(MemorialHallRecord.createMemorialHallRecord())
+                .centralLibraryRecord(CentralLibraryRecord.createCentralLibraryRecord())
+                .build();
+
+        // when
+        member1.updateMemberTotalStudyingTime(5);
+        memberService.join(member1);
+
+        long findStudyingTime = memberService.findMemberTotalStudyingTime(member1.getString_id());
+
+        // then
+        Assertions.assertThat(member1.getMemberTotalStudyingTime()).isEqualTo(findStudyingTime);
+    }
+
 }
