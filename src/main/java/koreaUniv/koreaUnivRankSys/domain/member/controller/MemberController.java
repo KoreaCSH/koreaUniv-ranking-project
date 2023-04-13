@@ -1,8 +1,7 @@
-package koreaUniv.koreaUnivRankSys.controller;
+package koreaUniv.koreaUnivRankSys.domain.member.controller;
 
-import koreaUniv.koreaUnivRankSys.domain.Member;
-import koreaUniv.koreaUnivRankSys.domain.building.CentralLibraryRecord;
-import koreaUniv.koreaUnivRankSys.service.MemberService;
+import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberForm;
+import koreaUniv.koreaUnivRankSys.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

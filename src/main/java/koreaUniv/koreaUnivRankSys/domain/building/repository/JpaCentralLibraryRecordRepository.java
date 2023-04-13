@@ -1,7 +1,7 @@
-package koreaUniv.koreaUnivRankSys.repository.building;
+package koreaUniv.koreaUnivRankSys.domain.building.repository;
 
-import koreaUniv.koreaUnivRankSys.domain.building.CentralLibraryRecord;
-import koreaUniv.koreaUnivRankSys.repository.interfaces.CentralLibraryRecordRepository;
+import koreaUniv.koreaUnivRankSys.domain.building.domain.CentralLibraryRecord;
+import koreaUniv.koreaUnivRankSys.domain.building.repository.interfaces.CentralLibraryRecordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

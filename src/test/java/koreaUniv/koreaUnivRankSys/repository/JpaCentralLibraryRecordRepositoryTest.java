@@ -1,10 +1,7 @@
 package koreaUniv.koreaUnivRankSys.repository;
 
 
-import koreaUniv.koreaUnivRankSys.domain.building.CentralLibraryRecord;
-import koreaUniv.koreaUnivRankSys.domain.Member;
-import koreaUniv.koreaUnivRankSys.repository.building.JpaCentralLibraryRecordRepository;
-import org.assertj.core.api.Assertions;
+import koreaUniv.koreaUnivRankSys.domain.building.repository.JpaCentralLibraryRecordRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

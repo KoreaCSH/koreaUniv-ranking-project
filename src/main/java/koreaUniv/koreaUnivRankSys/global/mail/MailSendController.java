@@ -1,6 +1,6 @@
-package koreaUniv.koreaUnivRankSys.api;
+package koreaUniv.koreaUnivRankSys.global.mail;
 
-import koreaUniv.koreaUnivRankSys.service.MailSendService;
+import koreaUniv.koreaUnivRankSys.global.mail.MailSendService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,12 +1,13 @@
 package koreaUniv.koreaUnivRankSys.service;
 
-import koreaUniv.koreaUnivRankSys.domain.Member;
-import koreaUniv.koreaUnivRankSys.domain.building.CentralLibraryRecord;
-import koreaUniv.koreaUnivRankSys.domain.building.MemorialHallRecord;
-import koreaUniv.koreaUnivRankSys.exception.DuplicateMemberIdException;
-import koreaUniv.koreaUnivRankSys.exception.DuplicateMemberNickNameException;
-import koreaUniv.koreaUnivRankSys.exception.NotMatchPasswordException;
-import koreaUniv.koreaUnivRankSys.repository.JpaMemberRepository;
+import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
+import koreaUniv.koreaUnivRankSys.domain.building.domain.CentralLibraryRecord;
+import koreaUniv.koreaUnivRankSys.domain.building.domain.MemorialHallRecord;
+import koreaUniv.koreaUnivRankSys.domain.member.service.MemberService;
+import koreaUniv.koreaUnivRankSys.domain.member.exception.DuplicateMemberIdException;
+import koreaUniv.koreaUnivRankSys.domain.member.exception.DuplicateMemberNickNameException;
+import koreaUniv.koreaUnivRankSys.domain.member.exception.NotMatchPasswordException;
+import koreaUniv.koreaUnivRankSys.domain.member.repository.JpaMemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

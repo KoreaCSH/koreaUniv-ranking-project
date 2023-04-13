@@ -1,4 +1,4 @@
-package koreaUniv.koreaUnivRankSys.domain;
+package koreaUniv.koreaUnivRankSys.domain.member.domain;
 
 import lombok.AccessLevel;
 import lombok.Getter;

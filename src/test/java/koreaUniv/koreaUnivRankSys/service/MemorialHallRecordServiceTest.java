@@ -1,21 +1,17 @@
 package koreaUniv.koreaUnivRankSys.service;
 
-import koreaUniv.koreaUnivRankSys.domain.Member;
-import koreaUniv.koreaUnivRankSys.domain.building.CentralLibraryRecord;
-import koreaUniv.koreaUnivRankSys.domain.building.MemorialHallRecord;
-import koreaUniv.koreaUnivRankSys.repository.building.JpaMemorialHallRecordRepository;
-import koreaUniv.koreaUnivRankSys.repository.interfaces.MemorialHallRecordRepository;
-import koreaUniv.koreaUnivRankSys.service.building.MemorialHallRecordService;
+import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
+import koreaUniv.koreaUnivRankSys.domain.building.domain.CentralLibraryRecord;
+import koreaUniv.koreaUnivRankSys.domain.building.domain.MemorialHallRecord;
+import koreaUniv.koreaUnivRankSys.domain.building.repository.interfaces.MemorialHallRecordRepository;
+import koreaUniv.koreaUnivRankSys.domain.building.service.MemorialHallRecordService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-
-import java.util.Optional;
 
 @SpringBootTest
 @Transactional

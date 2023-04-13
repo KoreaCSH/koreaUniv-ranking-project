@@ -1,6 +1,6 @@
-package koreaUniv.koreaUnivRankSys.domain.building;
+package koreaUniv.koreaUnivRankSys.domain.building.domain;
 
-import koreaUniv.koreaUnivRankSys.domain.Member;
+import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,11 +10,11 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CentralLibraryRecord {
+public class MemorialHallRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "central_library_record_id")
+    @Column(name = "memorial_hall_record_id")
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -30,20 +30,21 @@ public class CentralLibraryRecord {
         this.member = member;
     }
 
-    public static CentralLibraryRecord createCentralLibraryRecord() {
-        CentralLibraryRecord centralLibraryRecord = new CentralLibraryRecord();
-        centralLibraryRecord.dailyStudyingTime = 0L;
-        centralLibraryRecord.weeklyStudyingTime = 0L;
-        centralLibraryRecord.monthlyStudyingTime = 0L;
-        centralLibraryRecord.totalStudyingTime = 0L;
-        return centralLibraryRecord;
+    public static MemorialHallRecord createMemorialHallRecord() {
+        MemorialHallRecord memorialHallRecord = new MemorialHallRecord();
+        memorialHallRecord.dailyStudyingTime = 0L;
+        memorialHallRecord.weeklyStudyingTime = 0L;
+        memorialHallRecord.monthlyStudyingTime = 0L;
+        memorialHallRecord.totalStudyingTime = 0L;
+        return memorialHallRecord;
     }
 
-    public void updateStudyingTime(Long studyingTime) {
+    public void updateStudyingTime(long studyingTime) {
         this.dailyStudyingTime += studyingTime;
         this.weeklyStudyingTime += studyingTime;
         this.monthlyStudyingTime += studyingTime;
         this.totalStudyingTime += studyingTime;
         this.member.updateMemberTotalStudyingTime(studyingTime);
     }
+
 }

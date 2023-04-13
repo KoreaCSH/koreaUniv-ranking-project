@@ -1,4 +1,4 @@
-package koreaUniv.koreaUnivRankSys.exception;
+package koreaUniv.koreaUnivRankSys.domain.member.exception;
 
 public class NotMatchPasswordException extends RuntimeException {
 

@@ -1,8 +1,7 @@
-package koreaUniv.koreaUnivRankSys.service.building;
+package koreaUniv.koreaUnivRankSys.domain.building.service;
 
-import koreaUniv.koreaUnivRankSys.domain.building.CentralLibraryRecord;
-import koreaUniv.koreaUnivRankSys.repository.building.JpaCentralLibraryRecordRepository;
-import koreaUniv.koreaUnivRankSys.repository.interfaces.CentralLibraryRecordRepository;
+import koreaUniv.koreaUnivRankSys.domain.building.domain.CentralLibraryRecord;
+import koreaUniv.koreaUnivRankSys.domain.building.repository.interfaces.CentralLibraryRecordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

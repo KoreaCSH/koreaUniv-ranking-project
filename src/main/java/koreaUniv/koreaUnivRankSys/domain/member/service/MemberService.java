@@ -1,9 +1,9 @@
-package koreaUniv.koreaUnivRankSys.service;
+package koreaUniv.koreaUnivRankSys.domain.member.service;
 
-import koreaUniv.koreaUnivRankSys.domain.Member;
-import koreaUniv.koreaUnivRankSys.exception.DuplicateMemberIdException;
-import koreaUniv.koreaUnivRankSys.exception.DuplicateMemberNickNameException;
-import koreaUniv.koreaUnivRankSys.repository.interfaces.MemberRepository;
+import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
+import koreaUniv.koreaUnivRankSys.domain.member.exception.DuplicateMemberIdException;
+import koreaUniv.koreaUnivRankSys.domain.member.exception.DuplicateMemberNickNameException;
+import koreaUniv.koreaUnivRankSys.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,4 +1,4 @@
-package koreaUniv.koreaUnivRankSys.controller;
+package koreaUniv.koreaUnivRankSys.domain.member.dto;
 
 import lombok.Getter;
 import lombok.Setter;

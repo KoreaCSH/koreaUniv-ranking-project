@@ -1,14 +1,11 @@
-package koreaUniv.koreaUnivRankSys.service.building;
+package koreaUniv.koreaUnivRankSys.domain.building.service;
 
 
-import koreaUniv.koreaUnivRankSys.domain.building.MemorialHallRecord;
-import koreaUniv.koreaUnivRankSys.repository.building.JpaMemorialHallRecordRepository;
-import koreaUniv.koreaUnivRankSys.repository.interfaces.MemorialHallRecordRepository;
+import koreaUniv.koreaUnivRankSys.domain.building.domain.MemorialHallRecord;
+import koreaUniv.koreaUnivRankSys.domain.building.repository.interfaces.MemorialHallRecordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

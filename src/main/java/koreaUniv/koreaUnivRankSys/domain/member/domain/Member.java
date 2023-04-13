@@ -1,8 +1,8 @@
-package koreaUniv.koreaUnivRankSys.domain;
+package koreaUniv.koreaUnivRankSys.domain.member.domain;
 
-import koreaUniv.koreaUnivRankSys.domain.building.CentralLibraryRecord;
-import koreaUniv.koreaUnivRankSys.domain.building.MemorialHallRecord;
-import koreaUniv.koreaUnivRankSys.exception.NotMatchPasswordException;
+import koreaUniv.koreaUnivRankSys.domain.building.domain.CentralLibraryRecord;
+import koreaUniv.koreaUnivRankSys.domain.building.domain.MemorialHallRecord;
+import koreaUniv.koreaUnivRankSys.domain.member.exception.NotMatchPasswordException;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
