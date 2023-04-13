@@ -36,7 +36,10 @@ public class Member {
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
     private CentralLibraryRecord centralLibraryRecord;
 
-    // Builder 에 연관관계 편의 메서드 추가하면 어떻게 될ㄲ
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private MemberImage memberImage;
+
+    // Builder 에 연관관계 편의 메서드 추가하면 어떻게 될까.
     @Builder
     public Member(String string_id, String email, String password, String nickName,
                   MemorialHallRecord memorialHallRecord, CentralLibraryRecord centralLibraryRecord) {
