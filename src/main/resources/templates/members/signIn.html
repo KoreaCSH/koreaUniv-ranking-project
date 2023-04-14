@@ -5,7 +5,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-  <form action="#" th:action="@{/members/new}" th:object="${memberForm}" method="post">
+  <form action="#" th:action="@{/members/new}" th:object="${memberSignUpRequest}" method="post" enctype="multipart/form-data">
     <div>
       <label>아이디 : </label>
       <input type="text" th:field="*{string_id}" />
@@ -21,6 +21,10 @@
     <div>
       <label>이름 : </label>
       <input type="text" th:field="*{nickName}" />
+    </div>
+    <div>
+      <label>프로필사진 : </label>
+      <input type="file" th:field="*{profileImage}" />
     </div>
     <button type="submit">Sign In</button>
   </form>

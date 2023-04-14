@@ -1,6 +1,6 @@
 package koreaUniv.koreaUnivRankSys.domain.member.controller;
 
-import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberForm;
+import koreaUniv.koreaUnivRankSys.domain.member.api.dto.MemberSignUpRequest;
 import koreaUniv.koreaUnivRankSys.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -16,12 +16,14 @@ public class MemberController {
 
     @GetMapping("members/signIn")
     public String createForm(Model model) {
-        model.addAttribute("memberForm", new MemberForm());
+        model.addAttribute("memberSignUpRequest", new MemberSignUpRequest());
         return "members/signIn";
     }
 
     @PostMapping("members/new")
-    public String createMember(MemberForm memberForm) {
+    public String createMember(MemberSignUpRequest request) {
+
+        memberService.join(request);
 
         return "redirect:/";
     }

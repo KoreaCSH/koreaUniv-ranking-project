@@ -1,6 +1,7 @@
 package koreaUniv.koreaUnivRankSys.domain.member.domain;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,7 +20,15 @@ public class MemberImage {
     @Column(name = "member_image_id")
     private long id;
 
-    //
     private String originName;
+    private String fileName;
+    private String path;
+
+    @Builder
+    public MemberImage(String originName, String fileName, String path) {
+        this.originName = originName;
+        this.fileName = fileName;
+        this.path = path;
+    }
 
 }
