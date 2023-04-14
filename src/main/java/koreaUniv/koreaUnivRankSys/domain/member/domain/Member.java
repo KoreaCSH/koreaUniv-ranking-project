@@ -37,20 +37,21 @@ public class Member {
     private CentralLibraryRecord centralLibraryRecord;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "member_image_id")
     private MemberImage memberImage;
 
     // Builder 에 연관관계 편의 메서드 추가하면 어떻게 될까.
     @Builder
-    public Member(String string_id, String email, String password, String nickName,
-                  MemorialHallRecord memorialHallRecord, CentralLibraryRecord centralLibraryRecord) {
+    public Member(String string_id, String email, String password, String nickName) {
 
         this.string_id = string_id;
         this.email = email;
         this.password = password;
         this.nickName = nickName;
         this.memberTotalStudyingTime = 0L;
-        this.setMemorialHallRecord(memorialHallRecord);
-        this.setCentralLibraryRecord(centralLibraryRecord);
+        this.setMemorialHallRecord(MemorialHallRecord.createMemorialHallRecord());
+        this.setCentralLibraryRecord(CentralLibraryRecord.createCentralLibraryRecord());
+        this.memberImage = MemberImage.builder().build();
 
     }
 
@@ -64,6 +65,9 @@ public class Member {
         centralLibraryRecord.setMember(this);
     }
 
+    public void setMemberImage(MemberImage memberImage) {
+        this.memberImage = memberImage;
+    }
 
     /*
     * 비밀번호 변경 로직
