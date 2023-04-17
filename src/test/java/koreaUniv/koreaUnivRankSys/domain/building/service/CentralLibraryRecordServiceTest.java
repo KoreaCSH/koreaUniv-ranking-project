@@ -1,4 +1,4 @@
-package koreaUniv.koreaUnivRankSys.service;
+package koreaUniv.koreaUnivRankSys.domain.building.service;
 
 import koreaUniv.koreaUnivRankSys.domain.building.repository.JpaCentralLibraryRecordRepository;
 import koreaUniv.koreaUnivRankSys.domain.building.service.CentralLibraryRecordService;
