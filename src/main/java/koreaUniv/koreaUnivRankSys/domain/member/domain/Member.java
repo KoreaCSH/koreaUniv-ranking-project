@@ -2,11 +2,13 @@ package koreaUniv.koreaUnivRankSys.domain.member.domain;
 
 import koreaUniv.koreaUnivRankSys.domain.building.domain.CentralLibraryRecord;
 import koreaUniv.koreaUnivRankSys.domain.building.domain.MemorialHallRecord;
+import koreaUniv.koreaUnivRankSys.domain.member.api.dto.MemberUpdateRequest;
 import koreaUniv.koreaUnivRankSys.domain.member.exception.NotMatchPasswordException;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 
@@ -24,11 +26,11 @@ public class Member {
     private String email;
     private String password;
     private String nickName;
+    private String profileMessage;
     private long memberTotalStudyingTime;
 
     // 단과대학 추가
     // 학과 추가
-    // 프로필 사진 추가
 
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
     private MemorialHallRecord memorialHallRecord;
@@ -42,16 +44,17 @@ public class Member {
 
     // Builder 에 연관관계 편의 메서드 추가하면 어떻게 될까.
     @Builder
-    public Member(String string_id, String email, String password, String nickName) {
+    public Member(String string_id, String email, String password, String nickName, MemberImage memberImage) {
 
         this.string_id = string_id;
         this.email = email;
         this.password = password;
         this.nickName = nickName;
+        this.profileMessage = null;
         this.memberTotalStudyingTime = 0L;
         this.setMemorialHallRecord(MemorialHallRecord.createMemorialHallRecord());
         this.setCentralLibraryRecord(CentralLibraryRecord.createCentralLibraryRecord());
-        this.memberImage = MemberImage.builder().build();
+        this.memberImage = memberImage;
 
     }
 
@@ -86,4 +89,13 @@ public class Member {
         this.memberTotalStudyingTime += studyingTime;
     }
 
+    /*
+     * memberInfo update 로직
+     * */
+    public void update(MemberUpdateRequest request) {
+        if(StringUtils.hasText(request.getNickName())) {
+            this.nickName = request.getNickName();
+        }
+        this.profileMessage = request.getProfileMessage();
+    }
 }

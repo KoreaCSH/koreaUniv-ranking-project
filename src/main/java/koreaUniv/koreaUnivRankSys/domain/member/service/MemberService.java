@@ -1,21 +1,17 @@
 package koreaUniv.koreaUnivRankSys.domain.member.service;
 
 import koreaUniv.koreaUnivRankSys.domain.member.api.dto.MemberSignUpRequest;
+import koreaUniv.koreaUnivRankSys.domain.member.api.dto.MemberUpdateRequest;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.MemberImage;
 import koreaUniv.koreaUnivRankSys.domain.member.exception.DuplicateMemberIdException;
 import koreaUniv.koreaUnivRankSys.domain.member.exception.DuplicateMemberNickNameException;
 import koreaUniv.koreaUnivRankSys.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 @Service
@@ -24,41 +20,25 @@ import java.util.List;
 public class MemberService {
 
     private final MemberRepository memberRepository;
-
-    @Value("${koreaUniv.upload.path}")
-    private String uploadPath;
+    private final MemberImageService memberImageService;
 
     @Transactional
     public Long join(MemberSignUpRequest request) {
         validateDuplicateMember(request);
         validateDuplicateMemberNickName(request);
 
+        // request 값 valid 필요
         Member member = request.toEntity();
 
-        // test code - refactoring 필요
         if(request.getProfileImage() != null && !request.getProfileImage().isEmpty()) {
-            MultipartFile profileImage = request.getProfileImage();
-            String originName = profileImage.getOriginalFilename();
-            String fileName = originName.substring(originName.lastIndexOf("\\") + 1);
-            String saveName = uploadPath + File.separator + fileName;
-            Path savePath = Paths.get(saveName);
-            try {
-                profileImage.transferTo(savePath);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            MemberImage memberImage = MemberImage.builder()
-                    .originName(originName)
-                    .fileName(fileName)
-                    .path(saveName)
-                    .build();
-
+            MemberImage memberImage = memberImageService.createMemberImage(request.getProfileImage());
             member.setMemberImage(memberImage);
         }
 
         memberRepository.save(member);
         return member.getId();
     }
+
     private void validateDuplicateMember(MemberSignUpRequest request) {
         memberRepository.findById(request.getString_id()).ifPresent(
                 m -> {throw new DuplicateMemberIdException();}
@@ -77,6 +57,32 @@ public class MemberService {
                 .orElseThrow(() -> new IllegalStateException("사용자를 찾을 수 없습니다."));
 
         findMember.changePassword(oldPassword, newPassword);
+        return findMember.getId();
+    }
+
+    // nickName, profileMessage, memberImage 등 변경 가능
+    @Transactional
+    public Long updateMember(Long id, MemberUpdateRequest request) {
+        // dirty checking 으로 update
+        Member findMember = memberRepository.findOne(id)
+                .orElseThrow(() -> new IllegalStateException("사용자를 찾을 수 없습니다."));
+
+        MemberImage currentMemberImage = findMember.getMemberImage();
+        MultipartFile newProfileImage = request.getProfileImage();
+
+        // newProfileImage 가 null 이 아닐 때만 변경
+        if(newProfileImage != null && newProfileImage.isEmpty()) {
+            if(currentMemberImage != null) {
+                memberImageService.delete(findMember, currentMemberImage);
+            }
+
+            MemberImage memberImage = memberImageService.createMemberImage(request.getProfileImage());
+            findMember.setMemberImage(memberImage);
+        }
+
+        // request.nickName valid 필요
+        findMember.update(request);
+
         return findMember.getId();
     }
 
