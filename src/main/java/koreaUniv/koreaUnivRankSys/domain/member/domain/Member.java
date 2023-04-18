@@ -42,9 +42,18 @@ public class Member {
     @JoinColumn(name = "member_image_id")
     private MemberImage memberImage;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "college_id")
+    private College college;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id")
+    private Department department;
+
     // Builder 에 연관관계 편의 메서드 추가하면 어떻게 될까.
     @Builder
-    public Member(String string_id, String email, String password, String nickName, MemberImage memberImage) {
+    public Member(String string_id, String email, String password, String nickName, MemberImage memberImage,
+                  College college, Department department) {
 
         this.string_id = string_id;
         this.email = email;
@@ -55,6 +64,8 @@ public class Member {
         this.setMemorialHallRecord(MemorialHallRecord.createMemorialHallRecord());
         this.setCentralLibraryRecord(CentralLibraryRecord.createCentralLibraryRecord());
         this.memberImage = memberImage;
+        this.college = college;
+        this.department = department;
 
     }
 
