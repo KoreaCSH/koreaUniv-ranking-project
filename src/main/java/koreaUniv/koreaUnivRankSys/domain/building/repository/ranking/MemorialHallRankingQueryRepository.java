@@ -17,7 +17,7 @@ public class MemorialHallRankingQueryRepository {
     public List<MemorialHallRankingDto> findAllByRanking() {
         return jdbcTemplate.query("select path, nick_name, total_studying_time, " +
                         "rank() over (order by total_studying_time desc) as \'ranking\' " +
-                        "from (member natural left outer join member_image) natural join memorial_hall_record" ,
+                        "from (member natural left outer join member_image) natural join memorial_hall_record",
                 memorialHallRankingDtoRowMapper());
         }
 
