@@ -1,4 +1,4 @@
-package koreaUniv.koreaUnivRankSys.domain.building.repository;
+package koreaUniv.koreaUnivRankSys.domain.building.repository.ranking;
 
 import koreaUniv.koreaUnivRankSys.domain.building.api.dto.CentralLibraryRankingDto;
 import lombok.RequiredArgsConstructor;
