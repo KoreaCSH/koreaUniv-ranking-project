@@ -10,7 +10,7 @@ public class CentralLibraryRankingDto {
 
     private Long ranking;
     private String nickName;
-    private MemberImage memberImage;
+    private String path;
     private long totalStudyingTime;
 
 }
