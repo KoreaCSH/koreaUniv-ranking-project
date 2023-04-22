@@ -29,9 +29,6 @@ public class Member {
     private String profileMessage;
     private long memberTotalStudyingTime;
 
-    // 단과대학 추가
-    // 학과 추가
-
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
     private MemorialHallRecord memorialHallRecord;
 
