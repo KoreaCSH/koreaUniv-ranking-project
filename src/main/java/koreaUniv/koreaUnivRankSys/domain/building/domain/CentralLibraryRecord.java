@@ -21,10 +21,10 @@ public class CentralLibraryRecord {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private long dailyStudyingTime;
-    private long weeklyStudyingTime;
-    private long monthlyStudyingTime;
-    private long totalStudyingTime;
+    private Long dailyStudyingTime;
+    private Long weeklyStudyingTime;
+    private Long monthlyStudyingTime;
+    private Long totalStudyingTime;
 
     public void setMember(Member member) {
         this.member = member;
