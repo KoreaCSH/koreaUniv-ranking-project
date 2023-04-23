@@ -7,8 +7,6 @@ import java.util.Optional;
 
 public interface MemorialHallRecordRepository {
 
-    Long save(MemorialHallRecord memorialHallRecord);
-
     Optional<MemorialHallRecord> findOne(Long id);
 
     Optional<MemorialHallRecord> findByStringId(String stringId);

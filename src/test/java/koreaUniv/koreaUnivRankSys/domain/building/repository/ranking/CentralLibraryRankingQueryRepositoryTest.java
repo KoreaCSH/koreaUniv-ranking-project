@@ -1,15 +1,13 @@
 package koreaUniv.koreaUnivRankSys.domain.building.repository.ranking;
 
-import koreaUniv.koreaUnivRankSys.domain.building.api.dto.CentralLibraryRankingDto;
+import koreaUniv.koreaUnivRankSys.domain.building.api.dto.RankingDto;
 import koreaUniv.koreaUnivRankSys.domain.building.domain.CentralLibraryRecord;
 import koreaUniv.koreaUnivRankSys.domain.building.repository.interfaces.CentralLibraryRecordRepository;
 import koreaUniv.koreaUnivRankSys.domain.building.service.CentralLibraryRecordService;
 import koreaUniv.koreaUnivRankSys.domain.member.api.dto.MemberSignUpRequest;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
 import koreaUniv.koreaUnivRankSys.domain.member.service.MemberService;
-import org.aspectj.lang.annotation.Before;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -72,7 +70,7 @@ class CentralLibraryRankingQueryRepositoryTest {
         findRecord = centralLibraryRecordService.findOne(recordId);
         Assertions.assertThat(findRecord.getTotalStudyingTime()).isEqualTo(16L);
 
-        List<CentralLibraryRankingDto> findRankings = centralLibraryRecordService.findAllByRanking();
+        List<RankingDto> findRankings = centralLibraryRecordService.findAllByRanking();
         findRankings.stream().forEach(System.out::println);
 
         Assertions.assertThat(findRecord.getTotalStudyingTime()).isEqualTo(16L);

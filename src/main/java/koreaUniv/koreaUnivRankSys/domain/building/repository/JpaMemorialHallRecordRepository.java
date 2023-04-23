@@ -16,12 +16,6 @@ public class JpaMemorialHallRecordRepository implements MemorialHallRecordReposi
     private final EntityManager em;
 
     @Override
-    public Long save(MemorialHallRecord memorialHallRecord) {
-        em.persist(memorialHallRecord);
-        return memorialHallRecord.getId();
-    }
-
-    @Override
     public Optional<MemorialHallRecord> findOne(Long id) {
         return Optional.ofNullable(em.find(MemorialHallRecord.class, id));
     }

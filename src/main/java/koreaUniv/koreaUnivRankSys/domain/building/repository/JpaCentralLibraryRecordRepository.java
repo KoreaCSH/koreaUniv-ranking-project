@@ -16,7 +16,7 @@ public class JpaCentralLibraryRecordRepository implements CentralLibraryRecordRe
     private final EntityManager em;
 
     @Override
-    public Optional<CentralLibraryRecord> findByOne(Long id) {
+    public Optional<CentralLibraryRecord> findOne(Long id) {
         return Optional.ofNullable(em.find(CentralLibraryRecord.class, id));
     }
 

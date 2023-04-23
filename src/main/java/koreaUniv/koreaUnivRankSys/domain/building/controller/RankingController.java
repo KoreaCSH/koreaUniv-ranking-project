@@ -1,6 +1,6 @@
 package koreaUniv.koreaUnivRankSys.domain.building.controller;
 
-import koreaUniv.koreaUnivRankSys.domain.building.api.dto.CentralLibraryRankingDto;
+import koreaUniv.koreaUnivRankSys.domain.building.api.dto.RankingDto;
 import koreaUniv.koreaUnivRankSys.domain.building.service.CentralLibraryRecordService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,7 +17,7 @@ public class RankingController {
 
     @GetMapping("centralLibrary/ranking")
     public String rankingList(Model model) {
-        List<CentralLibraryRankingDto> ranking = centralLibraryRecordService.findAllByRanking();
+        List<RankingDto> ranking = centralLibraryRecordService.findAllByRanking();
         model.addAttribute("ranking", ranking);
         return "buildings/centralLibrary";
     }
