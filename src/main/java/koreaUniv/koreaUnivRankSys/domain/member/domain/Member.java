@@ -1,5 +1,6 @@
 package koreaUniv.koreaUnivRankSys.domain.member.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import koreaUniv.koreaUnivRankSys.domain.building.domain.CentralLibraryRecord;
 import koreaUniv.koreaUnivRankSys.domain.building.domain.MemorialHallRecord;
 import koreaUniv.koreaUnivRankSys.domain.member.api.dto.MemberUpdateRequest;
@@ -29,10 +30,14 @@ public class Member {
     private String profileMessage;
     private long memberTotalStudyingTime;
 
+    // 양방향 관계
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
+    //@JsonIgnore
     private MemorialHallRecord memorialHallRecord;
 
+    // 양방향 관계
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
+    //@JsonIgnore
     private CentralLibraryRecord centralLibraryRecord;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
