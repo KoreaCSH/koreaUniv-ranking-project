@@ -10,6 +10,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -26,8 +27,7 @@ class CentralLibraryRecordServiceTest {
     CentralLibraryRecordService centralLibraryRecordService;
 
     @Test
-    //@Rollback(value = false)
-    void 공부_기록_측정() throws InterruptedException {
+    void 공부_기록_측정() {
         MemberSignUpRequest request = new MemberSignUpRequest();
         request.setString_id("test1");
         request.setNickName("korea1");

@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface CentralLibraryRecordRepository {
 
-    Optional<CentralLibraryRecord> findByOne(Long id);
+    Optional<CentralLibraryRecord> findOne(Long id);
 
     Optional<CentralLibraryRecord> findByStringId(String stringId);
 

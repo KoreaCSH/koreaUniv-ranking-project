@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Hello</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<form action="#" th:action="@{/centralLibrary/update}" th:object="${updateRequest}" method="post">
+  <div>
+    <label>아이디 : </label>
+    <input type="text" th:field="*{string_id}" />
+  </div>
+  <div>
+    <label>시간 : </label>
+    <input type="number" th:field="*{studyingTime}" />
+  </div>
+  <button type="submit">update</button>
+</form>
+</body>
+</html>

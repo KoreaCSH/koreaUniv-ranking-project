@@ -23,6 +23,7 @@ public class MemberImageService {
 
     @Value("${koreaUniv.upload.path}")
     private String uploadPath;
+
     public MemberImage createMemberImage(MultipartFile profileImage) {
         String originName = profileImage.getOriginalFilename();
         String fileName = originName.substring(originName.lastIndexOf("\\") + 1);

@@ -1,14 +1,13 @@
 package koreaUniv.koreaUnivRankSys.domain.building.api.dto;
 
-import koreaUniv.koreaUnivRankSys.domain.member.domain.MemberImage;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter
 @Setter
+@Getter
 @ToString
-public class CentralLibraryRankingDto {
+public class RankingDto {
 
     private Long ranking;
     private String nickName;

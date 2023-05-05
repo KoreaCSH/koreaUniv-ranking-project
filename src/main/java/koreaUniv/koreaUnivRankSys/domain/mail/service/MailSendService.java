@@ -1,4 +1,4 @@
-package koreaUniv.koreaUnivRankSys.global.mail;
+package koreaUniv.koreaUnivRankSys.domain.mail.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
