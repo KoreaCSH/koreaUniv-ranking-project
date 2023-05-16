@@ -26,6 +26,7 @@ public class MemberService {
     public Long join(MemberSignUpRequest request) {
         validateDuplicateMember(request);
         validateDuplicateMemberNickName(request);
+        // 이메일 인증 받았는지에 대한 validate 한 번 더 검사
 
         // request 값 valid 필요
         Member member = request.toEntity();
@@ -37,7 +38,7 @@ public class MemberService {
 
         memberRepository.save(member);
         return member.getId();
-    }
+}
 
     private void validateDuplicateMember(MemberSignUpRequest request) {
         memberRepository.findById(request.getString_id()).ifPresent(

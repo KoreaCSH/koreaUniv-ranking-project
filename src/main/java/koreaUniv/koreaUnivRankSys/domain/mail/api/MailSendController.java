@@ -23,8 +23,8 @@ public class MailSendController {
     @ResponseStatus(value = HttpStatus.CREATED)
     public String sendAuthCode(@RequestBody EmailDto emailDto) throws MessagingException {
 
-        String authCode = mailSendService.sendEmail(emailDto.getEmail());
         // 해당 이메일이 Member table 에 있는지 확인하는 로직 추가
+        String authCode = mailSendService.sendEmail(emailDto.getEmail());
         mailAuthInfoService.create(emailDto.getEmail(), authCode);
         return "인증번호를 전송했습니다.";
     }
