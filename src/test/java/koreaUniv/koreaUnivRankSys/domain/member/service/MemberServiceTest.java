@@ -1,13 +1,7 @@
 package koreaUniv.koreaUnivRankSys.domain.member.service;
 
-import koreaUniv.koreaUnivRankSys.domain.member.api.dto.MemberSignUpRequest;
+import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberSignUpRequest;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
-import koreaUniv.koreaUnivRankSys.domain.building.domain.CentralLibraryRecord;
-import koreaUniv.koreaUnivRankSys.domain.building.domain.MemorialHallRecord;
-import koreaUniv.koreaUnivRankSys.domain.member.service.MemberService;
-import koreaUniv.koreaUnivRankSys.domain.member.exception.DuplicateMemberIdException;
-import koreaUniv.koreaUnivRankSys.domain.member.exception.DuplicateMemberNickNameException;
-import koreaUniv.koreaUnivRankSys.domain.member.exception.NotMatchPasswordException;
 import koreaUniv.koreaUnivRankSys.domain.member.repository.JpaMemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -19,10 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional

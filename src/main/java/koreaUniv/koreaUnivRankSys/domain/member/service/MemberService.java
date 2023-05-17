@@ -1,13 +1,14 @@
 package koreaUniv.koreaUnivRankSys.domain.member.service;
 
-import koreaUniv.koreaUnivRankSys.domain.member.api.dto.MemberSignUpRequest;
-import koreaUniv.koreaUnivRankSys.domain.member.api.dto.MemberUpdateRequest;
+import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberSignUpRequest;
+import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberUpdateRequest;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.MemberImage;
 import koreaUniv.koreaUnivRankSys.domain.member.exception.DuplicateMemberIdException;
 import koreaUniv.koreaUnivRankSys.domain.member.exception.DuplicateMemberNickNameException;
 import koreaUniv.koreaUnivRankSys.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +22,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final MemberImageService memberImageService;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public Long join(MemberSignUpRequest request) {
@@ -28,8 +30,10 @@ public class MemberService {
         validateDuplicateMemberNickName(request);
         // 이메일 인증 받았는지에 대한 validate 한 번 더 검사
 
+        String password = passwordEncoder.encode(request.getPassword());
+
         // request 값 valid 필요
-        Member member = request.toEntity();
+        Member member = request.toEntity(password);
 
         if(request.getProfileImage() != null && !request.getProfileImage().isEmpty()) {
             MemberImage memberImage = memberImageService.createMemberImage(request.getProfileImage());

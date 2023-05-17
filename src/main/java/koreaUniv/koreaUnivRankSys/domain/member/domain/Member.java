@@ -1,9 +1,8 @@
 package koreaUniv.koreaUnivRankSys.domain.member.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import koreaUniv.koreaUnivRankSys.domain.building.domain.CentralLibraryRecord;
 import koreaUniv.koreaUnivRankSys.domain.building.domain.MemorialHallRecord;
-import koreaUniv.koreaUnivRankSys.domain.member.api.dto.MemberUpdateRequest;
+import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberUpdateRequest;
 import koreaUniv.koreaUnivRankSys.domain.member.exception.NotMatchPasswordException;
 import lombok.AccessLevel;
 import lombok.Builder;

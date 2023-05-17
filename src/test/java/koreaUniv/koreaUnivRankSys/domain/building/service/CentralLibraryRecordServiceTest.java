@@ -1,20 +1,14 @@
 package koreaUniv.koreaUnivRankSys.domain.building.service;
 
 import koreaUniv.koreaUnivRankSys.domain.building.domain.CentralLibraryRecord;
-import koreaUniv.koreaUnivRankSys.domain.building.repository.JpaCentralLibraryRecordRepository;
-import koreaUniv.koreaUnivRankSys.domain.building.service.CentralLibraryRecordService;
-import koreaUniv.koreaUnivRankSys.domain.member.api.dto.MemberSignUpRequest;
+import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberSignUpRequest;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
 import koreaUniv.koreaUnivRankSys.domain.member.service.MemberService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityManager;
-import java.util.Optional;
 
 @SpringBootTest
 @Transactional
