@@ -51,6 +51,8 @@ public class Member {
     @JoinColumn(name = "department_id")
     private Department department;
 
+    // boolean departmentPublic
+
     // Builder 에 연관관계 편의 메서드 추가하면 어떻게 될까.
     @Builder
     public Member(String string_id, String email, String password, String nickName, MemberImage memberImage,
@@ -110,4 +112,5 @@ public class Member {
         }
         this.profileMessage = request.getProfileMessage();
     }
+
 }
