@@ -1,6 +1,6 @@
 package koreaUniv.koreaUnivRankSys.domain.member.service;
 
-import koreaUniv.koreaUnivRankSys.domain.member.api.dto.MemberSignUpRequest;
+import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberSignUpRequest;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
 import koreaUniv.koreaUnivRankSys.domain.member.repository.MemberImageRepository;
 import org.assertj.core.api.Assertions;
@@ -14,8 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional

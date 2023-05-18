@@ -1,9 +1,8 @@
 package koreaUniv.koreaUnivRankSys.domain.member.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import koreaUniv.koreaUnivRankSys.domain.building.domain.CentralLibraryRecord;
 import koreaUniv.koreaUnivRankSys.domain.building.domain.MemorialHallRecord;
-import koreaUniv.koreaUnivRankSys.domain.member.api.dto.MemberUpdateRequest;
+import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberUpdateRequest;
 import koreaUniv.koreaUnivRankSys.domain.member.exception.NotMatchPasswordException;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -51,6 +50,8 @@ public class Member {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
     private Department department;
+
+    // boolean departmentPublic
 
     // Builder 에 연관관계 편의 메서드 추가하면 어떻게 될까.
     @Builder
@@ -111,4 +112,5 @@ public class Member {
         }
         this.profileMessage = request.getProfileMessage();
     }
+
 }

@@ -1,6 +1,7 @@
-package koreaUniv.koreaUnivRankSys.domain.member.api.dto;
+package koreaUniv.koreaUnivRankSys.domain.member.dto;
 
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Setter
 @Getter
+@AllArgsConstructor
 @NoArgsConstructor
 public class MemberSignUpRequest {
 
@@ -17,7 +19,7 @@ public class MemberSignUpRequest {
     private String nickName;
     private MultipartFile profileImage;
 
-    public Member toEntity() {
+    public Member toEntity(String password) {
         return Member.builder()
                 .string_id(string_id)
                 .email(email)
