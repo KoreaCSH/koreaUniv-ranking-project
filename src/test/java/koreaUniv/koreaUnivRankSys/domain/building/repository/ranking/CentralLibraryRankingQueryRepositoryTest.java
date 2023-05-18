@@ -4,7 +4,7 @@ import koreaUniv.koreaUnivRankSys.domain.building.api.dto.RankingDto;
 import koreaUniv.koreaUnivRankSys.domain.building.domain.CentralLibraryRecord;
 import koreaUniv.koreaUnivRankSys.domain.building.repository.interfaces.CentralLibraryRecordRepository;
 import koreaUniv.koreaUnivRankSys.domain.building.service.CentralLibraryRecordService;
-import koreaUniv.koreaUnivRankSys.domain.member.api.dto.MemberSignUpRequest;
+import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberSignUpRequest;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
 import koreaUniv.koreaUnivRankSys.domain.member.service.MemberService;
 import org.assertj.core.api.Assertions;

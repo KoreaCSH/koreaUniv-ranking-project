@@ -1,4 +1,4 @@
-package koreaUniv.koreaUnivRankSys.domain.member.api.dto;
+package koreaUniv.koreaUnivRankSys.domain.member.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

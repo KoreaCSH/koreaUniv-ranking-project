@@ -4,7 +4,7 @@ import koreaUniv.koreaUnivRankSys.domain.building.api.dto.RankingDto;
 import koreaUniv.koreaUnivRankSys.domain.building.domain.MemorialHallRecord;
 import koreaUniv.koreaUnivRankSys.domain.building.repository.interfaces.MemorialHallRecordRepository;
 import koreaUniv.koreaUnivRankSys.domain.building.service.MemorialHallRecordService;
-import koreaUniv.koreaUnivRankSys.domain.member.api.dto.MemberSignUpRequest;
+import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberSignUpRequest;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
 import koreaUniv.koreaUnivRankSys.domain.member.service.MemberService;
 import org.assertj.core.api.Assertions;
@@ -15,8 +15,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
