@@ -35,7 +35,7 @@ public class SecurityConfiguration {
                 .cors().and()
                 .authorizeRequests()
                 .antMatchers("/api/members/login", "/api/members/join").permitAll()
-                //.antMatchers(HttpMethod.POST, "/api/**").authenticated()
+                .antMatchers("/api/**").authenticated()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt 사용 시 설정
