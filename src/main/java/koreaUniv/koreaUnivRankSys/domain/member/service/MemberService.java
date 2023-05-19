@@ -7,6 +7,8 @@ import koreaUniv.koreaUnivRankSys.domain.member.domain.MemberImage;
 import koreaUniv.koreaUnivRankSys.domain.member.exception.DuplicateMemberIdException;
 import koreaUniv.koreaUnivRankSys.domain.member.exception.DuplicateMemberNickNameException;
 import koreaUniv.koreaUnivRankSys.domain.member.repository.MemberRepository;
+import koreaUniv.koreaUnivRankSys.global.exception.CustomException;
+import koreaUniv.koreaUnivRankSys.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,8 +29,9 @@ public class MemberService {
 
     @Transactional
     public Long join(MemberSignUpRequest request) {
-        validateDuplicateMember(request);
-        validateDuplicateMemberNickName(request);
+        validateDuplicateMember(request.getString_id());
+        validateDuplicateMemberNickName(request.getNickName());
+
         // 이메일 인증 받았는지에 대한 validate 한 번 더 검사
 
         String password = passwordEncoder.encode(request.getPassword());
@@ -44,14 +48,14 @@ public class MemberService {
         return member.getId();
 }
 
-    private void validateDuplicateMember(MemberSignUpRequest request) {
-        memberRepository.findById(request.getString_id()).ifPresent(
-                m -> {throw new DuplicateMemberIdException();}
+    public void validateDuplicateMember(String id) {
+        memberRepository.findById(id).ifPresent(
+                m -> {throw new CustomException(ErrorCode.MEMBER_ID_DUPLICATED);}
         );
     }
 
-    private void validateDuplicateMemberNickName(MemberSignUpRequest member) {
-        memberRepository.findByNickName(member.getNickName()).ifPresent(
+    public void validateDuplicateMemberNickName(String nickName) {
+        memberRepository.findByNickName(nickName).ifPresent(
                 m -> {throw new DuplicateMemberNickNameException();}
         );
     }
