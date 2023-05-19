@@ -17,7 +17,7 @@ import javax.validation.constraints.Size;
 public class MemberSignUpRequest {
 
     @NotBlank(message = "아이디를 입력해주세요.")
-    private String string_id;
+    private String userId;
 
     @NotBlank(message = "이메일을 입력해주세요.")
     private String email;
@@ -35,7 +35,7 @@ public class MemberSignUpRequest {
 
     public Member toEntity(String password) {
         return Member.builder()
-                .string_id(string_id)
+                .userId(userId)
                 .email(email + "@korea.ac.kr")
                 .password(password)
                 .nickName(nickName)

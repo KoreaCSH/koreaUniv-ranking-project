@@ -33,11 +33,11 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
         }
 
         AuthRequest authRequest = objectMapper.readValue(request.getReader(), AuthRequest.class);
-        if (StringUtils.isEmpty(authRequest.getString_id()) || StringUtils.isEmpty(authRequest.getPassword())) {
+        if (StringUtils.isEmpty(authRequest.getUserId()) || StringUtils.isEmpty(authRequest.getPassword())) {
             throw new AuthenticationServiceException("Username or Password not provided");
         }
 
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(authRequest.getString_id(), authRequest.getPassword());
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(authRequest.getUserId(), authRequest.getPassword());
 
         return this.getAuthenticationManager().authenticate(token);
     }

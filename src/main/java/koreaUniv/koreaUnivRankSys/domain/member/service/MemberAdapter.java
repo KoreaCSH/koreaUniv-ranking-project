@@ -15,7 +15,7 @@ public class MemberAdapter extends User {
     private final Member member;
 
     public MemberAdapter(Member member) {
-        super(member.getString_id(), member.getPassword(), List.of(new SimpleGrantedAuthority("ROLE_USER")));
+        super(member.getUserId(), member.getPassword(), List.of(new SimpleGrantedAuthority("ROLE_USER")));
         this.member = member;
     }
 

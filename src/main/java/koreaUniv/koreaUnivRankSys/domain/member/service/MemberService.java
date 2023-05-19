@@ -29,7 +29,7 @@ public class MemberService {
 
     @Transactional
     public Long join(MemberSignUpRequest request) {
-        validateDuplicateMember(request.getString_id());
+        validateDuplicateMember(request.getUserId());
         validateDuplicateMemberNickName(request.getNickName());
 
         // 이메일 인증 받았는지에 대한 validate 한 번 더 검사
@@ -49,7 +49,7 @@ public class MemberService {
 }
 
     public void validateDuplicateMember(String id) {
-        memberRepository.findById(id).ifPresent(
+        memberRepository.findByUserId(id).ifPresent(
                 m -> {throw new CustomException(ErrorCode.MEMBER_ID_DUPLICATED);}
         );
     }
@@ -62,7 +62,7 @@ public class MemberService {
 
     @Transactional
     public Long updatePassword(Long id, String oldPassword, String newPassword) {
-        Member findMember = memberRepository.findOne(id)
+        Member findMember = memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException("사용자를 찾을 수 없습니다."));
 
         findMember.changePassword(oldPassword, newPassword);
@@ -73,7 +73,7 @@ public class MemberService {
     @Transactional
     public Long updateMember(Long id, MemberUpdateRequest request) {
         // dirty checking 으로 update
-        Member findMember = memberRepository.findOne(id)
+        Member findMember = memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException("사용자를 찾을 수 없습니다."));
 
         MemberImage currentMemberImage = findMember.getMemberImage();
@@ -95,13 +95,13 @@ public class MemberService {
         return findMember.getId();
     }
 
-    public Member findOne(Long id) {
-        return memberRepository.findOne(id)
+    public Member findById(Long id) {
+        return memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException("사용자를 찾을 수 없습니다."));
     }
 
-    public Member findById(String id) {
-        return memberRepository.findById(id)
+    public Member findByUserId(String userId) {
+        return memberRepository.findByUserId(userId)
                 .orElseThrow(() -> new IllegalStateException("사용자를 찾을 수 없습니다."));
     }
 
@@ -114,8 +114,12 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
+    public boolean existsByUserId(String userId) {
+        return memberRepository.existsByUserId(userId);
+    }
+
     public long findMemberTotalStudyingTime(String id) {
-        return findById(id).getMemberTotalStudyingTime();
+        return findByUserId(id).getMemberTotalStudyingTime();
     }
 
 }

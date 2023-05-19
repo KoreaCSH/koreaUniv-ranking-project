@@ -24,7 +24,7 @@ public class JwtProvider {
     private String secretKey;
     private final Long expireTimeNs = 1000 * 60 * 60L;
 
-    public String createToken(String stringId) {
+    public String createToken(String userId) {
 
         Claims claims = Jwts.claims(); // 일종의 map
         claims.put("roles", "ROLE_USER");
@@ -34,7 +34,7 @@ public class JwtProvider {
         return Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
                 .setClaims(claims)
-                .setSubject(stringId)
+                .setSubject(userId)
                 .signWith(stringToKey(secretKey), SignatureAlgorithm.HS256)
                 .compact();
 

@@ -30,7 +30,7 @@ public class JwtAuthenticationSuccessHandler implements AuthenticationSuccessHan
 
         // JWT 발급
         MemberAdapter memberAdapter = (MemberAdapter) authentication.getPrincipal();
-        final String token = jwtProvider.createToken(memberAdapter.getMember().getString_id());
+        final String token = jwtProvider.createToken(memberAdapter.getMember().getUserId());
         response.addHeader("Authorization", "Bearer " + token);
     }
 }

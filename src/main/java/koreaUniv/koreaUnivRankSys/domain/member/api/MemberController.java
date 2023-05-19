@@ -20,16 +20,13 @@ public class MemberController {
     public ResponseEntity<String> join(@Valid @RequestBody MemberSignUpRequest request) {
         memberService.join(request);
 
-        return ResponseEntity.ok().body(request.getString_id() + "님이 가입되었습니다");
+        return ResponseEntity.ok().body(request.getUserId() + "님이 가입되었습니다");
     }
 
     @GetMapping("/{id}/exists")
-    public ResponseEntity<ErrorResult> checkDuplicateId(@PathVariable String id) {
-        memberService.validateDuplicateMember(id);
+    public ResponseEntity<Boolean> checkDuplicateId(@PathVariable String id) {
 
-        return ResponseEntity.ok().body(new ErrorResult(
-                "200", "사용 가능한 아이디입니다."
-        ));
+        return ResponseEntity.ok().body(memberService.existsByUserId(id));
     }
 
 }

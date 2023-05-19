@@ -22,7 +22,7 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
-    private String string_id;
+    private String userId;
     private String email;
     private String password;
     private String nickName;
@@ -55,10 +55,10 @@ public class Member {
 
     // Builder 에 연관관계 편의 메서드 추가하면 어떻게 될까.
     @Builder
-    public Member(String string_id, String email, String password, String nickName, MemberImage memberImage,
+    public Member(String userId, String email, String password, String nickName, MemberImage memberImage,
                   College college, Department department) {
 
-        this.string_id = string_id;
+        this.userId = userId;
         this.email = email;
         this.password = password;
         this.nickName = nickName;
