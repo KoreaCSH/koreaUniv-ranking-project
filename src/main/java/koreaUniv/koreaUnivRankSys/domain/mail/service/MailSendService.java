@@ -15,23 +15,24 @@ public class MailSendService {
 
     private final JavaMailSender javaMailSender;
     private final TemplateEngine templateEngine;
-    private String authCode;
 
-    public String sendEmail(String toEmail) throws MessagingException {
+    public String sendEmail(String toEmail, String authCode) throws MessagingException {
 
-        MimeMessage emailForm = createEmailForm(toEmail);
+        MimeMessage emailForm = createEmailForm(toEmail, authCode);
         javaMailSender.send(emailForm);
 
         return authCode;
     }
 
-    private void createAuthCode() {
+    public String createAuthCode() {
+        String authCode;
         java.util.Random generator = new java.util.Random();
         generator.setSeed(System.currentTimeMillis());
         authCode = String.valueOf(generator.nextInt(1000000) % 1000000);
+        return authCode;
     }
 
-    private MimeMessage createEmailForm(String email) throws MessagingException {
+    private MimeMessage createEmailForm(String email, String authCode) throws MessagingException {
 
         createAuthCode();
         String setFrom = "seungheon7495@gmail.com";
@@ -47,9 +48,9 @@ public class MailSendService {
         return mailForm;
     }
 
-    private String setContext(String code) {
+    private String setContext(String authCode) {
         Context context = new Context();
-        context.setVariable("code", code);
+        context.setVariable("code", authCode);
         return templateEngine.process("mail", context); //mail.html
     }
 

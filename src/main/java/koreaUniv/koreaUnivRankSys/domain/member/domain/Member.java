@@ -3,7 +3,8 @@ package koreaUniv.koreaUnivRankSys.domain.member.domain;
 import koreaUniv.koreaUnivRankSys.domain.building.domain.CentralLibraryRecord;
 import koreaUniv.koreaUnivRankSys.domain.building.domain.MemorialHallRecord;
 import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberUpdateRequest;
-import koreaUniv.koreaUnivRankSys.domain.member.exception.NotMatchPasswordException;
+import koreaUniv.koreaUnivRankSys.global.exception.CustomException;
+import koreaUniv.koreaUnivRankSys.global.exception.ErrorCode;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -91,7 +92,7 @@ public class Member {
     * */
     public void changePassword(String oldPassword, String newPassword) {
         if(!oldPassword.equals(this.password)) {
-            throw new NotMatchPasswordException("현재 비밀번호와 일치하지 않습니다.");
+            throw new CustomException(ErrorCode.INVALID_PASSWORD);
         }
         this.password = newPassword;
     }

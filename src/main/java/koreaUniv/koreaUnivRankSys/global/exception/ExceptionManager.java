@@ -19,10 +19,10 @@ public class ExceptionManager {
     }
 
     @ExceptionHandler(CustomException.class)
-    public ResponseEntity<ErrorResult> customExceptionHandler(CustomException e) {
+    public ResponseEntity<CustomResult> customExceptionHandler(CustomException e) {
 
         return ResponseEntity.status(e.getErrorCode().getHttpStatus())
-                .body(new ErrorResult(String.valueOf(e.getErrorCode().getHttpStatus().value()),
+                .body(new CustomResult(String.valueOf(e.getErrorCode().getHttpStatus().value()),
                         e.getErrorCode().getMessage()));
     }
 

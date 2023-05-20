@@ -1,11 +1,10 @@
 package koreaUniv.koreaUnivRankSys.domain.member.service;
 
+import koreaUniv.koreaUnivRankSys.domain.mail.service.MailAuthInfoService;
 import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberSignUpRequest;
 import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberUpdateRequest;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.MemberImage;
-import koreaUniv.koreaUnivRankSys.domain.member.exception.DuplicateMemberIdException;
-import koreaUniv.koreaUnivRankSys.domain.member.exception.DuplicateMemberNickNameException;
 import koreaUniv.koreaUnivRankSys.domain.member.repository.MemberRepository;
 import koreaUniv.koreaUnivRankSys.global.exception.CustomException;
 import koreaUniv.koreaUnivRankSys.global.exception.ErrorCode;
@@ -16,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,13 +24,13 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final MemberImageService memberImageService;
     private final PasswordEncoder passwordEncoder;
+    private final MailAuthInfoService mailAuthInfoService;
 
     @Transactional
     public Long join(MemberSignUpRequest request) {
         validateDuplicateMember(request.getUserId());
         validateDuplicateMemberNickName(request.getNickName());
-
-        // 이메일 인증 받았는지에 대한 validate 한 번 더 검사
+        mailAuthInfoService.validateMailAuth(request.getEmail() + "@korea.ac.kr");
 
         String password = passwordEncoder.encode(request.getPassword());
 
@@ -48,22 +46,27 @@ public class MemberService {
         return member.getId();
 }
 
-    public void validateDuplicateMember(String id) {
-        memberRepository.findByUserId(id).ifPresent(
-                m -> {throw new CustomException(ErrorCode.MEMBER_ID_DUPLICATED);}
+    private void validateDuplicateMember(String userId) {
+        memberRepository.findByUserId(userId).ifPresent(
+                m -> {throw new CustomException(ErrorCode.MEMBER_USERID_DUPLICATED);}
         );
     }
 
-    public void validateDuplicateMemberNickName(String nickName) {
+    private void validateDuplicateMemberNickName(String nickName) {
         memberRepository.findByNickName(nickName).ifPresent(
-                m -> {throw new DuplicateMemberNickNameException();}
+                m -> {throw new CustomException(ErrorCode.MEMBER_NICKNAME_DUPLICATED);}
         );
     }
 
+    // 수정 필요 - matches 써야하므로.
     @Transactional
     public Long updatePassword(Long id, String oldPassword, String newPassword) {
         Member findMember = memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException("사용자를 찾을 수 없습니다."));
+
+        // matches
+
+        // true 라면 change, false 라면 Exception
 
         findMember.changePassword(oldPassword, newPassword);
         return findMember.getId();
@@ -97,17 +100,17 @@ public class MemberService {
 
     public Member findById(Long id) {
         return memberRepository.findById(id)
-                .orElseThrow(() -> new IllegalStateException("사용자를 찾을 수 없습니다."));
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOTFOUND));
     }
 
     public Member findByUserId(String userId) {
         return memberRepository.findByUserId(userId)
-                .orElseThrow(() -> new IllegalStateException("사용자를 찾을 수 없습니다."));
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOTFOUND));
     }
 
     public Member findByNickName(String nickName) {
         return memberRepository.findByNickName(nickName)
-                .orElseThrow(() -> new IllegalStateException("사용자를 찾을 수 없습니다."));
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOTFOUND));
     }
 
     public List<Member> findAll() {
@@ -116,6 +119,10 @@ public class MemberService {
 
     public boolean existsByUserId(String userId) {
         return memberRepository.existsByUserId(userId);
+    }
+
+    public boolean existsByNickName(String nickName) {
+        return memberRepository.existsByNickName(nickName);
     }
 
     public long findMemberTotalStudyingTime(String id) {

@@ -2,8 +2,9 @@ package koreaUniv.koreaUnivRankSys.domain.member.api;
 
 import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberSignUpRequest;
 import koreaUniv.koreaUnivRankSys.domain.member.service.MemberService;
-import koreaUniv.koreaUnivRankSys.global.exception.ErrorResult;
+import koreaUniv.koreaUnivRankSys.global.exception.CustomResult;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,16 +18,24 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping
-    public ResponseEntity<String> join(@Valid @RequestBody MemberSignUpRequest request) {
+    public ResponseEntity<CustomResult> join(@Valid @RequestBody MemberSignUpRequest request) {
         memberService.join(request);
 
-        return ResponseEntity.ok().body(request.getUserId() + "님이 가입되었습니다");
+        return ResponseEntity.ok().body(
+                new CustomResult(String.valueOf(HttpStatus.CREATED.value()),
+                        request.getUserId() + "님이 가입되었습니다"));
     }
 
-    @GetMapping("/{id}/exists")
-    public ResponseEntity<Boolean> checkDuplicateId(@PathVariable String id) {
+    @GetMapping("id/{userId}/exists")
+    public ResponseEntity<Boolean> checkDuplicateUserId(@PathVariable String userId) {
 
-        return ResponseEntity.ok().body(memberService.existsByUserId(id));
+        return ResponseEntity.ok().body(memberService.existsByUserId(userId));
+    }
+
+    @GetMapping("nickname/{nickName}/exists")
+    public ResponseEntity<Boolean> checkDuplicateNickName(@PathVariable String nickName) {
+
+        return ResponseEntity.ok().body(memberService.existsByNickName(nickName));
     }
 
 }
