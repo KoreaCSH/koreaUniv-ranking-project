@@ -21,10 +21,10 @@ public class JpaCentralLibraryRecordRepository implements CentralLibraryRecordRe
     }
 
     @Override
-    public Optional<CentralLibraryRecord> findByStringId(String stringId) {
-        List<CentralLibraryRecord> result = em.createQuery("select c from CentralLibraryRecord c where c.member.string_id =: stringId",
+    public Optional<CentralLibraryRecord> findByStringId(String userId) {
+        List<CentralLibraryRecord> result = em.createQuery("select c from CentralLibraryRecord c where c.member.userId =: userId",
                         CentralLibraryRecord.class)
-                .setParameter("stringId", stringId)
+                .setParameter("userId", userId)
                 .getResultList();
 
         return result.stream().findAny();

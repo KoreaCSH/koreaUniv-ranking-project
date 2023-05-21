@@ -21,9 +21,9 @@ public class JpaMemorialHallRecordRepository implements MemorialHallRecordReposi
     }
 
     @Override
-    public Optional<MemorialHallRecord> findByStringId(String string_id) {
-        List<MemorialHallRecord> result = em.createQuery("select m from MemorialHallRecord m where m.member.string_id =: string_id", MemorialHallRecord.class)
-                .setParameter("string_id", string_id)
+    public Optional<MemorialHallRecord> findByStringId(String userId) {
+        List<MemorialHallRecord> result = em.createQuery("select m from MemorialHallRecord m where m.member.userId =: userId", MemorialHallRecord.class)
+                .setParameter("userId", userId)
                 .getResultList();
 
         return result.stream().findAny();

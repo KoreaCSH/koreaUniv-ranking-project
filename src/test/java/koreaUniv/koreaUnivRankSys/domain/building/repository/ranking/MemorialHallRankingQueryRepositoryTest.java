@@ -1,6 +1,6 @@
 package koreaUniv.koreaUnivRankSys.domain.building.repository.ranking;
 
-import koreaUniv.koreaUnivRankSys.domain.building.api.dto.RankingDto;
+import koreaUniv.koreaUnivRankSys.domain.building.dto.RankingDto;
 import koreaUniv.koreaUnivRankSys.domain.building.domain.MemorialHallRecord;
 import koreaUniv.koreaUnivRankSys.domain.building.repository.interfaces.MemorialHallRecordRepository;
 import koreaUniv.koreaUnivRankSys.domain.building.service.MemorialHallRecordService;

@@ -1,6 +1,6 @@
 package koreaUniv.koreaUnivRankSys.domain.building.controller;
 
-import koreaUniv.koreaUnivRankSys.domain.building.api.dto.RankingDto;
+import koreaUniv.koreaUnivRankSys.domain.building.dto.RankingDto;
 import koreaUniv.koreaUnivRankSys.domain.building.service.CentralLibraryRecordService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

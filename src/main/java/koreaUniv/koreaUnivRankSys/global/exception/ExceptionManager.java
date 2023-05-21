@@ -1,5 +1,6 @@
 package koreaUniv.koreaUnivRankSys.global.exception;
 
+import koreaUniv.koreaUnivRankSys.global.common.CommonResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,10 +20,10 @@ public class ExceptionManager {
     }
 
     @ExceptionHandler(CustomException.class)
-    public ResponseEntity<CustomResult> customExceptionHandler(CustomException e) {
+    public ResponseEntity<CommonResponse> customExceptionHandler(CustomException e) {
 
         return ResponseEntity.status(e.getErrorCode().getHttpStatus())
-                .body(new CustomResult(String.valueOf(e.getErrorCode().getHttpStatus().value()),
+                .body(new CommonResponse(String.valueOf(e.getErrorCode().getHttpStatus().value()),
                         e.getErrorCode().getMessage()));
     }
 

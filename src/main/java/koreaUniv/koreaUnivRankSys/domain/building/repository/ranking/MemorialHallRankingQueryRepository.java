@@ -1,7 +1,7 @@
 package koreaUniv.koreaUnivRankSys.domain.building.repository.ranking;
 
-import koreaUniv.koreaUnivRankSys.domain.building.api.dto.RankingDto;
-import koreaUniv.koreaUnivRankSys.domain.building.api.dto.RankingDtoRowMapper;
+import koreaUniv.koreaUnivRankSys.domain.building.dto.RankingDto;
+import koreaUniv.koreaUnivRankSys.domain.building.dto.RankingDtoRowMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

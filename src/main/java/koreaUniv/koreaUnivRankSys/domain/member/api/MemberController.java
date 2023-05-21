@@ -2,7 +2,7 @@ package koreaUniv.koreaUnivRankSys.domain.member.api;
 
 import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberSignUpRequest;
 import koreaUniv.koreaUnivRankSys.domain.member.service.MemberService;
-import koreaUniv.koreaUnivRankSys.global.exception.CustomResult;
+import koreaUniv.koreaUnivRankSys.global.common.CommonResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +18,11 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping
-    public ResponseEntity<CustomResult> join(@Valid @RequestBody MemberSignUpRequest request) {
+    public ResponseEntity<CommonResponse> join(@Valid @RequestBody MemberSignUpRequest request) {
         memberService.join(request);
 
         return ResponseEntity.ok().body(
-                new CustomResult(String.valueOf(HttpStatus.CREATED.value()),
+                new CommonResponse(String.valueOf(HttpStatus.CREATED.value()),
                         request.getUserId() + "님이 가입되었습니다"));
     }
 
