@@ -21,10 +21,10 @@ public class MemorialHallRecord {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private long dailyStudyingTime;
-    private long weeklyStudyingTime;
-    private long monthlyStudyingTime;
-    private long totalStudyingTime;
+    private long dailyStudyTime;
+    private long weeklyStudyTime;
+    private long monthlyStudyTime;
+    private long totalStudyTime;
 
     public void setMember(Member member) {
         this.member = member;
@@ -32,19 +32,19 @@ public class MemorialHallRecord {
 
     public static MemorialHallRecord createMemorialHallRecord() {
         MemorialHallRecord memorialHallRecord = new MemorialHallRecord();
-        memorialHallRecord.dailyStudyingTime = 0L;
-        memorialHallRecord.weeklyStudyingTime = 0L;
-        memorialHallRecord.monthlyStudyingTime = 0L;
-        memorialHallRecord.totalStudyingTime = 0L;
+        memorialHallRecord.dailyStudyTime = 0L;
+        memorialHallRecord.weeklyStudyTime = 0L;
+        memorialHallRecord.monthlyStudyTime = 0L;
+        memorialHallRecord.totalStudyTime = 0L;
         return memorialHallRecord;
     }
 
-    public void updateStudyingTime(long studyingTime) {
-        this.dailyStudyingTime += studyingTime;
-        this.weeklyStudyingTime += studyingTime;
-        this.monthlyStudyingTime += studyingTime;
-        this.totalStudyingTime += studyingTime;
-        this.member.updateMemberTotalStudyingTime(studyingTime);
+    public void updateStudyTime(long studyTime) {
+        this.dailyStudyTime += studyTime;
+        this.weeklyStudyTime += studyTime;
+        this.monthlyStudyTime += studyTime;
+        this.totalStudyTime += studyTime;
+        this.member.updateMemberTotalStudyTime(studyTime);
     }
 
 }

@@ -1,7 +1,6 @@
 package koreaUniv.koreaUnivRankSys.domain.building.repository;
 
 
-import koreaUniv.koreaUnivRankSys.domain.building.repository.JpaCentralLibraryRecordRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

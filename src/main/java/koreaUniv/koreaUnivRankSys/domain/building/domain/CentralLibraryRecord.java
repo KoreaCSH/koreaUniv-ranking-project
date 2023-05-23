@@ -44,6 +44,6 @@ public class CentralLibraryRecord {
         this.weeklyStudyingTime += studyingTime;
         this.monthlyStudyingTime += studyingTime;
         this.totalStudyingTime += studyingTime;
-        this.member.updateMemberTotalStudyingTime(studyingTime);
+        this.member.updateMemberTotalStudyTime(studyingTime);
     }
 }

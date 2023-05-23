@@ -100,7 +100,7 @@ public class Member {
     /*
      * memberTotalStudyingTime update 로직
      * */
-    public void updateMemberTotalStudyingTime(long studyingTime) {
+    public void updateMemberTotalStudyTime(long studyingTime) {
         this.memberTotalStudyingTime += studyingTime;
     }
 
