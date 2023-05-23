@@ -31,6 +31,7 @@ public class SecurityConfiguration {
     private final UserDetailsService userDetailsService;
     private final JwtProvider jwtProvider;
     private final JwtEntryPoint jwtEntryPoint;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -52,6 +53,7 @@ public class SecurityConfiguration {
 
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtEntryPoint)
+                .accessDeniedHandler(jwtAccessDeniedHandler)
                 .and()
 
                 .build();
