@@ -28,7 +28,7 @@ public class Member {
     private String password;
     private String nickName;
     private String profileMessage;
-    private long memberTotalStudyingTime;
+    private Long memberTotalStudyingTime;
 
     // 양방향 관계
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)

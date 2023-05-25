@@ -36,9 +36,9 @@ public class CentralLibraryRecordService {
     }
 
     @Transactional
-    public Long recordStudyingTime(String userId, Long studyingTime) {
+    public Long recordStudyingTime(String userId, Long studyTime) {
         CentralLibraryRecord findRecord = findByUserId(userId);
-        findRecord.updateStudyingTime(studyingTime);
+        findRecord.updateStudyTime(studyTime);
         return findRecord.getId();
     }
 

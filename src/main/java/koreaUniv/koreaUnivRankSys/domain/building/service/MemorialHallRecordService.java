@@ -21,6 +21,13 @@ public class MemorialHallRecordService {
     private final MemorialHallRecordRepository memorialHallRepository;
     private final MemorialHallRankingQueryRepository memorialHallRankingQueryRepository;
 
+    @Transactional
+    public Long trackStudyTime(String userId, long studyingTime) {
+        MemorialHallRecord findRecord = findByMemberUserId(userId);
+        findRecord.updateStudyTime(studyingTime);
+        return findRecord.getId();
+    }
+
     public MemorialHallRecord findOne(Long id) {
         return memorialHallRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ErrorCode.RECORD_NOTFOUND));
@@ -31,15 +38,16 @@ public class MemorialHallRecordService {
                 .orElseThrow(() -> new CustomException(ErrorCode.RECORD_NOTFOUND));
     }
 
-    public List<RankingDto> findAllByRanking() {
-        return memorialHallRankingQueryRepository.findAllByRanking();
+    public List<RankingDto> findTotalRankings() {
+        return memorialHallRankingQueryRepository.findRankingsByTotalStudyTime();
     }
 
-    @Transactional
-    public Long trackStudyTime(String userId, long studyingTime) {
-        MemorialHallRecord findRecord = findByMemberUserId(userId);
-        findRecord.updateStudyTime(studyingTime);
-        return findRecord.getId();
+    public List<RankingDto> findDailyRankings() {
+        return memorialHallRankingQueryRepository.findRankingsByDailyStudyTime();
+    }
+
+    public List<RankingDto> findWeeklyRankings() {
+        return memorialHallRankingQueryRepository.findRankingsByWeeklyStudyTime();
     }
 
 }

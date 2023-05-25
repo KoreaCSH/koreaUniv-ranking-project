@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -25,7 +26,7 @@ public class MemorialHallController {
 
     @PostMapping
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<CommonResponse> trackStudyTime(@AuthMember Member member, @RequestBody StudyTimeDto studyTimeDto) {
+    public ResponseEntity<CommonResponse> trackStudyTime(@AuthMember Member member, @Valid @RequestBody StudyTimeDto studyTimeDto) {
 
         memorialHallRecordService.trackStudyTime(member.getUserId(), studyTimeDto.getStudyTime());
 
@@ -35,9 +36,27 @@ public class MemorialHallController {
 
     @GetMapping("/total-rankings")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<RankingResultDto> getRankings() {
+    public ResponseEntity<RankingResultDto> getTotalRankings() {
 
-        List<RankingDto> rankings = memorialHallRecordService.findAllByRanking();
+        List<RankingDto> rankings = memorialHallRecordService.findTotalRankings();
+
+        return ResponseEntity.ok().body(RankingResultDto.of(rankings));
+    }
+
+    @GetMapping("/daily-rankings")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<RankingResultDto> getDailyRankings() {
+
+        List<RankingDto> rankings = memorialHallRecordService.findDailyRankings();
+
+        return ResponseEntity.ok().body(RankingResultDto.of(rankings));
+    }
+
+    @GetMapping("/weekly-rankings")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<RankingResultDto> getWeeklyRankings() {
+
+        List<RankingDto> rankings = memorialHallRecordService.findWeeklyRankings();
 
         return ResponseEntity.ok().body(RankingResultDto.of(rankings));
     }

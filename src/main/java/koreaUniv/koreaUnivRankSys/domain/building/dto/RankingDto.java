@@ -1,17 +1,18 @@
 package koreaUniv.koreaUnivRankSys.domain.building.dto;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
-@Setter
 @Getter
-@ToString
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder
 public class RankingDto {
 
     private Long ranking;
     private String nickName;
     private String path;
-    private Long totalStudyingTime;
+    private long studyTime;
 
 }

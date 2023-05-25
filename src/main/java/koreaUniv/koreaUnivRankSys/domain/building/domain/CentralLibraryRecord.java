@@ -21,10 +21,10 @@ public class CentralLibraryRecord {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private Long dailyStudyingTime;
-    private Long weeklyStudyingTime;
-    private Long monthlyStudyingTime;
-    private Long totalStudyingTime;
+    private long dailyStudyTime;
+    private long weeklyStudyTime;
+    private long monthlyStudyTime;
+    private long totalStudyTime;
 
     public void setMember(Member member) {
         this.member = member;
@@ -32,18 +32,18 @@ public class CentralLibraryRecord {
 
     public static CentralLibraryRecord createCentralLibraryRecord() {
         CentralLibraryRecord centralLibraryRecord = new CentralLibraryRecord();
-        centralLibraryRecord.dailyStudyingTime = 0L;
-        centralLibraryRecord.weeklyStudyingTime = 0L;
-        centralLibraryRecord.monthlyStudyingTime = 0L;
-        centralLibraryRecord.totalStudyingTime = 0L;
+        centralLibraryRecord.dailyStudyTime = 0L;
+        centralLibraryRecord.weeklyStudyTime = 0L;
+        centralLibraryRecord.monthlyStudyTime = 0L;
+        centralLibraryRecord.totalStudyTime = 0L;
         return centralLibraryRecord;
     }
 
-    public void updateStudyingTime(Long studyingTime) {
-        this.dailyStudyingTime += studyingTime;
-        this.weeklyStudyingTime += studyingTime;
-        this.monthlyStudyingTime += studyingTime;
-        this.totalStudyingTime += studyingTime;
-        this.member.updateMemberTotalStudyTime(studyingTime);
+    public void updateStudyTime(Long studyTime) {
+        this.dailyStudyTime += studyTime;
+        this.weeklyStudyTime += studyTime;
+        this.monthlyStudyTime += studyTime;
+        this.totalStudyTime += studyTime;
+        this.member.updateMemberTotalStudyTime(studyTime);
     }
 }
