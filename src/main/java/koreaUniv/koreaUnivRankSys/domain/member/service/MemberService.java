@@ -60,24 +60,29 @@ public class MemberService {
 
     // 수정 필요 - matches 써야하므로.
     @Transactional
-    public Long updatePassword(Long id, String oldPassword, String newPassword) {
-        Member findMember = memberRepository.findById(id)
-                .orElseThrow(() -> new IllegalStateException("사용자를 찾을 수 없습니다."));
+    public Long updatePassword(String userId, String oldPassword, String newPassword, String validNewPassword) {
 
-        // matches
+        if(!newPassword.equals(validNewPassword)) {
+            throw new CustomException(ErrorCode.NOT_MATCH_PASSWORD);
+        }
 
-        // true 라면 change, false 라면 Exception
+        Member findMember = findByUserId(userId);
 
-        findMember.changePassword(oldPassword, newPassword);
+        if(!passwordEncoder.matches(oldPassword, findMember.getPassword())) {
+            throw new CustomException(ErrorCode.INVALID_PASSWORD);
+        }
+
+        String newEncodePassword = passwordEncoder.encode(newPassword);
+
+        findMember.changePassword(newEncodePassword);
         return findMember.getId();
     }
 
     // nickName, profileMessage, memberImage 등 변경 가능
     @Transactional
-    public Long updateMember(Long id, MemberUpdateRequest request) {
+    public Long updateMember(String userId, MemberUpdateRequest request) {
         // dirty checking 으로 update
-        Member findMember = memberRepository.findById(id)
-                .orElseThrow(() -> new IllegalStateException("사용자를 찾을 수 없습니다."));
+        Member findMember = findByUserId(userId);
 
         MemberImage currentMemberImage = findMember.getMemberImage();
         MultipartFile newProfileImage = request.getProfileImage();
@@ -125,8 +130,8 @@ public class MemberService {
         return memberRepository.existsByNickName(nickName);
     }
 
-    public long findMemberTotalStudyingTime(String id) {
-        return findByUserId(id).getMemberTotalStudyingTime();
+    public long findMemberTotalStudyingTime(String userId) {
+        return findByUserId(userId).getMemberTotalStudyingTime();
     }
 
 }

@@ -1,6 +1,7 @@
 package koreaUniv.koreaUnivRankSys.global.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import koreaUniv.koreaUnivRankSys.global.common.CommonResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -22,16 +23,20 @@ public class JwtAuthenticationFailureHandler implements AuthenticationFailureHan
 
         String errorMessage;
 
-        response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-
         if(exception instanceof BadCredentialsException) {
-            errorMessage = "Invalid Username or Password";
+            errorMessage = "아이디 또는 비밀번호를 잘못 입력했습니다.";
         } else {
             errorMessage = "Exception";
         }
 
-        objectMapper.writeValue(response.getWriter(), errorMessage);
+        CommonResponse commonResponse = new CommonResponse(String.valueOf(HttpServletResponse.SC_UNAUTHORIZED), errorMessage);
+
+        String json = objectMapper.writeValueAsString(commonResponse);
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("utf-8");
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.getWriter().write(json);
 
     }
 }

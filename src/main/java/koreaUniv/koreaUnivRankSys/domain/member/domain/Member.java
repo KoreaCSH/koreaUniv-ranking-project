@@ -90,10 +90,7 @@ public class Member {
     /*
     * 비밀번호 변경 로직
     * */
-    public void changePassword(String oldPassword, String newPassword) {
-        if(!oldPassword.equals(this.password)) {
-            throw new CustomException(ErrorCode.INVALID_PASSWORD);
-        }
+    public void changePassword(String newPassword) {
         this.password = newPassword;
     }
 

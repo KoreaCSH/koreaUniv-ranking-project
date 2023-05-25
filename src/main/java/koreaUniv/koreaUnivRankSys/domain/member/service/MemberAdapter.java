@@ -2,11 +2,9 @@ package koreaUniv.koreaUnivRankSys.domain.member.service;
 
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
 import lombok.Getter;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-import java.util.Collection;
 import java.util.List;
 
 @Getter
