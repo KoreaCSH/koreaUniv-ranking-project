@@ -22,9 +22,9 @@ public class MemorialHallRecordService {
     private final MemorialHallRankingQueryRepository memorialHallRankingQueryRepository;
 
     @Transactional
-    public Long trackStudyTime(String userId, long studyingTime) {
+    public Long trackStudyTime(String userId, long studyTime) {
         MemorialHallRecord findRecord = findByMemberUserId(userId);
-        findRecord.updateStudyTime(studyingTime);
+        findRecord.updateStudyTime(studyTime);
         return findRecord.getId();
     }
 

@@ -10,13 +10,13 @@ import java.util.List;
 @Getter
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class RankingResultDto {
+public class RankingResult {
 
     private List<RankingDto> rankings;
     private Integer count;
 
-    public static RankingResultDto of(List<RankingDto> rankings) {
-        return RankingResultDto.builder()
+    public static RankingResult of(List<RankingDto> rankings) {
+        return RankingResult.builder()
                 .rankings(rankings)
                 .count(rankings.size())
                 .build();

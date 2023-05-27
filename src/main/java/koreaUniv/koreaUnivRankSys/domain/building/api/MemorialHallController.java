@@ -2,8 +2,8 @@ package koreaUniv.koreaUnivRankSys.domain.building.api;
 
 import koreaUniv.koreaUnivRankSys.domain.auth.service.AuthMember;
 import koreaUniv.koreaUnivRankSys.domain.building.dto.RankingDto;
-import koreaUniv.koreaUnivRankSys.domain.building.dto.RankingResultDto;
-import koreaUniv.koreaUnivRankSys.domain.building.dto.StudyTimeDto;
+import koreaUniv.koreaUnivRankSys.domain.building.dto.RankingResult;
+import koreaUniv.koreaUnivRankSys.domain.building.dto.StudyTimeRequest;
 import koreaUniv.koreaUnivRankSys.domain.building.service.MemorialHallRecordService;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
 import koreaUniv.koreaUnivRankSys.global.common.CommonResponse;
@@ -26,39 +26,39 @@ public class MemorialHallController {
 
     @PostMapping
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<CommonResponse> trackStudyTime(@AuthMember Member member, @Valid @RequestBody StudyTimeDto studyTimeDto) {
+    public ResponseEntity<CommonResponse> trackStudyTime(@AuthMember Member member, @Valid @RequestBody StudyTimeRequest studyTimeRequest) {
 
-        memorialHallRecordService.trackStudyTime(member.getUserId(), studyTimeDto.getStudyTime());
+        memorialHallRecordService.trackStudyTime(member.getUserId(), studyTimeRequest.getStudyTime());
 
         return ResponseEntity.ok().body(new CommonResponse(String.valueOf(HttpStatus.CREATED.value()),
-                studyTimeDto.getStudyTime() + "분이 기록되었습니다."));
+                studyTimeRequest.getStudyTime() + "분이 기록되었습니다."));
     }
 
     @GetMapping("/total-rankings")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<RankingResultDto> getTotalRankings() {
+    public ResponseEntity<RankingResult> getTotalRankings() {
 
         List<RankingDto> rankings = memorialHallRecordService.findTotalRankings();
 
-        return ResponseEntity.ok().body(RankingResultDto.of(rankings));
+        return ResponseEntity.ok().body(RankingResult.of(rankings));
     }
 
     @GetMapping("/daily-rankings")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<RankingResultDto> getDailyRankings() {
+    public ResponseEntity<RankingResult> getDailyRankings() {
 
         List<RankingDto> rankings = memorialHallRecordService.findDailyRankings();
 
-        return ResponseEntity.ok().body(RankingResultDto.of(rankings));
+        return ResponseEntity.ok().body(RankingResult.of(rankings));
     }
 
     @GetMapping("/weekly-rankings")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<RankingResultDto> getWeeklyRankings() {
+    public ResponseEntity<RankingResult> getWeeklyRankings() {
 
         List<RankingDto> rankings = memorialHallRecordService.findWeeklyRankings();
 
-        return ResponseEntity.ok().body(RankingResultDto.of(rankings));
+        return ResponseEntity.ok().body(RankingResult.of(rankings));
     }
 
 }

@@ -19,7 +19,8 @@ public enum ErrorCode {
     NOT_MATCH_AUTHCODE(HttpStatus.BAD_REQUEST, "인증번호가 일치하지 않습니다."),
     NOT_AUTH_MAIL(HttpStatus.BAD_REQUEST, "메일 인증을 해 주세요."),
 
-    RECORD_NOTFOUND(HttpStatus.NOT_FOUND, "공부 기록이 없습니다.");
+    RECORD_NOTFOUND(HttpStatus.NOT_FOUND, "공부 기록이 없습니다."),
+    MEMBER_RECORD_NOTFOUND(HttpStatus.NOT_FOUND, "회원의 공부 기록이 없습니다.");
 
     private HttpStatus httpStatus;
     private String message;

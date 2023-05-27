@@ -3,8 +3,6 @@ package koreaUniv.koreaUnivRankSys.domain.member.domain;
 import koreaUniv.koreaUnivRankSys.domain.building.domain.CentralLibraryRecord;
 import koreaUniv.koreaUnivRankSys.domain.building.domain.MemorialHallRecord;
 import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberUpdateRequest;
-import koreaUniv.koreaUnivRankSys.global.exception.CustomException;
-import koreaUniv.koreaUnivRankSys.global.exception.ErrorCode;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,7 +26,8 @@ public class Member {
     private String password;
     private String nickName;
     private String profileMessage;
-    private Long memberTotalStudyingTime;
+
+    // 각 건물별 기록과의 연관관계에서 누가 주인이 되어야 할 지 고민해보자.
 
     // 양방향 관계
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
@@ -39,6 +38,9 @@ public class Member {
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
     //@JsonIgnore
     private CentralLibraryRecord centralLibraryRecord;
+
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
+    private MemberStudyTime memberStudyTime;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "member_image_id")
@@ -64,9 +66,9 @@ public class Member {
         this.password = password;
         this.nickName = nickName;
         this.profileMessage = null;
-        this.memberTotalStudyingTime = 0L;
         this.setMemorialHallRecord(MemorialHallRecord.createMemorialHallRecord());
         this.setCentralLibraryRecord(CentralLibraryRecord.createCentralLibraryRecord());
+        this.setMemberStudyTime(MemberStudyTime.createStudyTime());
         this.memberImage = memberImage;
         this.college = college;
         this.department = department;
@@ -83,6 +85,11 @@ public class Member {
         centralLibraryRecord.setMember(this);
     }
 
+    private void setMemberStudyTime(MemberStudyTime memberStudyTime) {
+        this.memberStudyTime = memberStudyTime;
+        memberStudyTime.setMember(this);
+    }
+
     public void setMemberImage(MemberImage memberImage) {
         this.memberImage = memberImage;
     }
@@ -92,13 +99,6 @@ public class Member {
     * */
     public void changePassword(String newPassword) {
         this.password = newPassword;
-    }
-
-    /*
-     * memberTotalStudyingTime update 로직
-     * */
-    public void updateMemberTotalStudyTime(long studyingTime) {
-        this.memberTotalStudyingTime += studyingTime;
     }
 
     /*

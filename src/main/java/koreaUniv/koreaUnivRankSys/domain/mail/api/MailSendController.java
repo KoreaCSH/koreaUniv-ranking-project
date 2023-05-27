@@ -2,7 +2,7 @@ package koreaUniv.koreaUnivRankSys.domain.mail.api;
 
 import koreaUniv.koreaUnivRankSys.domain.mail.domain.MailAuthInfo;
 import koreaUniv.koreaUnivRankSys.domain.mail.domain.MailAuthStatus;
-import koreaUniv.koreaUnivRankSys.domain.mail.dto.AuthCodeRequestDto;
+import koreaUniv.koreaUnivRankSys.domain.mail.dto.AuthCodeRequest;
 import koreaUniv.koreaUnivRankSys.domain.mail.service.MailAuthInfoService;
 import koreaUniv.koreaUnivRankSys.domain.mail.service.MailSendService;
 import koreaUniv.koreaUnivRankSys.global.common.CommonResponse;
@@ -40,7 +40,7 @@ public class MailSendController {
     }
 
     @PostMapping("{email}/check")
-    public ResponseEntity<CommonResponse> checkAuthCode(@PathVariable String email, @RequestBody AuthCodeRequestDto request) {
+    public ResponseEntity<CommonResponse> checkAuthCode(@PathVariable String email, @RequestBody AuthCodeRequest request) {
 
         email += "@korea.ac.kr";
 

@@ -130,8 +130,4 @@ public class MemberService {
         return memberRepository.existsByNickName(nickName);
     }
 
-    public long findMemberTotalStudyingTime(String userId) {
-        return findByUserId(userId).getMemberTotalStudyingTime();
-    }
-
 }
