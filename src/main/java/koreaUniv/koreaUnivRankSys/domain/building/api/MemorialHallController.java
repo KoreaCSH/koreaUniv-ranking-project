@@ -1,6 +1,7 @@
 package koreaUniv.koreaUnivRankSys.domain.building.api;
 
 import koreaUniv.koreaUnivRankSys.domain.auth.service.AuthMember;
+import koreaUniv.koreaUnivRankSys.domain.building.dto.MyRankingResult;
 import koreaUniv.koreaUnivRankSys.domain.building.dto.RankingDto;
 import koreaUniv.koreaUnivRankSys.domain.building.dto.RankingResult;
 import koreaUniv.koreaUnivRankSys.domain.building.dto.StudyTimeRequest;
@@ -59,6 +60,13 @@ public class MemorialHallController {
         List<RankingDto> rankings = memorialHallRecordService.findWeeklyRankings();
 
         return ResponseEntity.ok().body(RankingResult.of(rankings));
+    }
+
+    @GetMapping("/my-total-ranking")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<MyRankingResult> getMyTotalRanking(@AuthMember Member member) {
+
+        return ResponseEntity.ok().body(memorialHallRecordService.findMyRankingByTotalStudyTime(member.getNickName()));
     }
 
 }
