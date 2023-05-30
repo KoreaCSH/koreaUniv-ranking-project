@@ -30,13 +30,13 @@ public class Member {
     // 각 건물별 기록과의 연관관계에서 누가 주인이 되어야 할 지 고민해보자.
 
     // 양방향 관계
-    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
-    //@JsonIgnore
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "memorial_hall_record_id")
     private MemorialHallRecord memorialHallRecord;
 
     // 양방향 관계
-    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
-    //@JsonIgnore
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "central_library_record_id")
     private CentralLibraryRecord centralLibraryRecord;
 
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)

@@ -62,11 +62,11 @@ public class MemorialHallController {
         return ResponseEntity.ok().body(RankingResult.of(rankings));
     }
 
-    @GetMapping("/my-total-ranking")
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<MyRankingResult> getMyTotalRanking(@AuthMember Member member) {
+        @GetMapping("/my-total-ranking")
+        @PreAuthorize("isAuthenticated()")
+        public ResponseEntity<MyRankingResult> getMyTotalRanking(@AuthMember Member member) {
 
-        return ResponseEntity.ok().body(memorialHallRecordService.findMyRankingByTotalStudyTime(member.getNickName()));
+            return ResponseEntity.ok().body(memorialHallRecordService.findMyRankingByTotalStudyTime(member.getNickName()));
     }
 
 }

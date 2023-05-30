@@ -17,8 +17,7 @@ public class MemorialHallRecord {
     @Column(name = "memorial_hall_record_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @OneToOne(mappedBy = "memorialHallRecord")
     private Member member;
 
     private long dailyStudyTime;

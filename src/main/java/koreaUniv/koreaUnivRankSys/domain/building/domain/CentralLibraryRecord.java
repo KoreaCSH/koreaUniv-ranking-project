@@ -17,8 +17,7 @@ public class CentralLibraryRecord {
     @Column(name = "central_library_record_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @OneToOne(mappedBy = "centralLibraryRecord")
     private Member member;
 
     private long dailyStudyTime;
