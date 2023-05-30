@@ -32,6 +32,8 @@ public class SecurityConfiguration {
     private final JwtProvider jwtProvider;
     private final JwtEntryPoint jwtEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final JwtAuthenticationSuccessHandler authenticationSuccessHandler;
+    private final JwtAuthenticationFailureHandler authenticationFailureHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -72,8 +74,8 @@ public class SecurityConfiguration {
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
         JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter();
         jwtAuthenticationFilter.setAuthenticationManager(authenticationManager());
-        jwtAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
-        jwtAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler());
+        jwtAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
+        jwtAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler);
         return jwtAuthenticationFilter;
     }
 
@@ -85,16 +87,6 @@ public class SecurityConfiguration {
     @Bean
     public AuthenticationProvider authenticationProvider() {
         return new JwtAuthenticationProvider(userDetailsService, passwordEncoder());
-    }
-
-    @Bean
-    public AuthenticationSuccessHandler authenticationSuccessHandler() {
-        return new JwtAuthenticationSuccessHandler(jwtProvider);
-    }
-
-    @Bean
-    public AuthenticationFailureHandler authenticationFailureHandler() {
-        return new JwtAuthenticationFailureHandler();
     }
 
     @Bean

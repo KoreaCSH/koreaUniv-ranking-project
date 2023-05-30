@@ -1,6 +1,6 @@
 package koreaUniv.koreaUnivRankSys.global.jwt;
 
-import koreaUniv.koreaUnivRankSys.domain.member.service.MemberAdapter;
+import koreaUniv.koreaUnivRankSys.domain.auth.service.MemberAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
