@@ -43,16 +43,7 @@ public class MailSendController {
     public ResponseEntity<CommonResponse> checkAuthCode(@PathVariable String email, @RequestBody AuthCodeRequest request) {
 
         email += "@korea.ac.kr";
-
-
-        // 이 과정을 하나의 메서드에 담을 수 있을 것!
-        MailAuthInfo findInfo = mailAuthInfoService.findByEmail(email);
-
-        if(!findInfo.getAuthCode().equals(request.getAuthCode())) {
-            throw new CustomException(ErrorCode.NOT_MATCH_AUTHCODE);
-        }
-
-        mailAuthInfoService.changeStatus(findInfo, MailAuthStatus.Y);
+        mailAuthInfoService.validateAuthCode(email, request);
 
         return ResponseEntity.ok().body(
                 new CommonResponse(String.valueOf(HttpStatus.OK), "인증이 완료되었습니다.")
