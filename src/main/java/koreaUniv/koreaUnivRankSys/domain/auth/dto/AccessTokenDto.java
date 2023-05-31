@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class AccessTokenResponse {
+public class AccessTokenDto {
 
     @NotBlank(message = "Access Token 이 입력되지 않았습니다.")
     private String accessToken;

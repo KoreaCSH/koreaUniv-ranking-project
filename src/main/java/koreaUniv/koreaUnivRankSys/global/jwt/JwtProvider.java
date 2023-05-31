@@ -83,6 +83,12 @@ public class JwtProvider {
         return new UsernamePasswordAuthenticationToken(memberAdapter, null, memberAdapter.getAuthorities());
     }
 
+    public Long getRemainingTime(String jwt) {
+        Date expiration = getClaims(jwt).getExpiration();
+        Date now = new Date();
+        return expiration.getTime() - now.getTime();
+    }
+
     private Claims getClaims(String jwt) {
         return Jwts.parserBuilder()
                 .setSigningKey(stringToKey(secretKey))

@@ -29,4 +29,8 @@ public class RedisService {
         return Optional.ofNullable(getData("RefreshToken:" + userId));
     }
 
+    public Optional<String> getBlackList(String accessToken) {
+        return Optional.ofNullable(getData("BlackList:" + accessToken));
+    }
+
 }
