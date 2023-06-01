@@ -15,6 +15,7 @@ public class TotalMyRankingResultMapper implements RowMapper<MyRankingResult> {
                 .ranking(rs.getLong("ranking"))
                 .studyTime(rs.getLong("total_study_time"))
                 .prevRanking(rs.getLong("prev_ranking"))
+                .nextRanking(rs.getLong("next_ranking"))
                 .build();
     }
 

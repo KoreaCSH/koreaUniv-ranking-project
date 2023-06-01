@@ -13,6 +13,7 @@ public class MyRankingResult {
     private String nickName;
     private Long ranking;
     private long studyTime;
-    private long prevRanking;
+    private Long prevRanking;
+    private Long nextRanking;
 
 }

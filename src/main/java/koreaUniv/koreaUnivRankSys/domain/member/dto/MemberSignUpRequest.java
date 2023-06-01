@@ -31,6 +31,9 @@ public class MemberSignUpRequest {
     @Size(min = 2, max = 10, message = "닉네임은 2~10자 이어야 합니다.")
     private String nickName;
 
+    private String collegeName;
+    private String departmentName;
+    private String profileMessage;
     private MultipartFile profileImage;
 
     public Member toEntity(String password) {
@@ -38,6 +41,7 @@ public class MemberSignUpRequest {
                 .userId(userId)
                 .email(email + "@korea.ac.kr")
                 .password(password)
+                .profileMessage(profileMessage)
                 .nickName(nickName)
                 .build();
     }

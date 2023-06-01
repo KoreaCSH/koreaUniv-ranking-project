@@ -59,13 +59,13 @@ public class Member {
     // Builder 에 연관관계 편의 메서드 추가하면 어떻게 될까.
     @Builder
     public Member(String userId, String email, String password, String nickName, MemberImage memberImage,
-                  College college, Department department) {
+                  String profileMessage, College college, Department department) {
 
         this.userId = userId;
         this.email = email;
         this.password = password;
         this.nickName = nickName;
-        this.profileMessage = null;
+        this.profileMessage = profileMessage;
         this.setMemorialHallRecord(MemorialHallRecord.createMemorialHallRecord());
         this.setCentralLibraryRecord(CentralLibraryRecord.createCentralLibraryRecord());
         this.setMemberStudyTime(MemberStudyTime.createStudyTime());
