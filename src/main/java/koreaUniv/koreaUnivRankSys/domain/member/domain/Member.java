@@ -1,10 +1,8 @@
 package koreaUniv.koreaUnivRankSys.domain.member.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import koreaUniv.koreaUnivRankSys.domain.building.domain.CentralLibraryRecord;
 import koreaUniv.koreaUnivRankSys.domain.building.domain.MemorialHallRecord;
-import koreaUniv.koreaUnivRankSys.domain.member.api.dto.MemberUpdateRequest;
-import koreaUniv.koreaUnivRankSys.domain.member.exception.NotMatchPasswordException;
+import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberUpdateRequest;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,12 +21,13 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
-    private String string_id;
+    private String userId;
     private String email;
     private String password;
     private String nickName;
     private String profileMessage;
-    private long memberTotalStudyingTime;
+
+    // 각 건물별 기록과의 연관관계에서 누가 주인이 되어야 할 지 고민해보자.
 
     // 양방향 관계
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
@@ -39,6 +38,9 @@ public class Member {
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
     //@JsonIgnore
     private CentralLibraryRecord centralLibraryRecord;
+
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
+    private MemberStudyTime memberStudyTime;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "member_image_id")
@@ -52,19 +54,21 @@ public class Member {
     @JoinColumn(name = "department_id")
     private Department department;
 
+    // boolean departmentPublic
+
     // Builder 에 연관관계 편의 메서드 추가하면 어떻게 될까.
     @Builder
-    public Member(String string_id, String email, String password, String nickName, MemberImage memberImage,
+    public Member(String userId, String email, String password, String nickName, MemberImage memberImage,
                   College college, Department department) {
 
-        this.string_id = string_id;
+        this.userId = userId;
         this.email = email;
         this.password = password;
         this.nickName = nickName;
         this.profileMessage = null;
-        this.memberTotalStudyingTime = 0L;
         this.setMemorialHallRecord(MemorialHallRecord.createMemorialHallRecord());
         this.setCentralLibraryRecord(CentralLibraryRecord.createCentralLibraryRecord());
+        this.setMemberStudyTime(MemberStudyTime.createStudyTime());
         this.memberImage = memberImage;
         this.college = college;
         this.department = department;
@@ -81,6 +85,11 @@ public class Member {
         centralLibraryRecord.setMember(this);
     }
 
+    private void setMemberStudyTime(MemberStudyTime memberStudyTime) {
+        this.memberStudyTime = memberStudyTime;
+        memberStudyTime.setMember(this);
+    }
+
     public void setMemberImage(MemberImage memberImage) {
         this.memberImage = memberImage;
     }
@@ -88,18 +97,8 @@ public class Member {
     /*
     * 비밀번호 변경 로직
     * */
-    public void changePassword(String oldPassword, String newPassword) {
-        if(!oldPassword.equals(this.password)) {
-            throw new NotMatchPasswordException("현재 비밀번호와 일치하지 않습니다.");
-        }
+    public void changePassword(String newPassword) {
         this.password = newPassword;
-    }
-
-    /*
-     * memberTotalStudyingTime update 로직
-     * */
-    public void updateMemberTotalStudyingTime(long studyingTime) {
-        this.memberTotalStudyingTime += studyingTime;
     }
 
     /*
@@ -111,4 +110,5 @@ public class Member {
         }
         this.profileMessage = request.getProfileMessage();
     }
+
 }

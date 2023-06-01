@@ -1,8 +1,8 @@
 package koreaUniv.koreaUnivRankSys.domain.building.service;
 
-import koreaUniv.koreaUnivRankSys.domain.building.api.dto.RankingDto;
+import koreaUniv.koreaUnivRankSys.domain.building.dto.RankingDto;
 import koreaUniv.koreaUnivRankSys.domain.building.domain.CentralLibraryRecord;
-import koreaUniv.koreaUnivRankSys.domain.building.repository.interfaces.CentralLibraryRecordRepository;
+import koreaUniv.koreaUnivRankSys.domain.building.repository.CentralLibraryRecordRepository;
 import koreaUniv.koreaUnivRankSys.domain.building.repository.ranking.CentralLibraryRankingQueryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,11 +19,11 @@ public class CentralLibraryRecordService {
     private final CentralLibraryRankingQueryRepository centralLibraryRankingQueryRepository;
 
     public CentralLibraryRecord findOne(Long id) {
-        return centralLibraryRecordRepository.findOne(id)
+        return centralLibraryRecordRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException("공부 기록이 존재하지 않습니다."));
     }
-    public CentralLibraryRecord findByStringId(String stringId) {
-        return centralLibraryRecordRepository.findByStringId(stringId)
+    public CentralLibraryRecord findByUserId(String userId) {
+        return centralLibraryRecordRepository.findByMemberUserId(userId)
                 .orElseThrow(() -> new IllegalStateException("공부 기록이 존재하지 않습니다."));
     }
 
@@ -36,9 +36,9 @@ public class CentralLibraryRecordService {
     }
 
     @Transactional
-    public Long recordStudyingTime(String stringId, Long studyingTime) {
-        CentralLibraryRecord findRecord = findByStringId(stringId);
-        findRecord.updateStudyingTime(studyingTime);
+    public Long recordStudyingTime(String userId, Long studyTime) {
+        CentralLibraryRecord findRecord = findByUserId(userId);
+        findRecord.updateStudyTime(studyTime);
         return findRecord.getId();
     }
 

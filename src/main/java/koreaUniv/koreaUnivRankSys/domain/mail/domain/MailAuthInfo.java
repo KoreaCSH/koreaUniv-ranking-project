@@ -4,10 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -21,9 +18,21 @@ public class MailAuthInfo {
     private String email;
     private String authCode;
 
+    @Enumerated(EnumType.STRING)
+    private MailAuthStatus status;
+
     @Builder
     public MailAuthInfo(String email, String authCode) {
         this.email = email;
+        this.authCode = authCode;
+        this.status = MailAuthStatus.N;
+    }
+
+    public void changeStatus(MailAuthStatus status) {
+        this.status = status;
+    }
+
+    public void changeAuthCode(String authCode) {
         this.authCode = authCode;
     }
 
