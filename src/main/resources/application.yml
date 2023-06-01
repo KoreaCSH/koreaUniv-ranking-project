@@ -1,7 +1,7 @@
 spring:
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: create #실행할 때마다 데이터 초기화, 테스트 시 설정값
     properties:
       hibernate:
         #         show_sql: true
