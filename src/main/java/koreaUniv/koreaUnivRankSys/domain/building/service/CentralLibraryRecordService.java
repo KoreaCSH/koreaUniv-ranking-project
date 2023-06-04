@@ -32,7 +32,7 @@ public class CentralLibraryRecordService {
     }
 
     public List<RankingDto> findAllByRanking() {
-        return centralLibraryRankingQueryRepository.findAllByRanking();
+        return centralLibraryRankingQueryRepository.findRankingsByTotalStudyTime();
     }
 
     @Transactional
