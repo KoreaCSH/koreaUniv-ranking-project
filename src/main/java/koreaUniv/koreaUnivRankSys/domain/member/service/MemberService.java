@@ -36,7 +36,7 @@ public class MemberService {
         String password = passwordEncoder.encode(request.getPassword());
 
         // 정보 공개 여부
-        MemberInfoStatus infoStatus = null;
+        MemberInfoStatus infoStatus = MemberInfoStatus.N;
         if(request.getMemberInfoStatus().equals("Y")) {
             infoStatus = MemberInfoStatus.Y;
         } else {

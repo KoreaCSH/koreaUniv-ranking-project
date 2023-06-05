@@ -1,5 +1,6 @@
 package koreaUniv.koreaUnivRankSys.domain.member.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,10 +14,10 @@ public class MemberStudyTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_study_time_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @OneToOne(mappedBy = "memberStudyTime")
     private Member member;
 
     private long memberDailyStudyTime;
@@ -26,10 +27,10 @@ public class MemberStudyTime {
 
     public static MemberStudyTime createStudyTime() {
         MemberStudyTime memberStudyTime = new MemberStudyTime();
-        memberStudyTime.memberDailyStudyTime = 0;
-        memberStudyTime.memberWeeklyStudyTime = 0;
-        memberStudyTime.memberMonthlyStudyTime = 0;
-        memberStudyTime.memberTotalStudyTime = 0;
+        memberStudyTime.memberDailyStudyTime = 0L;
+        memberStudyTime.memberWeeklyStudyTime = 0L;
+        memberStudyTime.memberMonthlyStudyTime = 0L;
+        memberStudyTime.memberTotalStudyTime = 0L;
         return memberStudyTime;
     }
 

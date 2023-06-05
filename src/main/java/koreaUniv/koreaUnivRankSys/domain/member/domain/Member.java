@@ -1,6 +1,7 @@
 package koreaUniv.koreaUnivRankSys.domain.member.domain;
 
 import koreaUniv.koreaUnivRankSys.domain.building.domain.CentralLibraryRecord;
+import koreaUniv.koreaUnivRankSys.domain.building.domain.CentralSquareRecord;
 import koreaUniv.koreaUnivRankSys.domain.building.domain.MemorialHallRecord;
 import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberUpdateRequest;
 import lombok.AccessLevel;
@@ -39,7 +40,12 @@ public class Member {
     @JoinColumn(name = "central_library_record_id")
     private CentralLibraryRecord centralLibraryRecord;
 
-    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "central_square_record_id")
+    private CentralSquareRecord centralSquareRecord;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "member_study_time_id")
     private MemberStudyTime memberStudyTime;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -71,6 +77,7 @@ public class Member {
         this.profileMessage = profileMessage;
         this.setMemorialHallRecord(MemorialHallRecord.createMemorialHallRecord());
         this.setCentralLibraryRecord(CentralLibraryRecord.createCentralLibraryRecord());
+        this.setCentralSquareRecord(CentralSquareRecord.createCentralSquareRecord());
         this.setMemberStudyTime(MemberStudyTime.createStudyTime());
         this.memberImage = memberImage;
         this.college = college;
@@ -87,6 +94,11 @@ public class Member {
     public void setCentralLibraryRecord(CentralLibraryRecord centralLibraryRecord) {
         this.centralLibraryRecord = centralLibraryRecord;
         centralLibraryRecord.setMember(this);
+    }
+
+    public void setCentralSquareRecord(CentralSquareRecord centralSquareRecord) {
+        this.centralSquareRecord = centralSquareRecord;
+        centralSquareRecord.setMember(this);
     }
 
     private void setMemberStudyTime(MemberStudyTime memberStudyTime) {

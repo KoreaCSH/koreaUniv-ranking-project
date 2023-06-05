@@ -1,11 +1,10 @@
 package koreaUniv.koreaUnivRankSys.domain.building.service;
 
-
+import koreaUniv.koreaUnivRankSys.domain.building.domain.CentralSquareRecord;
 import koreaUniv.koreaUnivRankSys.domain.building.dto.MyRankingResult;
 import koreaUniv.koreaUnivRankSys.domain.building.dto.RankingDto;
-import koreaUniv.koreaUnivRankSys.domain.building.domain.MemorialHallRecord;
-import koreaUniv.koreaUnivRankSys.domain.building.repository.MemorialHallRecordRepository;
-import koreaUniv.koreaUnivRankSys.domain.building.repository.ranking.MemorialHallRankingQueryRepository;
+import koreaUniv.koreaUnivRankSys.domain.building.repository.CentralSquareRecordRepository;
+import koreaUniv.koreaUnivRankSys.domain.building.repository.ranking.CentralSquareRankingQueryRepository;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
 import koreaUniv.koreaUnivRankSys.global.exception.CustomException;
 import koreaUniv.koreaUnivRankSys.global.exception.ErrorCode;
@@ -18,42 +17,42 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class MemorialHallRecordService {
+public class CentralSquareRecordService {
 
-    private final MemorialHallRecordRepository memorialHallRepository;
-    private final MemorialHallRankingQueryRepository memorialHallRankingQueryRepository;
+    private final CentralSquareRecordRepository centralSquareRecordRepository;
+    private final CentralSquareRankingQueryRepository centralSquareRankingQueryRepository;
 
     @Transactional
     public Long trackStudyTime(Member member, long studyTime) {
-        MemorialHallRecord findRecord = findByMemberUserId(member.getUserId());
+        CentralSquareRecord findRecord = findByMemberUserId(member.getUserId());
         findRecord.updateStudyTime(studyTime);
         return findRecord.getId();
     }
 
-    public MemorialHallRecord findOne(Long id) {
-        return memorialHallRepository.findById(id)
+    public CentralSquareRecord findOne(Long id) {
+        return centralSquareRecordRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ErrorCode.RECORD_NOTFOUND));
     }
 
-    public MemorialHallRecord findByMemberUserId(String userId) {
-        return memorialHallRepository.findByMemberUserId(userId)
+    public CentralSquareRecord findByMemberUserId(String userId) {
+        return centralSquareRecordRepository.findByMemberUserId(userId)
                 .orElseThrow(() -> new CustomException(ErrorCode.RECORD_NOTFOUND));
     }
 
     public List<RankingDto> findTotalRankings() {
-        return memorialHallRankingQueryRepository.findRankingsByTotalStudyTime();
+        return centralSquareRankingQueryRepository.findRankingsByTotalStudyTime();
     }
 
     public List<RankingDto> findDailyRankings() {
-        return memorialHallRankingQueryRepository.findRankingsByDailyStudyTime();
+        return centralSquareRankingQueryRepository.findRankingsByDailyStudyTime();
     }
 
     public List<RankingDto> findWeeklyRankings() {
-        return memorialHallRankingQueryRepository.findRankingsByWeeklyStudyTime();
+        return centralSquareRankingQueryRepository.findRankingsByWeeklyStudyTime();
     }
 
     public MyRankingResult findMyRankingByTotalStudyTime(String nickName) {
-        return memorialHallRankingQueryRepository.findMyRankingByTotalStudyTime(nickName)
+        return centralSquareRankingQueryRepository.findMyRankingByTotalStudyTime(nickName)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_RECORD_NOTFOUND));
     }
 

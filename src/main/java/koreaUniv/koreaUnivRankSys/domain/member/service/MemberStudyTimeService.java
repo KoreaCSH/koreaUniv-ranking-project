@@ -20,12 +20,12 @@ public class MemberStudyTimeService {
     public MyPageResponse getMyPage(Member member) {
 
         // 공부기록 중 가장 높은 랭킹을 어떻게 찾아서 넘겨줄까?
-        Member findMember = memberRepository.findByUserId(member.getUserId())
-                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOTFOUND));
+        //Member findMember = memberRepository.findByUserId(member.getUserId())
+        //        .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOTFOUND));
 
         MemberStudyTime findMemberStudyTime = findByUserId(member.getUserId());
 
-        return MyPageResponse.of(findMember.getNickName(), findMemberStudyTime);
+        return MyPageResponse.of(member.getNickName(), findMemberStudyTime);
     }
 
     public MemberStudyTime findByUserId(String userId) {
