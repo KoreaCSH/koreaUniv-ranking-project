@@ -1,6 +1,7 @@
 package koreaUniv.koreaUnivRankSys.domain.member.dto;
 
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
+import koreaUniv.koreaUnivRankSys.domain.member.domain.MemberInfoStatus;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,14 +34,16 @@ public class MemberSignUpRequest {
 
     private String collegeName;
     private String departmentName;
+    private String memberInfoStatus;
     private String profileMessage;
     private MultipartFile profileImage;
 
-    public Member toEntity(String password) {
+    public Member toEntity(String password, MemberInfoStatus infoStatus) {
         return Member.builder()
                 .userId(userId)
                 .email(email + "@korea.ac.kr")
                 .password(password)
+                .memberInfoStatus(infoStatus)
                 .profileMessage(profileMessage)
                 .nickName(nickName)
                 .build();

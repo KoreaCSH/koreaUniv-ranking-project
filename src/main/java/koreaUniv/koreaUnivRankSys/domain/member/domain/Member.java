@@ -54,12 +54,15 @@ public class Member {
     @JoinColumn(name = "department_id")
     private Department department;
 
+    @Enumerated(EnumType.STRING)
+    private MemberInfoStatus memberInfoStatus;
+
     // boolean departmentPublic
 
     // Builder 에 연관관계 편의 메서드 추가하면 어떻게 될까.
     @Builder
     public Member(String userId, String email, String password, String nickName, MemberImage memberImage,
-                  String profileMessage, College college, Department department) {
+                  String profileMessage, College college, Department department, MemberInfoStatus memberInfoStatus) {
 
         this.userId = userId;
         this.email = email;
@@ -72,6 +75,7 @@ public class Member {
         this.memberImage = memberImage;
         this.college = college;
         this.department = department;
+        this.memberInfoStatus = memberInfoStatus;
 
     }
 

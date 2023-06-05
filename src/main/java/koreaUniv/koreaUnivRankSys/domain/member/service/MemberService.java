@@ -1,6 +1,7 @@
 package koreaUniv.koreaUnivRankSys.domain.member.service;
 
 import koreaUniv.koreaUnivRankSys.domain.mail.service.MailAuthInfoService;
+import koreaUniv.koreaUnivRankSys.domain.member.domain.MemberInfoStatus;
 import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberSignUpRequest;
 import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberUpdateRequest;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
@@ -34,9 +35,17 @@ public class MemberService {
 
         String password = passwordEncoder.encode(request.getPassword());
 
-        // request 값 valid 필요
-        Member member = request.toEntity(password);
+        // 정보 공개 여부
+        MemberInfoStatus infoStatus = null;
+        if(request.getMemberInfoStatus().equals("Y")) {
+            infoStatus = MemberInfoStatus.Y;
+        } else {
+            infoStatus = MemberInfoStatus.N;
+        }
 
+        Member member = request.toEntity(password, infoStatus);
+
+        // 프로필사진 설정했다면 저장, 그렇지 않다면 null 저장
         if(request.getProfileImage() != null && !request.getProfileImage().isEmpty()) {
             MemberImage memberImage = memberImageService.createMemberImage(request.getProfileImage());
             member.setMemberImage(memberImage);
