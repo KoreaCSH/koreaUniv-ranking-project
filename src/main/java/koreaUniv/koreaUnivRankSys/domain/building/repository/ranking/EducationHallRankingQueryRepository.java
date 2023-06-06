@@ -15,14 +15,14 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class CentralSquareRankingQueryRepository {
+public class EducationHallRankingQueryRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
     public List<RankingDto> findRankingsByTotalStudyTime() {
         return jdbcTemplate.query("select path, nick_name, total_study_time, " +
                         "row_number() over (order by total_study_time desc) as \'ranking\' " +
-                        "from (member natural left outer join member_image) natural join central_square_record",
+                        "from (member natural left outer join member_image) natural join education_hall_record",
                 new TotalRankingDtoRowMapper());
 
     }
@@ -30,7 +30,7 @@ public class CentralSquareRankingQueryRepository {
     public List<RankingDto> findRankingsByDailyStudyTime() {
         return jdbcTemplate.query("select path, nick_name, daily_study_time, " +
                         "rank() over (order by daily_study_time desc) as \'ranking\' " +
-                        "from (member natural left outer join member_image) natural join central_square_record",
+                        "from (member natural left outer join member_image) natural join education_hall_record",
                 new DailyRankingDtoRowMapper());
 
     }
@@ -38,7 +38,7 @@ public class CentralSquareRankingQueryRepository {
     public List<RankingDto> findRankingsByWeeklyStudyTime() {
         return jdbcTemplate.query("select path, nick_name, weekly_study_time, " +
                         "rank() over (order by weekly_study_time desc) as \'ranking\' " +
-                        "from (member natural left outer join member_image) natural join central_square_record",
+                        "from (member natural left outer join member_image) natural join education_hall_record",
                 new WeeklyRankingDtoRowMapper());
 
     }
@@ -49,7 +49,7 @@ public class CentralSquareRankingQueryRepository {
                         "row_number() over (order by total_study_time desc) as 'ranking', " +
                         "LAG(total_study_time, 1) over (order by total_study_time desc) prev_ranking, " +
                         "LEAD(total_study_time, 1) over (order by total_study_time desc) next_ranking " +
-                        "from member natural join central_square_record) as t " +
+                        "from member natural join education_hall_record) as t " +
                         "where nick_name=?", new TotalMyRankingResultMapper(), nickName)
                 .stream().findAny();
     }

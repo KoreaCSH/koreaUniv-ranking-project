@@ -53,7 +53,7 @@ public class MemberService {
 
         memberRepository.save(member);
         return member.getId();
-}
+    }
 
     private void validateDuplicateMember(String userId) {
         memberRepository.findByUserId(userId).ifPresent(
@@ -106,8 +106,8 @@ public class MemberService {
             findMember.setMemberImage(memberImage);
         }
 
-        // request.nickName valid 필요
-        findMember.update(request);
+        // request.nickName valid 필요 - 매번 닉네임을 변경해도 괜찮을까?
+        // findMember.update(request);
 
         return findMember.getId();
     }

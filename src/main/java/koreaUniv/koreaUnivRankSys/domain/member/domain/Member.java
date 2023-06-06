@@ -2,6 +2,7 @@ package koreaUniv.koreaUnivRankSys.domain.member.domain;
 
 import koreaUniv.koreaUnivRankSys.domain.building.domain.CentralLibraryRecord;
 import koreaUniv.koreaUnivRankSys.domain.building.domain.CentralSquareRecord;
+import koreaUniv.koreaUnivRankSys.domain.building.domain.EducationHallRecord;
 import koreaUniv.koreaUnivRankSys.domain.building.domain.MemorialHallRecord;
 import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberUpdateRequest;
 import lombok.AccessLevel;
@@ -35,7 +36,6 @@ public class Member {
     @JoinColumn(name = "memorial_hall_record_id")
     private MemorialHallRecord memorialHallRecord;
 
-    // 양방향 관계
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "central_library_record_id")
     private CentralLibraryRecord centralLibraryRecord;
@@ -43,6 +43,10 @@ public class Member {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "central_square_record_id")
     private CentralSquareRecord centralSquareRecord;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "education_hall_record_id")
+    private EducationHallRecord educationHallRecord;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "member_study_time_id")
@@ -78,6 +82,7 @@ public class Member {
         this.setMemorialHallRecord(MemorialHallRecord.createMemorialHallRecord());
         this.setCentralLibraryRecord(CentralLibraryRecord.createCentralLibraryRecord());
         this.setCentralSquareRecord(CentralSquareRecord.createCentralSquareRecord());
+        this.setEducationHallRecord(EducationHallRecord.educationHallRecord());
         this.setMemberStudyTime(MemberStudyTime.createStudyTime());
         this.memberImage = memberImage;
         this.college = college;
@@ -99,6 +104,11 @@ public class Member {
     public void setCentralSquareRecord(CentralSquareRecord centralSquareRecord) {
         this.centralSquareRecord = centralSquareRecord;
         centralSquareRecord.setMember(this);
+    }
+
+    public void setEducationHallRecord(EducationHallRecord educationHallRecord) {
+        this.educationHallRecord = educationHallRecord;
+        educationHallRecord.setMember(this);
     }
 
     private void setMemberStudyTime(MemberStudyTime memberStudyTime) {

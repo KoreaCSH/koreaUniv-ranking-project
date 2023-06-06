@@ -46,7 +46,7 @@ public class MemorialHallRankingQueryRepository {
     public Optional<MyRankingResult> findMyRankingByTotalStudyTime(String nickName) {
         return jdbcTemplate.query("select nick_name, total_study_time, ranking, prev_ranking, next_ranking " +
                         "from (select nick_name, total_study_time, " +
-                        "rank() over (order by total_study_time desc) as 'ranking', " +
+                        "row_number() over (order by total_study_time desc) as 'ranking', " +
                         "LAG(total_study_time, 1) over (order by total_study_time desc) prev_ranking, " +
                         "LEAD(total_study_time, 1) over (order by total_study_time desc) next_ranking " +
                         "from member natural join memorial_hall_record) as t " +
