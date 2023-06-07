@@ -1,9 +1,6 @@
 package koreaUniv.koreaUnivRankSys.domain.member.domain;
 
-import koreaUniv.koreaUnivRankSys.domain.building.domain.CentralLibraryRecord;
-import koreaUniv.koreaUnivRankSys.domain.building.domain.CentralSquareRecord;
-import koreaUniv.koreaUnivRankSys.domain.building.domain.EducationHallRecord;
-import koreaUniv.koreaUnivRankSys.domain.building.domain.MemorialHallRecord;
+import koreaUniv.koreaUnivRankSys.domain.building.domain.*;
 import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberUpdateRequest;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -49,6 +46,10 @@ public class Member {
     private EducationHallRecord educationHallRecord;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "hana_square_record_id")
+    private HanaSquareRecord hanaSquareRecord;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "member_study_time_id")
     private MemberStudyTime memberStudyTime;
 
@@ -83,6 +84,7 @@ public class Member {
         this.setCentralLibraryRecord(CentralLibraryRecord.createCentralLibraryRecord());
         this.setCentralSquareRecord(CentralSquareRecord.createCentralSquareRecord());
         this.setEducationHallRecord(EducationHallRecord.educationHallRecord());
+        this.setHanaSquareRecord(HanaSquareRecord.createHanaSquareRecord());
         this.setMemberStudyTime(MemberStudyTime.createStudyTime());
         this.memberImage = memberImage;
         this.college = college;
@@ -109,6 +111,11 @@ public class Member {
     public void setEducationHallRecord(EducationHallRecord educationHallRecord) {
         this.educationHallRecord = educationHallRecord;
         educationHallRecord.setMember(this);
+    }
+
+    public void setHanaSquareRecord(HanaSquareRecord hanaSquareRecord) {
+        this.hanaSquareRecord = hanaSquareRecord;
+        hanaSquareRecord.setMember(this);
     }
 
     private void setMemberStudyTime(MemberStudyTime memberStudyTime) {
