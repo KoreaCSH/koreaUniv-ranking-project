@@ -50,6 +50,10 @@ public class Member {
     private HanaSquareRecord hanaSquareRecord;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "science_library_record_id")
+    private ScienceLibraryRecord scienceLibraryRecord;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "member_study_time_id")
     private MemberStudyTime memberStudyTime;
 
@@ -85,6 +89,7 @@ public class Member {
         this.setCentralSquareRecord(CentralSquareRecord.createCentralSquareRecord());
         this.setEducationHallRecord(EducationHallRecord.educationHallRecord());
         this.setHanaSquareRecord(HanaSquareRecord.createHanaSquareRecord());
+        this.setScienceLibraryRecord(ScienceLibraryRecord.createScienceLibraryRecord());
         this.setMemberStudyTime(MemberStudyTime.createStudyTime());
         this.memberImage = memberImage;
         this.college = college;
@@ -116,6 +121,11 @@ public class Member {
     public void setHanaSquareRecord(HanaSquareRecord hanaSquareRecord) {
         this.hanaSquareRecord = hanaSquareRecord;
         hanaSquareRecord.setMember(this);
+    }
+
+    public void setScienceLibraryRecord(ScienceLibraryRecord scienceLibraryRecord) {
+        this.scienceLibraryRecord = scienceLibraryRecord;
+        scienceLibraryRecord.setMember(this);
     }
 
     private void setMemberStudyTime(MemberStudyTime memberStudyTime) {
