@@ -18,3 +18,17 @@ logging:
   level:
     org.hibernate.SQL: debug
 #    org.hibernate.type: trace
+
+springdoc:
+  # request media type 의 기본값
+  default-consumes-media-type: application/json
+  # response media type 의 기본값
+  default-produces-media-type: application/json
+
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+
+  api-docs:
+    path: /swagger/api-docs
+    enabled: true
