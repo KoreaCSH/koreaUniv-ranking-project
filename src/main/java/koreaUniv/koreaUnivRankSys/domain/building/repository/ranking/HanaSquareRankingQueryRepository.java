@@ -1,6 +1,6 @@
 package koreaUniv.koreaUnivRankSys.domain.building.repository.ranking;
 
-import koreaUniv.koreaUnivRankSys.domain.building.dto.MyRankingResult;
+import koreaUniv.koreaUnivRankSys.domain.building.dto.MyRankingResponse;
 import koreaUniv.koreaUnivRankSys.domain.building.dto.RankingDto;
 import koreaUniv.koreaUnivRankSys.domain.building.dto.mapper.DailyRankingDtoRowMapper;
 import koreaUniv.koreaUnivRankSys.domain.building.dto.mapper.TotalMyRankingResultMapper;
@@ -43,7 +43,7 @@ public class HanaSquareRankingQueryRepository {
 
     }
 
-    public Optional<MyRankingResult> findMyRankingByTotalStudyTime(String nickName) {
+    public Optional<MyRankingResponse> findMyRankingByTotalStudyTime(String nickName) {
         return jdbcTemplate.query("select nick_name, total_study_time, ranking, prev_ranking, next_ranking " +
                         "from (select nick_name, total_study_time, " +
                         "row_number() over (order by total_study_time desc) as 'ranking', " +

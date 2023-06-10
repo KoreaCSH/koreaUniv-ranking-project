@@ -1,7 +1,7 @@
 package koreaUniv.koreaUnivRankSys.domain.building.service;
 
 import koreaUniv.koreaUnivRankSys.domain.building.domain.CentralSquareRecord;
-import koreaUniv.koreaUnivRankSys.domain.building.dto.MyRankingResult;
+import koreaUniv.koreaUnivRankSys.domain.building.dto.MyRankingResponse;
 import koreaUniv.koreaUnivRankSys.domain.building.dto.RankingDto;
 import koreaUniv.koreaUnivRankSys.domain.building.repository.CentralSquareRecordRepository;
 import koreaUniv.koreaUnivRankSys.domain.building.repository.ranking.CentralSquareRankingQueryRepository;
@@ -51,7 +51,7 @@ public class CentralSquareRecordService {
         return centralSquareRankingQueryRepository.findRankingsByWeeklyStudyTime();
     }
 
-    public MyRankingResult findMyRankingByTotalStudyTime(String nickName) {
+    public MyRankingResponse findMyRankingByTotalStudyTime(String nickName) {
         return centralSquareRankingQueryRepository.findMyRankingByTotalStudyTime(nickName)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_RECORD_NOTFOUND));
     }

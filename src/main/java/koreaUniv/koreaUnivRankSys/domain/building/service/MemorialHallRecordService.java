@@ -1,7 +1,7 @@
 package koreaUniv.koreaUnivRankSys.domain.building.service;
 
 
-import koreaUniv.koreaUnivRankSys.domain.building.dto.MyRankingResult;
+import koreaUniv.koreaUnivRankSys.domain.building.dto.MyRankingResponse;
 import koreaUniv.koreaUnivRankSys.domain.building.dto.RankingDto;
 import koreaUniv.koreaUnivRankSys.domain.building.domain.MemorialHallRecord;
 import koreaUniv.koreaUnivRankSys.domain.building.repository.MemorialHallRecordRepository;
@@ -52,7 +52,7 @@ public class MemorialHallRecordService {
         return memorialHallRankingQueryRepository.findRankingsByWeeklyStudyTime();
     }
 
-    public MyRankingResult findMyRankingByTotalStudyTime(String nickName) {
+    public MyRankingResponse findMyRankingByTotalStudyTime(String nickName) {
         return memorialHallRankingQueryRepository.findMyRankingByTotalStudyTime(nickName)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_RECORD_NOTFOUND));
     }

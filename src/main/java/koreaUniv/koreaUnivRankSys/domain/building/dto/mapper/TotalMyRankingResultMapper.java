@@ -1,16 +1,16 @@
 package koreaUniv.koreaUnivRankSys.domain.building.dto.mapper;
 
-import koreaUniv.koreaUnivRankSys.domain.building.dto.MyRankingResult;
+import koreaUniv.koreaUnivRankSys.domain.building.dto.MyRankingResponse;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class TotalMyRankingResultMapper implements RowMapper<MyRankingResult> {
+public class TotalMyRankingResultMapper implements RowMapper<MyRankingResponse> {
 
     @Override
-    public MyRankingResult mapRow(ResultSet rs, int rowNum) throws SQLException {
-        return MyRankingResult.builder()
+    public MyRankingResponse mapRow(ResultSet rs, int rowNum) throws SQLException {
+        return MyRankingResponse.builder()
                 .nickName(rs.getString("nick_name"))
                 .ranking(rs.getLong("ranking"))
                 .studyTime(rs.getLong("total_study_time"))

@@ -13,7 +13,7 @@ public class DailyRankingDtoRowMapper implements RowMapper<RankingDto> {
 
         return RankingDto.builder()
                 .nickName(rs.getString("nick_name"))
-                .path(rs.getString("path"))
+                .imageUrl(rs.getString("path"))
                 .studyTime(rs.getLong("daily_study_time"))
                 .ranking(rs.getLong("ranking"))
                 .build();

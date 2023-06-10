@@ -6,13 +6,14 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class RankingDto {
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class MyRankingResponse {
 
-    private Long ranking;
     private String nickName;
-    private String imageUrl;
+    private Long ranking;
     private long studyTime;
+    private Long prevRanking;
+    private Long nextRanking;
 
 }

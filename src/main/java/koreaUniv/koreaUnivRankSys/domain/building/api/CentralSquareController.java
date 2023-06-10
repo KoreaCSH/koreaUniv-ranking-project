@@ -1,9 +1,9 @@
 package koreaUniv.koreaUnivRankSys.domain.building.api;
 
 import koreaUniv.koreaUnivRankSys.domain.auth.service.AuthMember;
-import koreaUniv.koreaUnivRankSys.domain.building.dto.MyRankingResult;
+import koreaUniv.koreaUnivRankSys.domain.building.dto.MyRankingResponse;
 import koreaUniv.koreaUnivRankSys.domain.building.dto.RankingDto;
-import koreaUniv.koreaUnivRankSys.domain.building.dto.RankingResult;
+import koreaUniv.koreaUnivRankSys.domain.building.dto.RankingsResponse;
 import koreaUniv.koreaUnivRankSys.domain.building.dto.StudyTimeRequest;
 import koreaUniv.koreaUnivRankSys.domain.building.service.CentralSquareRecordService;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
@@ -36,34 +36,34 @@ public class CentralSquareController {
 
     @GetMapping("/total-rankings")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<RankingResult> getTotalRankings() {
+    public ResponseEntity<RankingsResponse> getTotalRankings() {
 
         List<RankingDto> rankings = centralSquareRecordService.findTotalRankings();
 
-        return ResponseEntity.ok().body(RankingResult.of(rankings));
+        return ResponseEntity.ok().body(RankingsResponse.of(rankings));
     }
 
     @GetMapping("/daily-rankings")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<RankingResult> getDailyRankings() {
+    public ResponseEntity<RankingsResponse> getDailyRankings() {
 
         List<RankingDto> rankings = centralSquareRecordService.findDailyRankings();
 
-        return ResponseEntity.ok().body(RankingResult.of(rankings));
+        return ResponseEntity.ok().body(RankingsResponse.of(rankings));
     }
 
     @GetMapping("/weekly-rankings")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<RankingResult> getWeeklyRankings() {
+    public ResponseEntity<RankingsResponse> getWeeklyRankings() {
 
         List<RankingDto> rankings = centralSquareRecordService.findWeeklyRankings();
 
-        return ResponseEntity.ok().body(RankingResult.of(rankings));
+        return ResponseEntity.ok().body(RankingsResponse.of(rankings));
     }
 
     @GetMapping("/my-total-ranking")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<MyRankingResult> getMyTotalRanking(@AuthMember Member member) {
+    public ResponseEntity<MyRankingResponse> getMyTotalRanking(@AuthMember Member member) {
 
         return ResponseEntity.ok().body(centralSquareRecordService.findMyRankingByTotalStudyTime(member.getNickName()));
     }
