@@ -1,5 +1,6 @@
 package koreaUniv.koreaUnivRankSys.domain.building.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,6 +14,8 @@ import java.util.List;
 public class RankingsResponse {
 
     private List<RankingDto> rankings;
+
+    @Schema(description = "데이터 수", example = "30명 조회 했다면 30 return")
     private Integer count;
 
     public static RankingsResponse of(List<RankingDto> rankings) {

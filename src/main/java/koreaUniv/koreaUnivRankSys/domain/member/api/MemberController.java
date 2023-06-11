@@ -1,5 +1,7 @@
 package koreaUniv.koreaUnivRankSys.domain.member.api;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import koreaUniv.koreaUnivRankSys.domain.auth.service.AuthMember;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
 import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberSignUpRequest;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@Tag(name = "회원 관련 API", description = "MemberController")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/members")
@@ -24,6 +27,7 @@ public class MemberController {
     private final MemberService memberService;
     private final MemberStudyTimeService memberStudyTimeService;
 
+    @Operation(summary = "회원가입", description = "join")
     @PostMapping
     public ResponseEntity<CommonResponse> join(@Valid @RequestBody MemberSignUpRequest request) {
         memberService.join(request);
@@ -36,18 +40,22 @@ public class MemberController {
                         request.getUserId() + "님이 가입되었습니다"));
     }
 
+    @Operation(summary = "아이디 중복 조회", description = "checkDuplicateUserId")
     @GetMapping("/id/{userId}/exists")
     public ResponseEntity<Boolean> checkDuplicateUserId(@PathVariable String userId) {
 
         return ResponseEntity.ok().body(memberService.existsByUserId(userId));
     }
 
+    @Operation(summary = "닉네임 중복 조회", description = "checkDuplicateNickName")
     @GetMapping("/nickname/{nickName}/exists")
     public ResponseEntity<Boolean> checkDuplicateNickName(@PathVariable String nickName) {
 
         return ResponseEntity.ok().body(memberService.existsByNickName(nickName));
     }
 
+
+    @Operation(summary = "비밀번호 변경", description = "changePassword")
     @PutMapping("/password")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<CommonResponse> changePassword(@AuthMember Member member,
@@ -62,6 +70,7 @@ public class MemberController {
                     "비밀번호가 변경되었습니다."));
     }
 
+    @Operation(summary = "마이페이지", description = "getMyPage")
     @GetMapping("/my-page")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<MyPageResponse> getMyPage(@AuthMember Member member) {

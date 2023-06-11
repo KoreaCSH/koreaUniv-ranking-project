@@ -1,5 +1,7 @@
 package koreaUniv.koreaUnivRankSys.domain.mail.api;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import koreaUniv.koreaUnivRankSys.domain.mail.domain.MailAuthInfo;
 import koreaUniv.koreaUnivRankSys.domain.mail.domain.MailAuthStatus;
 import koreaUniv.koreaUnivRankSys.domain.mail.dto.AuthCodeRequest;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 
+@Tag(name = "메일 인증 API", description = "MailSendController")
 @RestController
 @RequestMapping("/api/mails")
 @RequiredArgsConstructor
@@ -23,6 +26,7 @@ public class MailSendController {
     private final MailSendService mailSendService;
     private final MailAuthInfoService mailAuthInfoService;
 
+    @Operation(summary = "인증번호 전송", description = "sendAuthCode")
     @PostMapping("{email}")
     public ResponseEntity<CommonResponse> sendAuthCode(@PathVariable String email)
             throws MessagingException {
@@ -39,6 +43,7 @@ public class MailSendController {
         );
     }
 
+    @Operation(summary = "인증번호 확인", description = "checkAuthCode")
     @PostMapping("{email}/check")
     public ResponseEntity<CommonResponse> checkAuthCode(@PathVariable String email, @RequestBody AuthCodeRequest request) {
 
