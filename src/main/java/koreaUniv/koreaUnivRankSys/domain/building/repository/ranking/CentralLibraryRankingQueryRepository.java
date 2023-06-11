@@ -21,14 +21,14 @@ public class CentralLibraryRankingQueryRepository {
 
     public List<RankingDto> findRankingsByTotalStudyTime() {
         return jdbcTemplate.query("select path, nick_name, total_study_time, " +
-                "rank() over (order by total_study_time desc) as \'ranking\' " +
+                "row_number() over (order by total_study_time desc) as \'ranking\' " +
                 "from (member natural left outer join member_image) natural join central_library_record",
                 new TotalRankingDtoRowMapper());
     }
 
     public List<RankingDto> findRankingsByDailyStudyTime() {
         return jdbcTemplate.query("select path, nick_name, daily_study_time, " +
-                        "rank() over (order by daily_study_time desc) as \'ranking\' " +
+                        "row_number() over (order by daily_study_time desc) as \'ranking\' " +
                         "from (member natural left outer join member_image) natural join central_library_record",
                 new DailyRankingDtoRowMapper());
 
@@ -36,7 +36,7 @@ public class CentralLibraryRankingQueryRepository {
 
     public List<RankingDto> findRankingsByWeeklyStudyTime() {
         return jdbcTemplate.query("select path, nick_name, weekly_study_time, " +
-                        "rank() over (order by weekly_study_time desc) as \'ranking\' " +
+                        "row_number() over (order by weekly_study_time desc) as \'ranking\' " +
                         "from (member natural left outer join member_image) natural join central_library_record",
                 new WeeklyRankingDtoRowMapper());
 

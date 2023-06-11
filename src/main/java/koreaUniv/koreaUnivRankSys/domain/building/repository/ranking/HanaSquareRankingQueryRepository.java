@@ -29,7 +29,7 @@ public class HanaSquareRankingQueryRepository {
 
     public List<RankingDto> findRankingsByDailyStudyTime() {
         return jdbcTemplate.query("select path, nick_name, daily_study_time, " +
-                        "rank() over (order by daily_study_time desc) as \'ranking\' " +
+                        "row_number() over (order by daily_study_time desc) as \'ranking\' " +
                         "from (member natural left outer join member_image) natural join hana_square_record",
                 new DailyRankingDtoRowMapper());
 
@@ -37,7 +37,7 @@ public class HanaSquareRankingQueryRepository {
 
     public List<RankingDto> findRankingsByWeeklyStudyTime() {
         return jdbcTemplate.query("select path, nick_name, weekly_study_time, " +
-                        "rank() over (order by weekly_study_time desc) as \'ranking\' " +
+                        "row_number() over (order by weekly_study_time desc) as \'ranking\' " +
                         "from (member natural left outer join member_image) natural join hana_square_record",
                 new WeeklyRankingDtoRowMapper());
 

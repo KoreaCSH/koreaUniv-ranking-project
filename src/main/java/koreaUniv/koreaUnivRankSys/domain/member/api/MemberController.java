@@ -32,7 +32,7 @@ public class MemberController {
         // 회원가입 페이지 '비밀번호 확인' 추가!
 
         return ResponseEntity.ok().body(
-                new CommonResponse(String.valueOf(HttpStatus.CREATED.value()),
+                new CommonResponse(String.valueOf(HttpStatus.OK.value()),
                         request.getUserId() + "님이 가입되었습니다"));
     }
 
