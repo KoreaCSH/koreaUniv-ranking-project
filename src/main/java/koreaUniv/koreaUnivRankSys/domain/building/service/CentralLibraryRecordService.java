@@ -48,6 +48,10 @@ public class CentralLibraryRecordService {
         return centralLibraryRankingQueryRepository.findRankingsByWeeklyStudyTime();
     }
 
+    public List<RankingDto> findMonthlyRankings() {
+        return centralLibraryRankingQueryRepository.findRankingsByMonthlyStudyTime();
+    }
+
     public MyRankingResponse findMyRankingByTotalStudyTime(String nickName) {
         return centralLibraryRankingQueryRepository.findMyRankingByTotalStudyTime(nickName)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_RECORD_NOTFOUND));

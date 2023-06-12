@@ -35,6 +35,13 @@ public class MemorialHallRankingQueryRepository {
 
     }
 
+    public List<RankingDto> findRankingsByMonthlyStudyTime() {
+        return jdbcTemplate.query("select path, nick_name, monthly_study_time, " +
+                        "row_number() over (order by monthly_study_time desc) as \'ranking\' " +
+                        "from (member natural left outer join member_image) natural join memorial_hall_record",
+                new WeeklyRankingDtoRowMapper());
+    }
+
     public List<RankingDto> findRankingsByWeeklyStudyTime() {
         return jdbcTemplate.query("select path, nick_name, weekly_study_time, " +
                         "row_number() over (order by weekly_study_time desc) as \'ranking\' " +

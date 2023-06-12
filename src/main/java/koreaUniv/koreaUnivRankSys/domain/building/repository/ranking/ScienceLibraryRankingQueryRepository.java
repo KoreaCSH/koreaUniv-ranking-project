@@ -43,6 +43,13 @@ public class ScienceLibraryRankingQueryRepository {
 
     }
 
+    public List<RankingDto> findRankingsByMonthlyStudyTime() {
+        return jdbcTemplate.query("select path, nick_name, monthly_study_time, " +
+                        "row_number() over (order by monthly_study_time desc) as \'ranking\' " +
+                        "from (member natural left outer join member_image) natural join science_library_record",
+                new WeeklyRankingDtoRowMapper());
+    }
+
     public Optional<MyRankingResponse> findMyRankingByTotalStudyTime(String nickName) {
         return jdbcTemplate.query("select nick_name, total_study_time, ranking, prev_ranking, next_ranking " +
                         "from (select nick_name, total_study_time, " +

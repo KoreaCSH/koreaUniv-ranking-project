@@ -51,6 +51,10 @@ public class ScienceLibraryRecordService {
         return scienceLibraryRankingQueryRepository.findRankingsByWeeklyStudyTime();
     }
 
+    public List<RankingDto> findMonthlyRankings() {
+        return scienceLibraryRankingQueryRepository.findRankingsByMonthlyStudyTime();
+    }
+
     public MyRankingResponse findMyRankingByTotalStudyTime(String nickName) {
         return scienceLibraryRankingQueryRepository.findMyRankingByTotalStudyTime(nickName)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_RECORD_NOTFOUND));

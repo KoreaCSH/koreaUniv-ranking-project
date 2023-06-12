@@ -52,6 +52,10 @@ public class MemorialHallRecordService {
         return memorialHallRankingQueryRepository.findRankingsByWeeklyStudyTime();
     }
 
+    public List<RankingDto> findMonthlyRankings() {
+        return memorialHallRankingQueryRepository.findRankingsByMonthlyStudyTime();
+    }
+
     public MyRankingResponse findMyRankingByTotalStudyTime(String nickName) {
         return memorialHallRankingQueryRepository.findMyRankingByTotalStudyTime(nickName)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_RECORD_NOTFOUND));

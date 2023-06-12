@@ -51,6 +51,10 @@ public class HanaSquareRecordService {
         return hanaSquareRankingQueryRepository.findRankingsByWeeklyStudyTime();
     }
 
+    public List<RankingDto> findMonthlyRankings() {
+        return hanaSquareRankingQueryRepository.findRankingsByMonthlyStudyTime();
+    }
+
     public MyRankingResponse findMyRankingByTotalStudyTime(String nickName) {
         return hanaSquareRankingQueryRepository.findMyRankingByTotalStudyTime(nickName)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_RECORD_NOTFOUND));

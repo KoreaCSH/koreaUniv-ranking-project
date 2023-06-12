@@ -51,6 +51,10 @@ public class CentralSquareRecordService {
         return centralSquareRankingQueryRepository.findRankingsByWeeklyStudyTime();
     }
 
+    public List<RankingDto> findMonthlyRankings() {
+        return centralSquareRankingQueryRepository.findRankingsByMonthlyStudyTime();
+    }
+
     public MyRankingResponse findMyRankingByTotalStudyTime(String nickName) {
         return centralSquareRankingQueryRepository.findMyRankingByTotalStudyTime(nickName)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_RECORD_NOTFOUND));

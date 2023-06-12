@@ -68,6 +68,16 @@ public class CentralLibraryController {
         return ResponseEntity.ok().body(RankingsResponse.of(rankings));
     }
 
+    @Operation(summary = "monthly 공부 기록 순위", description = "getMonthlyRankings")
+    @GetMapping("/monthly-rankings")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<RankingsResponse> getMonthlyRankings() {
+
+        List<RankingDto> rankings = centralLibraryRecordService.findMonthlyRankings();
+
+        return ResponseEntity.ok().body(RankingsResponse.of(rankings));
+    }
+
     @Operation(summary = "중앙 도서관 나의 순위", description = "getMyTotalRanking")
     @GetMapping("/my-total-ranking")
     @PreAuthorize("isAuthenticated()")

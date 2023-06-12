@@ -62,6 +62,15 @@ public class MemorialHallController {
         return ResponseEntity.ok().body(RankingsResponse.of(rankings));
     }
 
+    @GetMapping("/monthly-rankings")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<RankingsResponse> getMonthlyRankings() {
+
+        List<RankingDto> rankings = memorialHallRecordService.findMonthlyRankings();
+
+        return ResponseEntity.ok().body(RankingsResponse.of(rankings));
+    }
+
     @GetMapping("/my-total-ranking")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<MyRankingResponse> getMyTotalRanking(@AuthMember Member member) {
