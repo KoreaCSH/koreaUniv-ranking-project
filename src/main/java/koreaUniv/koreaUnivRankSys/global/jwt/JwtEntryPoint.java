@@ -2,7 +2,6 @@ package koreaUniv.koreaUnivRankSys.global.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import koreaUniv.koreaUnivRankSys.global.common.CommonResponse;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;

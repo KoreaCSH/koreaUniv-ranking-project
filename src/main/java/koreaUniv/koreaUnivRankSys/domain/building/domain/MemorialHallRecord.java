@@ -1,6 +1,7 @@
 package koreaUniv.koreaUnivRankSys.domain.building.domain;
 
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
+import koreaUniv.koreaUnivRankSys.global.common.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MemorialHallRecord {
+public class MemorialHallRecord extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

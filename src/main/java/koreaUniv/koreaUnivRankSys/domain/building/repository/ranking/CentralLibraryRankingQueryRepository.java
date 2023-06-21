@@ -19,6 +19,9 @@ public class CentralLibraryRankingQueryRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
+    // 해당 쿼리들도 View 로 만들어서 select 연산만 하는 것이 더 빠를까?
+    // 아니면 rank() 함수가 있기 때문에 view 로 만들 수 없나?
+
     public List<RankingDto> findRankingsByTotalStudyTime() {
         return jdbcTemplate.query("select path, nick_name, total_study_time, " +
                 "row_number() over (order by total_study_time desc) as \'ranking\' " +

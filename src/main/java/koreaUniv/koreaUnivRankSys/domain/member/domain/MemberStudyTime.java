@@ -1,6 +1,7 @@
 package koreaUniv.koreaUnivRankSys.domain.member.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import koreaUniv.koreaUnivRankSys.global.common.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MemberStudyTime {
+public class MemberStudyTime extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

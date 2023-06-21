@@ -2,6 +2,7 @@ package koreaUniv.koreaUnivRankSys.domain.member.domain;
 
 import koreaUniv.koreaUnivRankSys.domain.building.domain.*;
 import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberUpdateRequest;
+import koreaUniv.koreaUnivRankSys.global.common.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -49,8 +49,10 @@ public class AuthService {
         String refreshToken = redisService.getRefreshToken(memberAdapter.getMember().getUserId())
                 .orElseThrow(() -> new CustomException(ErrorCode.REFRESH_TOKEN_NOTFOUND));
 
+        // redis 에서 해당 사용자의 refreshToken 삭제
         redisService.deleteData("RefreshToken:" + memberAdapter.getMember().getUserId());
 
+        // remainingTime 만큼 BlackList 에 AccessToken 을 저장해서, 해당 토큰으로 접근할 수 없도록 해야 한다.
         Long remainingTime = jwtProvider.getRemainingTime(accessToken);
         redisService.setData("BlackList:" + accessToken, "logout", remainingTime);
 
@@ -61,6 +63,7 @@ public class AuthService {
         return ResponseCookie.from("refreshToken", null)
                 .path("/")
                 .maxAge(0)
+                // https 관련 설정들
                 //.secure(true)
                 //.httpOnly(true)
                 .build();
