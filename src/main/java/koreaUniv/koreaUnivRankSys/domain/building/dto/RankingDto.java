@@ -21,6 +21,6 @@ public class RankingDto {
     private String imageUrl;
 
     @Schema(description = "공부 시간", example = "공부 시간")
-    private long studyTime;
+    private Long studyTime;
 
 }

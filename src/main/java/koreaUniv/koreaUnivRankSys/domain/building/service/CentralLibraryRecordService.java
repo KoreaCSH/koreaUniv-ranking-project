@@ -22,7 +22,7 @@ public class CentralLibraryRecordService {
     private final CentralLibraryRankingQueryRepository centralLibraryRankingQueryRepository;
 
     @Transactional
-    public Long trackStudyTime(String userId, long studyTime) {
+    public Long trackStudyTime(String userId, Long studyTime) {
         CentralLibraryRecord findRecord = findByUserId(userId);
         findRecord.updateStudyTime(studyTime);
         return findRecord.getId();

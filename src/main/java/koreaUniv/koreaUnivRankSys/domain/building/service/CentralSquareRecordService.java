@@ -23,7 +23,7 @@ public class CentralSquareRecordService {
     private final CentralSquareRankingQueryRepository centralSquareRankingQueryRepository;
 
     @Transactional
-    public Long trackStudyTime(Member member, long studyTime) {
+    public Long trackStudyTime(Member member, Long studyTime) {
         CentralSquareRecord findRecord = findByMemberUserId(member.getUserId());
         findRecord.updateStudyTime(studyTime);
         return findRecord.getId();

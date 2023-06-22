@@ -24,7 +24,7 @@ public class MemorialHallRecordService {
     private final MemorialHallRankingQueryRepository memorialHallRankingQueryRepository;
 
     @Transactional
-    public Long trackStudyTime(Member member, long studyTime) {
+    public Long trackStudyTime(Member member, Long studyTime) {
         MemorialHallRecord findRecord = findByMemberUserId(member.getUserId());
         findRecord.updateStudyTime(studyTime);
         return findRecord.getId();

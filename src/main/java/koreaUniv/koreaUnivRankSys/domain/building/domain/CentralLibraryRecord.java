@@ -21,10 +21,10 @@ public class CentralLibraryRecord extends BaseEntity {
     @OneToOne(mappedBy = "centralLibraryRecord")
     private Member member;
 
-    private long dailyStudyTime;
-    private long weeklyStudyTime;
-    private long monthlyStudyTime;
-    private long totalStudyTime;
+    private Long dailyStudyTime;
+    private Long weeklyStudyTime;
+    private Long monthlyStudyTime;
+    private Long totalStudyTime;
 
     public void setMember(Member member) {
         this.member = member;

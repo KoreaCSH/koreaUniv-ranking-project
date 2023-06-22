@@ -23,7 +23,7 @@ public class HanaSquareRecordService {
     private final HanaSquareRankingQueryRepository hanaSquareRankingQueryRepository;
 
     @Transactional
-    public Long trackStudyTime(Member member, long studyTime) {
+    public Long trackStudyTime(Member member, Long studyTime) {
         HanaSquareRecord findRecord = findByMemberUserId(member.getUserId());
         findRecord.updateStudyTime(studyTime);
         return findRecord.getId();

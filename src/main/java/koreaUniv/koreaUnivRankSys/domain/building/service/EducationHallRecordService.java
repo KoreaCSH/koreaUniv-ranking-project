@@ -23,7 +23,7 @@ public class EducationHallRecordService {
     private final EducationHallRankingQueryRepository educationHallRankingQueryRepository;
 
     @Transactional
-    public Long trackStudyTime(Member member, long studyTime) {
+    public Long trackStudyTime(Member member, Long studyTime) {
         EducationHallRecord findRecord = findByMemberUserId(member.getUserId());
         findRecord.updateStudyTime(studyTime);
         return findRecord.getId();

@@ -18,7 +18,7 @@ public class MyRankingResponse {
     private Long ranking;
 
     @Schema(description = "나의 공부시간", type = "나의 공부시간")
-    private long studyTime;
+    private Long studyTime;
 
     @Schema(description = "앞 순위 회원의 공부시간")
     private Long prevRanking;

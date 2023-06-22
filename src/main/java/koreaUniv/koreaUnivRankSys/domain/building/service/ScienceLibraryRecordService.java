@@ -23,7 +23,7 @@ public class ScienceLibraryRecordService {
     private final ScienceLibraryRankingQueryRepository scienceLibraryRankingQueryRepository;
 
     @Transactional
-    public Long trackStudyTime(Member member, long studyTime) {
+    public Long trackStudyTime(Member member, Long studyTime) {
         ScienceLibraryRecord findRecord = findByMemberUserId(member.getUserId());
         findRecord.updateStudyTime(studyTime);
         return findRecord.getId();

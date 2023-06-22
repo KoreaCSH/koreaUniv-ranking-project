@@ -21,10 +21,10 @@ public class ScienceLibraryRecord extends BaseEntity {
     @OneToOne(mappedBy = "scienceLibraryRecord")
     private Member member;
 
-    private long dailyStudyTime;
-    private long weeklyStudyTime;
-    private long monthlyStudyTime;
-    private long totalStudyTime;
+    private Long dailyStudyTime;
+    private Long weeklyStudyTime;
+    private Long monthlyStudyTime;
+    private Long totalStudyTime;
 
     public void setMember(Member member) {
         this.member = member;
@@ -39,7 +39,7 @@ public class ScienceLibraryRecord extends BaseEntity {
         return scienceLibraryRecord;
     }
 
-    public void updateStudyTime(long studyTime) {
+    public void updateStudyTime(Long studyTime) {
         this.dailyStudyTime += studyTime;
         this.weeklyStudyTime += studyTime;
         this.monthlyStudyTime += studyTime;
