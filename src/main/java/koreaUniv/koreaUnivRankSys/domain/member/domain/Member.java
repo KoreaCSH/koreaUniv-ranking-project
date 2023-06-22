@@ -1,5 +1,6 @@
 package koreaUniv.koreaUnivRankSys.domain.member.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import koreaUniv.koreaUnivRankSys.domain.building.domain.*;
 import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberUpdateRequest;
 import koreaUniv.koreaUnivRankSys.global.common.BaseEntity;
@@ -56,6 +57,7 @@ public class Member extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "member_study_time_id")
+    //@JsonIgnore
     private MemberStudyTime memberStudyTime;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
