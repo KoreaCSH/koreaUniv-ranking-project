@@ -40,10 +40,15 @@ public class MemberStudyTimeMigrationConfig {
     private final MemberStudyTimeHistoryRepository memberStudyTimeHistoryRepository;
 
     @Bean
-    public Job memberStudyTimeMigrationJob(Step memberStudyTimeMigrationStep) {
+    public Job memberStudyTimeMigrationJob(
+                        Step memberStudyTimeMigrationStep,
+                        Step memberStudyTimeUpdateStep) {
         return jobBuilderFactory.get("memberStudyTimeMigrationJob")
                 .incrementer(new RunIdIncrementer()) // JobInstance 의 식별자 자동으로 생성
                 .start(memberStudyTimeMigrationStep)
+                .on("COMPLETED").to(memberStudyTimeUpdateStep)
+                .from(memberStudyTimeMigrationStep)
+                .end()
                 .build();
 
         // history table 로 이전 -> MemberStudyTime 의 DailyStudyTime 을 0 으로 Update 도 해야 할 것.
@@ -62,6 +67,20 @@ public class MemberStudyTimeMigrationConfig {
                 .reader(memberStudyTimeReader)
                 .processor(memberStudyTimeProcessor)
                 .writer(memberStudyTimeHistoryWriter)
+                .build();
+    }
+
+    @JobScope
+    @Bean
+    public Step memberStudyTimeUpdateStep(
+                        ItemReader memberStudyTimeReader,
+                        ItemProcessor memberStudyTimeUpdateProcessor,
+                        ItemWriter memberStudyTimeUpdateWriter) {
+        return stepBuilderFactory.get("memberStudyTimeUpdateStep")
+                .<MemberStudyTime, MemberStudyTime>chunk(10)
+                .reader(memberStudyTimeReader)
+                .processor(memberStudyTimeUpdateProcessor)
+                .writer(memberStudyTimeUpdateWriter)
                 .build();
     }
 
@@ -96,6 +115,27 @@ public class MemberStudyTimeMigrationConfig {
     public RepositoryItemWriter<MemberStudyTimeHistory> memberStudyTimeHistoryWriter() {
         return new RepositoryItemWriterBuilder<MemberStudyTimeHistory>()
                 .repository(memberStudyTimeHistoryRepository)
+                .methodName("save")
+                .build();
+    }
+
+    @StepScope
+    @Bean
+    public ItemProcessor<MemberStudyTime, MemberStudyTime> memberStudyTimeUpdateProcessor() {
+        return new ItemProcessor<MemberStudyTime, MemberStudyTime>() {
+            @Override
+            public MemberStudyTime process(MemberStudyTime item) throws Exception {
+                item.resetMemberDailyStudyTime();
+                return item;
+            }
+        };
+    }
+
+    @StepScope
+    @Bean
+    public RepositoryItemWriter<MemberStudyTime> memberStudyTimeUpdateWriter() {
+        return new RepositoryItemWriterBuilder<MemberStudyTime>()
+                .repository(memberStudyTimeRepository)
                 .methodName("save")
                 .build();
     }
