@@ -20,13 +20,14 @@ import org.springframework.batch.item.data.RepositoryItemReader;
 import org.springframework.batch.item.data.RepositoryItemWriter;
 import org.springframework.batch.item.data.builder.RepositoryItemReaderBuilder;
 import org.springframework.batch.item.data.builder.RepositoryItemWriterBuilder;
+import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Sort;
+import org.springframework.retry.policy.SimpleRetryPolicy;
+import org.springframework.retry.support.RetryTemplate;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 @Configuration
@@ -43,6 +44,7 @@ public class MemberStudyTimeMigrationConfig {
     public Job memberStudyTimeMigrationJob(
                         Step memberStudyTimeMigrationStep,
                         Step memberStudyTimeUpdateStep) {
+
         return jobBuilderFactory.get("memberStudyTimeMigrationJob")
                 .incrementer(new RunIdIncrementer()) // JobInstance 의 식별자 자동으로 생성
                 .start(memberStudyTimeMigrationStep)
@@ -50,10 +52,6 @@ public class MemberStudyTimeMigrationConfig {
                 .from(memberStudyTimeMigrationStep)
                 .end()
                 .build();
-
-        // history table 로 이전 -> MemberStudyTime 의 DailyStudyTime 을 0 으로 Update 도 해야 할 것.
-        // 그렇다면 두 개의 Step 을 사용하면 되는가?
-
     }
 
     @JobScope
@@ -67,6 +65,11 @@ public class MemberStudyTimeMigrationConfig {
                 .reader(memberStudyTimeReader)
                 .processor(memberStudyTimeProcessor)
                 .writer(memberStudyTimeHistoryWriter)
+                .faultTolerant()
+                .retry(Exception.class)
+                .retryLimit(3)
+                .skip(Exception.class)
+                .skipLimit(3)
                 .build();
     }
 
@@ -138,6 +141,20 @@ public class MemberStudyTimeMigrationConfig {
                 .repository(memberStudyTimeRepository)
                 .methodName("save")
                 .build();
+    }
+
+    @Bean
+    public RetryTemplate retryTemplate() {
+
+        Map<Class<? extends Throwable>, Boolean> exceptionClass = new HashMap<>();
+        exceptionClass.put(Exception.class, true);
+
+        SimpleRetryPolicy policy = new SimpleRetryPolicy(3, exceptionClass);
+
+        RetryTemplate retryTemplate = new RetryTemplate();
+        retryTemplate.setRetryPolicy(policy);
+
+        return retryTemplate;
     }
 
 }
