@@ -47,6 +47,7 @@ public class MemberStudyTimeMigrationConfig {
 
         return jobBuilderFactory.get("memberStudyTimeMigrationJob")
                 .incrementer(new RunIdIncrementer()) // JobInstance 의 식별자 자동으로 생성
+                .listener(new JobLoggerListener())
                 .start(memberStudyTimeMigrationStep)
                 .on("COMPLETED").to(memberStudyTimeUpdateStep)
                 .from(memberStudyTimeMigrationStep)
@@ -60,6 +61,7 @@ public class MemberStudyTimeMigrationConfig {
                         ItemReader memberStudyTimeReader,
                         ItemProcessor memberStudyTimeProcessor,
                         ItemWriter memberStudyTimeHistoryWriter) {
+
         return stepBuilderFactory.get("memberStudyTimeMigrationStep")
                 .<MemberStudyTime, MemberStudyTimeHistory>chunk(10)
                 .reader(memberStudyTimeReader)
