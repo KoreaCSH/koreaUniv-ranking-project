@@ -38,9 +38,9 @@ public class CentralLibraryRankingQueryRepository {
     }
 
     public List<RankingDto> findRankingsByWeeklyStudyTime() {
-        return jdbcTemplate.query("select path, nick_name, weekly_study_time, " +
-                        "row_number() over (order by weekly_study_time desc) as \'ranking\' " +
-                        "from (member natural left outer join member_image) natural join central_library_record",
+        return jdbcTemplate.query("select path, nick_name, weekly_study_time, row_number() over (order by weekly_study_time desc) as 'ranking' " +
+                        "from (member natural left outer join member_image) join central_library_record " +
+                        "where member.central_library_record_id = central_library_record.central_library_record_id",
                 new WeeklyRankingDtoRowMapper());
 
     }
