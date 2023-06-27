@@ -37,6 +37,8 @@ public class CentralLibraryRankingQueryRepository {
 
     }
 
+    // Member 와 Building Entity 모두 BaseEntity 를 상속받았기에, 이름이 같은 컬럼 2개가 추가 되어 natural join 이 정상적으로 동작하지 않았다.
+    // 그로 인해, natural join 이 아닌 join where 로 변경 불가피
     public List<RankingDto> findRankingsByWeeklyStudyTime() {
         return jdbcTemplate.query("select path, nick_name, weekly_study_time, row_number() over (order by weekly_study_time desc) as 'ranking' " +
                         "from (member natural left outer join member_image) join central_library_record " +

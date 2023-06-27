@@ -1,9 +1,10 @@
-package koreaUniv.koreaUnivRankSys.global.batch.job;
+package koreaUniv.koreaUnivRankSys.global.batch.job.member;
 
 import koreaUniv.koreaUnivRankSys.domain.member.domain.MemberStudyTime;
 import koreaUniv.koreaUnivRankSys.domain.member.repository.MemberStudyTimeRepository;
 import koreaUniv.koreaUnivRankSys.global.batch.domain.MemberStudyTimeHistory;
 import koreaUniv.koreaUnivRankSys.global.batch.domain.MemberStudyTimeHistoryRepository;
+import koreaUniv.koreaUnivRankSys.global.batch.job.JobLoggerListener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
@@ -20,7 +21,6 @@ import org.springframework.batch.item.data.RepositoryItemReader;
 import org.springframework.batch.item.data.RepositoryItemWriter;
 import org.springframework.batch.item.data.builder.RepositoryItemReaderBuilder;
 import org.springframework.batch.item.data.builder.RepositoryItemWriterBuilder;
-import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Sort;
@@ -32,7 +32,7 @@ import java.util.*;
 @Slf4j
 @Configuration
 @RequiredArgsConstructor
-public class MemberStudyTimeMigrationConfig {
+public class MemberStudyTimeMigrationJobConfig {
 
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
@@ -68,6 +68,7 @@ public class MemberStudyTimeMigrationConfig {
                 .processor(memberStudyTimeProcessor)
                 .writer(memberStudyTimeHistoryWriter)
                 .faultTolerant()
+                // 추후 retry, skip 할 Exception 구체화하기
                 .retry(Exception.class)
                 .retryLimit(3)
                 .skip(Exception.class)
@@ -145,6 +146,7 @@ public class MemberStudyTimeMigrationConfig {
                 .build();
     }
 
+    // 추후 RetryTemplate 활용해서 custom retry, skip policy 구현하기
     @Bean
     public RetryTemplate retryTemplate() {
 

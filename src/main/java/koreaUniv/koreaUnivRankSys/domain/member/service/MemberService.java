@@ -27,6 +27,11 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final MailAuthInfoService mailAuthInfoService;
 
+    /**
+     *
+     * @param request 회원가입 요청 객체
+     * @return 회원가입을 완료한 Member 의 id
+     */
     @Transactional
     public Long join(MemberSignUpRequest request) {
         validateDuplicateMember(request.getUserId());
