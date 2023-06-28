@@ -1,4 +1,4 @@
-package koreaUniv.koreaUnivRankSys.global.batch.domain;
+package koreaUniv.koreaUnivRankSys.global.batch.domain.building;
 
 import lombok.Builder;
 import lombok.Getter;

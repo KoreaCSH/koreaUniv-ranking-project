@@ -46,4 +46,9 @@ public class CentralLibraryRecord extends BaseEntity {
         this.totalStudyTime += studyTime;
         this.member.getMemberStudyTime().trackMemberStudyTime(studyTime);
     }
+
+    public void resetWeeklyStudyTime() {
+        this.weeklyStudyTime = 0L;
+    }
+
 }

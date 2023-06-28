@@ -1,8 +1,10 @@
 package koreaUniv.koreaUnivRankSys.global.batch.job.building;
 
-import koreaUniv.koreaUnivRankSys.global.batch.domain.CentralLibraryTop3;
-import koreaUniv.koreaUnivRankSys.global.batch.domain.CentralLibraryTop3Repository;
-import koreaUniv.koreaUnivRankSys.global.batch.domain.CentralLibraryTop3RowMapper;
+import koreaUniv.koreaUnivRankSys.domain.building.domain.CentralLibraryRecord;
+import koreaUniv.koreaUnivRankSys.domain.building.repository.CentralLibraryRecordRepository;
+import koreaUniv.koreaUnivRankSys.global.batch.domain.building.CentralLibraryTop3;
+import koreaUniv.koreaUnivRankSys.global.batch.domain.building.CentralLibraryTop3Repository;
+import koreaUniv.koreaUnivRankSys.global.batch.domain.building.CentralLibraryTop3RowMapper;
 import koreaUniv.koreaUnivRankSys.global.batch.job.JobLoggerListener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,16 +15,22 @@ import org.springframework.batch.core.configuration.annotation.JobScope;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.data.RepositoryItemReader;
 import org.springframework.batch.item.data.RepositoryItemWriter;
+import org.springframework.batch.item.data.builder.RepositoryItemReaderBuilder;
 import org.springframework.batch.item.data.builder.RepositoryItemWriterBuilder;
 import org.springframework.batch.item.database.JdbcCursorItemReader;
 import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.Sort;
 
 import javax.sql.DataSource;
+import java.util.Arrays;
+import java.util.Collections;
 
 @Slf4j
 @Configuration
@@ -33,19 +41,24 @@ public class CentralLibraryTopRecordJobConfig {
     private final StepBuilderFactory stepBuilderFactory;
 
     private final CentralLibraryTop3Repository centralLibraryTop3Repository;
+    private final CentralLibraryRecordRepository centralLibraryRecordRepository;
+
     private final DataSource dataSource;
 
     /**
      *
      * @param centralLibraryGetTop3RecordStep step 을 매개변수로 받는다.
-     * @return 중앙도서관 주간 랭킹 top 3 를 찾고, DB 로 이관하는 step 을 시작하는 Job 설정이다.
+     * @return 중앙도서관 주간 랭킹 top 3 를 찾고, DB 로 이관하는 step 을 시작. 해당 step 이 성공적으로 종료되면 중앙도서관 주간 공부 기록을 초기화하는 step 을 시작하는 Job 설정이다.
      */
     @Bean
-    public Job centralLibraryTopRecordJob(Step centralLibraryGetTop3RecordStep) {
+    public Job centralLibraryTopRecordJob(Step centralLibraryGetTop3RecordStep, Step centralLibraryStudyTimeUpdateStep) {
         return jobBuilderFactory.get("centralLibraryTopRecordJob")
                 .incrementer(new RunIdIncrementer())
                 .listener(new JobLoggerListener())
                 .start(centralLibraryGetTop3RecordStep)
+                .on("COMPLETED").to(centralLibraryStudyTimeUpdateStep)
+                .from(centralLibraryGetTop3RecordStep)
+                .end()
                 .build();
     }
 
@@ -68,6 +81,22 @@ public class CentralLibraryTopRecordJobConfig {
                 .build();
     }
 
+    /**
+     * @return 중앙도서관 주간 공부 기록을 0 으로 초기화하는 step
+     */
+    @JobScope
+    @Bean
+    public Step centralLibraryStudyTimeUpdateStep(ItemReader centralLibraryRecordReader,
+                                              ItemProcessor centralLibraryRecordUpdateProcessor,
+                                              ItemWriter centralLibraryRecordWriter) {
+        return stepBuilderFactory.get("centralLibraryStudyTimeUpdate")
+                .<CentralLibraryRecord, CentralLibraryRecord>chunk(10)
+                .reader(centralLibraryRecordReader)
+                .processor(centralLibraryRecordUpdateProcessor)
+                .writer(centralLibraryRecordWriter)
+                .build();
+    }
+
     @StepScope
     @Bean
     public JdbcCursorItemReader<CentralLibraryTop3> centralLibraryGetTop3Reader() {
@@ -86,6 +115,40 @@ public class CentralLibraryTopRecordJobConfig {
     public RepositoryItemWriter<CentralLibraryTop3> centralLibraryTop3Writer() {
         return new RepositoryItemWriterBuilder<CentralLibraryTop3>()
                 .repository(centralLibraryTop3Repository)
+                .methodName("save")
+                .build();
+    }
+
+    @StepScope
+    @Bean
+    public RepositoryItemReader<CentralLibraryRecord> centralLibraryRecordReader() {
+        return new RepositoryItemReaderBuilder<CentralLibraryRecord>()
+                .name("centralLibraryRecordReader")
+                .repository(centralLibraryRecordRepository)
+                .methodName("findAll")
+                .pageSize(10)
+                .arguments(Arrays.asList())
+                .sorts(Collections.singletonMap("id", Sort.Direction.ASC))
+                .build();
+    }
+
+    @StepScope
+    @Bean
+    public ItemProcessor<CentralLibraryRecord, CentralLibraryRecord> centralLibraryRecordUpdateProcessor() {
+        return new ItemProcessor<CentralLibraryRecord, CentralLibraryRecord>() {
+            @Override
+            public CentralLibraryRecord process(CentralLibraryRecord item) throws Exception {
+                item.resetWeeklyStudyTime();
+                return item;
+            }
+        };
+    }
+
+    @StepScope
+    @Bean
+    public RepositoryItemWriter<CentralLibraryRecord> centralLibraryRecordWriter() {
+        return new RepositoryItemWriterBuilder<CentralLibraryRecord>()
+                .repository(centralLibraryRecordRepository)
                 .methodName("save")
                 .build();
     }

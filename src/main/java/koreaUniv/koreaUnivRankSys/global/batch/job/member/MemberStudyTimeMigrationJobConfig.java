@@ -2,8 +2,8 @@ package koreaUniv.koreaUnivRankSys.global.batch.job.member;
 
 import koreaUniv.koreaUnivRankSys.domain.member.domain.MemberStudyTime;
 import koreaUniv.koreaUnivRankSys.domain.member.repository.MemberStudyTimeRepository;
-import koreaUniv.koreaUnivRankSys.global.batch.domain.MemberStudyTimeHistory;
-import koreaUniv.koreaUnivRankSys.global.batch.domain.MemberStudyTimeHistoryRepository;
+import koreaUniv.koreaUnivRankSys.global.batch.domain.member.MemberStudyTimeHistory;
+import koreaUniv.koreaUnivRankSys.global.batch.domain.member.MemberStudyTimeHistoryRepository;
 import koreaUniv.koreaUnivRankSys.global.batch.job.JobLoggerListener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package koreaUniv.koreaUnivRankSys.global.batch.domain;
+package koreaUniv.koreaUnivRankSys.global.batch.domain.member;
 
 import koreaUniv.koreaUnivRankSys.domain.member.domain.MemberStudyTime;
 import lombok.Builder;

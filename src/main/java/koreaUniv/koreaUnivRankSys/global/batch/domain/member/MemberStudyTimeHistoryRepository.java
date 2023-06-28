@@ -1,4 +1,4 @@
-package koreaUniv.koreaUnivRankSys.global.batch.domain;
+package koreaUniv.koreaUnivRankSys.global.batch.domain.member;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
