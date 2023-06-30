@@ -3,10 +3,7 @@ package koreaUniv.koreaUnivRankSys.domain.member.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.MemberInfoStatus;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
