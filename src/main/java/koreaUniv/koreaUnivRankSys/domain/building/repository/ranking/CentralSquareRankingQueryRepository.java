@@ -22,7 +22,8 @@ public class CentralSquareRankingQueryRepository {
     public List<RankingDto> findRankingsByTotalStudyTime() {
         return jdbcTemplate.query("select path, nick_name, total_study_time, " +
                         "row_number() over (order by total_study_time desc) as \'ranking\' " +
-                        "from (member natural left outer join member_image) natural join central_square_record",
+                        "from (member natural left outer join member_image) join central_square_record " +
+                        "where member.central_square_record_id = central_square_record.central_square_record_id",
                 new TotalRankingDtoRowMapper());
 
     }
@@ -30,7 +31,8 @@ public class CentralSquareRankingQueryRepository {
     public List<RankingDto> findRankingsByDailyStudyTime() {
         return jdbcTemplate.query("select path, nick_name, daily_study_time, " +
                         "row_number() over (order by daily_study_time desc) as \'ranking\' " +
-                        "from (member natural left outer join member_image) natural join central_square_record",
+                        "from (member natural left outer join member_image) join central_square_record " +
+                        "where member.central_square_record_id = central_square_record.central_square_record_id",
                 new DailyRankingDtoRowMapper());
 
     }
@@ -38,14 +40,16 @@ public class CentralSquareRankingQueryRepository {
     public List<RankingDto> findRankingsByMonthlyStudyTime() {
         return jdbcTemplate.query("select path, nick_name, monthly_study_time, " +
                         "row_number() over (order by monthly_study_time desc) as \'ranking\' " +
-                        "from (member natural left outer join member_image) natural join central_square_record",
+                        "from (member natural left outer join member_image) join central_square_record " +
+                        "where member.central_square_record_id = central_square_record.central_square_record_id",
                 new WeeklyRankingDtoRowMapper());
     }
 
     public List<RankingDto> findRankingsByWeeklyStudyTime() {
         return jdbcTemplate.query("select path, nick_name, weekly_study_time, " +
                         "row_number() over (order by weekly_study_time desc) as \'ranking\' " +
-                        "from (member natural left outer join member_image) natural join central_square_record",
+                        "from (member natural left outer join member_image) join central_square_record " +
+                        "where member.central_square_record_id = central_square_record.central_square_record_id",
                 new WeeklyRankingDtoRowMapper());
 
     }
@@ -56,7 +60,7 @@ public class CentralSquareRankingQueryRepository {
                         "row_number() over (order by total_study_time desc) as 'ranking', " +
                         "LAG(total_study_time, 1) over (order by total_study_time desc) prev_ranking, " +
                         "LEAD(total_study_time, 1) over (order by total_study_time desc) next_ranking " +
-                        "from member natural join central_square_record) as t " +
+                        "from member join central_square_record where member.central_square_record_id = central_square_record.central_square_record_id) as t " +
                         "where nick_name=?", new TotalMyRankingResultMapper(), nickName)
                 .stream().findAny();
     }
