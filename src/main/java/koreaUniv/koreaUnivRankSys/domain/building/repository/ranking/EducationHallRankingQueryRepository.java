@@ -2,10 +2,7 @@ package koreaUniv.koreaUnivRankSys.domain.building.repository.ranking;
 
 import koreaUniv.koreaUnivRankSys.domain.building.dto.MyRankingResponse;
 import koreaUniv.koreaUnivRankSys.domain.building.dto.RankingDto;
-import koreaUniv.koreaUnivRankSys.domain.building.dto.mapper.DailyRankingDtoRowMapper;
-import koreaUniv.koreaUnivRankSys.domain.building.dto.mapper.TotalMyRankingResultMapper;
-import koreaUniv.koreaUnivRankSys.domain.building.dto.mapper.TotalRankingDtoRowMapper;
-import koreaUniv.koreaUnivRankSys.domain.building.dto.mapper.WeeklyRankingDtoRowMapper;
+import koreaUniv.koreaUnivRankSys.domain.building.dto.mapper.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -22,7 +19,8 @@ public class EducationHallRankingQueryRepository {
     public List<RankingDto> findRankingsByTotalStudyTime() {
         return jdbcTemplate.query("select path, nick_name, total_study_time, " +
                         "row_number() over (order by total_study_time desc) as \'ranking\' " +
-                        "from (member natural left outer join member_image) natural join education_hall_record",
+                        "from (member natural left outer join member_image) join education_hall_record " +
+                        "where member.education_hall_record_id = education_hall_record.education_hall_record_id",
                 new TotalRankingDtoRowMapper());
 
     }
@@ -30,7 +28,8 @@ public class EducationHallRankingQueryRepository {
     public List<RankingDto> findRankingsByDailyStudyTime() {
         return jdbcTemplate.query("select path, nick_name, daily_study_time, " +
                         "row_number() over (order by daily_study_time desc) as \'ranking\' " +
-                        "from (member natural left outer join member_image) natural join education_hall_record",
+                        "from (member natural left outer join member_image) join education_hall_record " +
+                        "where member.education_hall_record_id = education_hall_record.education_hall_record_id",
                 new DailyRankingDtoRowMapper());
 
     }
@@ -38,7 +37,8 @@ public class EducationHallRankingQueryRepository {
     public List<RankingDto> findRankingsByWeeklyStudyTime() {
         return jdbcTemplate.query("select path, nick_name, weekly_study_time, " +
                         "row_number() over (order by weekly_study_time desc) as \'ranking\' " +
-                        "from (member natural left outer join member_image) natural join education_hall_record",
+                        "from (member natural left outer join member_image) join education_hall_record " +
+                        "where member.education_hall_record_id = education_hall_record.education_hall_record_id",
                 new WeeklyRankingDtoRowMapper());
 
     }
@@ -46,8 +46,9 @@ public class EducationHallRankingQueryRepository {
     public List<RankingDto> findRankingsByMonthlyStudyTime() {
         return jdbcTemplate.query("select path, nick_name, monthly_study_time, " +
                         "row_number() over (order by monthly_study_time desc) as \'ranking\' " +
-                        "from (member natural left outer join member_image) natural join education_hall_record",
-                new WeeklyRankingDtoRowMapper());
+                        "from (member natural left outer join member_image) join education_hall_record " +
+                        "where member.education_hall_record_id = education_hall_record.education_hall_record_id",
+                new MonthlyRankingDtoRowMapper());
     }
 
     public Optional<MyRankingResponse> findMyRankingByTotalStudyTime(String nickName) {
@@ -56,7 +57,7 @@ public class EducationHallRankingQueryRepository {
                         "row_number() over (order by total_study_time desc) as 'ranking', " +
                         "LAG(total_study_time, 1) over (order by total_study_time desc) prev_ranking, " +
                         "LEAD(total_study_time, 1) over (order by total_study_time desc) next_ranking " +
-                        "from member natural join education_hall_record) as t " +
+                        "from member join education_hall_record where member.education_hall_record_id = education_hall_record.education_hall_record_id) as t " +
                         "where nick_name=?", new TotalMyRankingResultMapper(), nickName)
                 .stream().findAny();
     }

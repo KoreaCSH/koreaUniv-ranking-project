@@ -2,10 +2,7 @@ package koreaUniv.koreaUnivRankSys.domain.building.repository.ranking;
 
 import koreaUniv.koreaUnivRankSys.domain.building.dto.MyRankingResponse;
 import koreaUniv.koreaUnivRankSys.domain.building.dto.RankingDto;
-import koreaUniv.koreaUnivRankSys.domain.building.dto.mapper.DailyRankingDtoRowMapper;
-import koreaUniv.koreaUnivRankSys.domain.building.dto.mapper.TotalMyRankingResultMapper;
-import koreaUniv.koreaUnivRankSys.domain.building.dto.mapper.TotalRankingDtoRowMapper;
-import koreaUniv.koreaUnivRankSys.domain.building.dto.mapper.WeeklyRankingDtoRowMapper;
+import koreaUniv.koreaUnivRankSys.domain.building.dto.mapper.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -54,7 +51,7 @@ public class CentralLibraryRankingQueryRepository {
                         "row_number() over (order by monthly_study_time desc) as \'ranking\' " +
                         "from (member natural left outer join member_image) join central_library_record " +
                         "where member.central_library_record_id = central_library_record.central_library_record_id",
-                new WeeklyRankingDtoRowMapper());
+                new MonthlyRankingDtoRowMapper());
     }
 
     public Optional<MyRankingResponse> findMyRankingByTotalStudyTime(String nickName) {

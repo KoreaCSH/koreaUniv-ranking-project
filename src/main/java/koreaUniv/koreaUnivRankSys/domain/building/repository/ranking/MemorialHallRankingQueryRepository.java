@@ -1,11 +1,8 @@
 package koreaUniv.koreaUnivRankSys.domain.building.repository.ranking;
 
 import koreaUniv.koreaUnivRankSys.domain.building.dto.MyRankingResponse;
-import koreaUniv.koreaUnivRankSys.domain.building.dto.mapper.DailyRankingDtoRowMapper;
+import koreaUniv.koreaUnivRankSys.domain.building.dto.mapper.*;
 import koreaUniv.koreaUnivRankSys.domain.building.dto.RankingDto;
-import koreaUniv.koreaUnivRankSys.domain.building.dto.mapper.TotalMyRankingResultMapper;
-import koreaUniv.koreaUnivRankSys.domain.building.dto.mapper.TotalRankingDtoRowMapper;
-import koreaUniv.koreaUnivRankSys.domain.building.dto.mapper.WeeklyRankingDtoRowMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -37,14 +34,6 @@ public class MemorialHallRankingQueryRepository {
 
     }
 
-    public List<RankingDto> findRankingsByMonthlyStudyTime() {
-        return jdbcTemplate.query("select path, nick_name, monthly_study_time, " +
-                        "row_number() over (order by monthly_study_time desc) as \'ranking\' " +
-                        "from (member natural left outer join member_image) join memorial_hall_record " +
-                        "where member.memorial_hall_record_id = memorial_hall_record.memorial_hall_record_id",
-                new WeeklyRankingDtoRowMapper());
-    }
-
     public List<RankingDto> findRankingsByWeeklyStudyTime() {
         return jdbcTemplate.query("select path, nick_name, weekly_study_time, " +
                         "row_number() over (order by weekly_study_time desc) as \'ranking\' " +
@@ -52,6 +41,14 @@ public class MemorialHallRankingQueryRepository {
                         "where member.memorial_hall_record_id = memorial_hall_record.memorial_hall_record_id",
                 new WeeklyRankingDtoRowMapper());
 
+    }
+
+    public List<RankingDto> findRankingsByMonthlyStudyTime() {
+        return jdbcTemplate.query("select path, nick_name, monthly_study_time, " +
+                        "row_number() over (order by monthly_study_time desc) as \'ranking\' " +
+                        "from (member natural left outer join member_image) join memorial_hall_record " +
+                        "where member.memorial_hall_record_id = memorial_hall_record.memorial_hall_record_id",
+                new MonthlyRankingDtoRowMapper());
     }
 
     public Optional<MyRankingResponse> findMyRankingByTotalStudyTime(String nickName) {
