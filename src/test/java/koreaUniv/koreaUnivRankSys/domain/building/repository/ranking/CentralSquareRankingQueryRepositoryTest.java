@@ -75,11 +75,7 @@ class CentralSquareRankingQueryRepositoryTest {
 
     @Test
     void dailyStudyTime_조회() {
-        List<RankingDto> records = centralSquareRankingQueryRepository.findRankingsByTotalStudyTime();
-
-        for(RankingDto record : records) {
-            System.out.println(record.getNickName());
-        }
+        List<RankingDto> records = centralSquareRankingQueryRepository.findRankingsByDailyStudyTime();
 
         Assertions.assertThat(records.size()).isEqualTo(3);
         Assertions.assertThat(records.get(0).getNickName()).isEqualTo("test2");
@@ -89,7 +85,7 @@ class CentralSquareRankingQueryRepositoryTest {
 
     @Test
     void weeklyStudyTime_조회() {
-        List<RankingDto> records = centralSquareRankingQueryRepository.findRankingsByTotalStudyTime();
+        List<RankingDto> records = centralSquareRankingQueryRepository.findRankingsByWeeklyStudyTime();
 
         Assertions.assertThat(records.size()).isEqualTo(3);
         Assertions.assertThat(records.get(0).getNickName()).isEqualTo("test2");
@@ -99,7 +95,7 @@ class CentralSquareRankingQueryRepositoryTest {
 
     @Test
     void monthlyStudyTime_조회() {
-        List<RankingDto> records = centralSquareRankingQueryRepository.findRankingsByTotalStudyTime();
+        List<RankingDto> records = centralSquareRankingQueryRepository.findRankingsByMonthlyStudyTime();
 
         Assertions.assertThat(records.size()).isEqualTo(3);
         Assertions.assertThat(records.get(0).getNickName()).isEqualTo("test2");
