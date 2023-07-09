@@ -2,11 +2,14 @@ package koreaUniv.koreaUnivRankSys.domain.member.domain;
 
 import koreaUniv.koreaUnivRankSys.domain.building.domain.*;
 import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberUpdateRequest;
+import koreaUniv.koreaUnivRankSys.global.batch.domain.building.CentralLibraryRecordHistory;
 import koreaUniv.koreaUnivRankSys.global.common.BaseEntity;
 import lombok.*;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -56,6 +59,9 @@ public class Member extends BaseEntity {
     //@JsonIgnore
     private MemberStudyTime memberStudyTime;
 
+    @OneToMany(mappedBy = "member")
+    private List<CentralLibraryRecordHistory> centralLibraryRecordHistory = new ArrayList<>();
+
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "member_image_id")
     private MemberImage memberImage;
@@ -71,9 +77,6 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private MemberInfoStatus memberInfoStatus;
 
-    // boolean departmentPublic
-
-    // Builder 에 연관관계 편의 메서드 추가하면 어떻게 될까.
     @Builder
     public Member(String userId, String email, String password, String nickName, MemberImage memberImage,
                   String profileMessage, College college, Department department, MemberInfoStatus memberInfoStatus) {
@@ -94,7 +97,6 @@ public class Member extends BaseEntity {
         this.college = college;
         this.department = department;
         this.memberInfoStatus = memberInfoStatus;
-
     }
 
     // 연관관계 편의 메서드
@@ -136,16 +138,16 @@ public class Member extends BaseEntity {
         this.memberImage = memberImage;
     }
 
-    /*
-    * 비밀번호 변경 로직
-    * */
+    /**
+     * 비밀번호 변경 로직
+     */
     public void changePassword(String newPassword) {
         this.password = newPassword;
     }
 
-    /*
+    /**
      * memberInfo update 로직
-     * */
+     */
     public void update(MemberUpdateRequest request) {
         if(StringUtils.hasText(request.getNickName())) {
             this.nickName = request.getNickName();

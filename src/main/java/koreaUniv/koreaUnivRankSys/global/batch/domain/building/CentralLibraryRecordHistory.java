@@ -1,9 +1,7 @@
 package koreaUniv.koreaUnivRankSys.global.batch.domain.building;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -17,9 +15,18 @@ public class CentralLibraryRecordHistory extends BuildingRecordHistory {
     @Column(name = "central_library_record_history_id")
     private Long id;
 
-    @Builder
-    public CentralLibraryRecordHistory(String nickName, Long ranking, Long studyTime) {
-        super(nickName, ranking, studyTime);
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    public CentralLibraryRecordHistory(Member member, Long ranking, Long studyTime) {
+        super(member.getNickName(), ranking, studyTime);
+        setMember(member);
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+        member.getCentralLibraryRecordHistory().add(this);
     }
 
 }
