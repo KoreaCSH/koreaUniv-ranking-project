@@ -14,13 +14,11 @@ import java.time.LocalDate;
 @Getter
 public abstract class BuildingRecordHistory {
 
-    private String nickName;
     private Long ranking;
     private Long studyTime;
     private LocalDate studyDate;
 
-    public BuildingRecordHistory(String nickName, Long ranking, Long studyTime) {
-        this.nickName = nickName;
+    public BuildingRecordHistory(Long ranking, Long studyTime) {
         this.ranking = ranking;
         this.studyTime = studyTime;
         this.studyDate = LocalDate.now().minusDays(1);
