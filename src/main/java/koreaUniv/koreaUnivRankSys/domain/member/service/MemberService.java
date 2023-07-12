@@ -1,6 +1,7 @@
 package koreaUniv.koreaUnivRankSys.domain.member.service;
 
 import koreaUniv.koreaUnivRankSys.domain.mail.service.MailAuthInfoService;
+import koreaUniv.koreaUnivRankSys.domain.member.domain.MemberInfoStatus;
 import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberSignUpRequest;
 import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberUpdateRequest;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
@@ -26,6 +27,11 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final MailAuthInfoService mailAuthInfoService;
 
+    /**
+     *
+     * @param request 회원가입 요청 객체
+     * @return 회원가입을 완료한 Member 의 id
+     */
     @Transactional
     public Long join(MemberSignUpRequest request) {
         validateDuplicateMember(request.getUserId());
@@ -34,9 +40,17 @@ public class MemberService {
 
         String password = passwordEncoder.encode(request.getPassword());
 
-        // request 값 valid 필요
-        Member member = request.toEntity(password);
+        // 정보 공개 여부
+        MemberInfoStatus infoStatus = MemberInfoStatus.N;
+        if(request.getMemberInfoStatus().equals("Y")) {
+            infoStatus = MemberInfoStatus.Y;
+        } else {
+            infoStatus = MemberInfoStatus.N;
+        }
 
+        Member member = request.toEntity(password, infoStatus);
+
+        // 프로필사진 설정했다면 저장, 그렇지 않다면 null 저장
         if(request.getProfileImage() != null && !request.getProfileImage().isEmpty()) {
             MemberImage memberImage = memberImageService.createMemberImage(request.getProfileImage());
             member.setMemberImage(memberImage);
@@ -44,7 +58,7 @@ public class MemberService {
 
         memberRepository.save(member);
         return member.getId();
-}
+    }
 
     private void validateDuplicateMember(String userId) {
         memberRepository.findByUserId(userId).ifPresent(
@@ -97,8 +111,8 @@ public class MemberService {
             findMember.setMemberImage(memberImage);
         }
 
-        // request.nickName valid 필요
-        findMember.update(request);
+        // request.nickName valid 필요 - 매번 닉네임을 변경해도 괜찮을까?
+        // findMember.update(request);
 
         return findMember.getId();
     }

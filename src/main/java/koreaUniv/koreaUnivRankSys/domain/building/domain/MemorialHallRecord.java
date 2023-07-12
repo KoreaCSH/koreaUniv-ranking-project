@@ -1,6 +1,7 @@
 package koreaUniv.koreaUnivRankSys.domain.building.domain;
 
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
+import koreaUniv.koreaUnivRankSys.global.common.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,21 +11,20 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MemorialHallRecord {
+public class MemorialHallRecord extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "memorial_hall_record_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @OneToOne(mappedBy = "memorialHallRecord")
     private Member member;
 
-    private long dailyStudyTime;
-    private long weeklyStudyTime;
-    private long monthlyStudyTime;
-    private long totalStudyTime;
+    private Long dailyStudyTime;
+    private Long weeklyStudyTime;
+    private Long monthlyStudyTime;
+    private Long totalStudyTime;
 
     public void setMember(Member member) {
         this.member = member;
@@ -39,7 +39,7 @@ public class MemorialHallRecord {
         return memorialHallRecord;
     }
 
-    public void updateStudyTime(long studyTime) {
+    public void updateStudyTime(Long studyTime) {
         this.dailyStudyTime += studyTime;
         this.weeklyStudyTime += studyTime;
         this.monthlyStudyTime += studyTime;

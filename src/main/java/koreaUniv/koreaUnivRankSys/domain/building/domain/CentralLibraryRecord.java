@@ -1,6 +1,7 @@
 package koreaUniv.koreaUnivRankSys.domain.building.domain;
 
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
+import koreaUniv.koreaUnivRankSys.global.common.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,21 +11,20 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CentralLibraryRecord {
+public class CentralLibraryRecord extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "central_library_record_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @OneToOne(mappedBy = "centralLibraryRecord")
     private Member member;
 
-    private long dailyStudyTime;
-    private long weeklyStudyTime;
-    private long monthlyStudyTime;
-    private long totalStudyTime;
+    private Long dailyStudyTime;
+    private Long weeklyStudyTime;
+    private Long monthlyStudyTime;
+    private Long totalStudyTime;
 
     public void setMember(Member member) {
         this.member = member;
@@ -46,4 +46,9 @@ public class CentralLibraryRecord {
         this.totalStudyTime += studyTime;
         this.member.getMemberStudyTime().trackMemberStudyTime(studyTime);
     }
+
+    public void resetWeeklyStudyTime() {
+        this.weeklyStudyTime = 0L;
+    }
+
 }

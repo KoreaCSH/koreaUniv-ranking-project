@@ -1,16 +1,49 @@
 spring:
+  # JPA 설정
   jpa:
     hibernate:
       ddl-auto: none
     properties:
       hibernate:
-        #         show_sql: true
+        # show_sql: true
         format_sql: true
 
+  # DB 설정
   profiles:
     include: db
 
+  # redis 설정
+  redis:
+    host: localhost
+    port: 6379
+
+  # Spring Batch 설정
+  batch:
+    job:
+      # Job name 을 넘겨줘야 한다. 지금은 Program Parameter 로 넘겼음.
+      names: ${job.name:NONE}
+      # 프로젝트 시작할 때 Parameter 존재하더라도, Parameter 로 넘겨준 job 이 실행되지 않는다. 스케줄링으로 실행된다.
+      # enabled: false
+    jdbc:
+      initialize-schema: ALWAYS
+
+# log 설정
 logging:
   level:
     org.hibernate.SQL: debug
 #    org.hibernate.type: trace
+
+# swagger 설정
+springdoc:
+  # request media type 의 기본값
+  default-consumes-media-type: application/json
+  # response media type 의 기본값
+  default-produces-media-type: application/json
+
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+
+  api-docs:
+    path: /swagger/api-docs
+    enabled: true

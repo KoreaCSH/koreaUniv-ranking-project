@@ -29,9 +29,11 @@ import org.springframework.web.cors.CorsConfigurationSource;
 public class SecurityConfiguration {
 
     private final UserDetailsService userDetailsService;
-    private final JwtProvider jwtProvider;
     private final JwtEntryPoint jwtEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final JwtAuthenticationSuccessHandler authenticationSuccessHandler;
+    private final JwtAuthenticationFailureHandler authenticationFailureHandler;
+    private final JwtAuthorizationFilter jwtAuthorizationFilter;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -49,7 +51,7 @@ public class SecurityConfiguration {
                 .and()
 
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
 
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtEntryPoint)
@@ -72,8 +74,8 @@ public class SecurityConfiguration {
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
         JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter();
         jwtAuthenticationFilter.setAuthenticationManager(authenticationManager());
-        jwtAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
-        jwtAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler());
+        jwtAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
+        jwtAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler);
         return jwtAuthenticationFilter;
     }
 
@@ -85,21 +87,6 @@ public class SecurityConfiguration {
     @Bean
     public AuthenticationProvider authenticationProvider() {
         return new JwtAuthenticationProvider(userDetailsService, passwordEncoder());
-    }
-
-    @Bean
-    public AuthenticationSuccessHandler authenticationSuccessHandler() {
-        return new JwtAuthenticationSuccessHandler(jwtProvider);
-    }
-
-    @Bean
-    public AuthenticationFailureHandler authenticationFailureHandler() {
-        return new JwtAuthenticationFailureHandler();
-    }
-
-    @Bean
-    public JwtAuthorizationFilter jwtAuthorizationFilter() {
-        return new JwtAuthorizationFilter(jwtProvider);
     }
 
     @Bean

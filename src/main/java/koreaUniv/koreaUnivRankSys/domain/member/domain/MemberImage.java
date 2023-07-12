@@ -1,5 +1,6 @@
 package koreaUniv.koreaUnivRankSys.domain.member.domain;
 
+import koreaUniv.koreaUnivRankSys.global.common.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +14,7 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MemberImage {
+public class MemberImage extends BaseEntity {
 
     @Id
     @GeneratedValue

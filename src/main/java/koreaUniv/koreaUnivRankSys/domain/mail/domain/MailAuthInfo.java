@@ -1,5 +1,6 @@
 package koreaUniv.koreaUnivRankSys.domain.mail.domain;
 
+import koreaUniv.koreaUnivRankSys.global.common.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
-public class MailAuthInfo {
+public class MailAuthInfo extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

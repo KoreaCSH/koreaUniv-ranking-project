@@ -1,4 +1,4 @@
-package koreaUniv.koreaUnivRankSys.domain.member.service;
+package koreaUniv.koreaUnivRankSys.domain.auth.service;
 
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
 import koreaUniv.koreaUnivRankSys.domain.member.repository.MemberRepository;
@@ -7,10 +7,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 

@@ -13,6 +13,6 @@ import javax.validation.constraints.Min;
 public class StudyTimeRequest {
 
     @Min(value = 1, message = "기록이 저장되지 않았습니다.")
-    long studyTime;
+    Long studyTime;
 
 }

@@ -2,6 +2,7 @@ package koreaUniv.koreaUnivRankSys.domain.mail.service;
 
 import koreaUniv.koreaUnivRankSys.domain.mail.domain.MailAuthInfo;
 import koreaUniv.koreaUnivRankSys.domain.mail.domain.MailAuthStatus;
+import koreaUniv.koreaUnivRankSys.domain.mail.dto.AuthCodeRequest;
 import koreaUniv.koreaUnivRankSys.domain.mail.repository.MailAuthInfoRepository;
 import koreaUniv.koreaUnivRankSys.global.exception.CustomException;
 import koreaUniv.koreaUnivRankSys.global.exception.ErrorCode;
@@ -21,6 +22,7 @@ public class MailAuthInfoService {
 
         MailAuthInfo mailAuthInfo;
 
+        // 다시 요청한 경우 authCode 만 변경한다.
         if(existsByEmail(email)) {
             mailAuthInfo = findByEmail(email);
             validateDuplicateEmail(mailAuthInfo);
@@ -38,6 +40,17 @@ public class MailAuthInfoService {
         return mailAuthInfo.getId();
     }
 
+    @Transactional
+    public void validateAuthCode(String email, AuthCodeRequest request) {
+        MailAuthInfo findInfo = findByEmail(email);
+
+        if(!findInfo.getAuthCode().equals(request.getAuthCode())) {
+            throw new CustomException(ErrorCode.NOT_MATCH_AUTHCODE);
+        }
+
+        findInfo.changeStatus(MailAuthStatus.Y);
+    }
+
     private void validateDuplicateEmail(MailAuthInfo mailAuthInfo) {
 
         if(mailAuthInfo.getStatus() == MailAuthStatus.Y) {
@@ -51,11 +64,6 @@ public class MailAuthInfoService {
         if(!(mailAuthInfo.getStatus() == MailAuthStatus.Y)) {
             throw new CustomException(ErrorCode.NOT_AUTH_MAIL);
         }
-    }
-
-    @Transactional
-    public void changeStatus(MailAuthInfo mailAuthInfo, MailAuthStatus status) {
-        mailAuthInfo.changeStatus(status);
     }
 
     public boolean existsByEmail(String email) {

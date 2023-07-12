@@ -1,10 +1,12 @@
 package koreaUniv.koreaUnivRankSys.domain.building.service;
 
 
+import koreaUniv.koreaUnivRankSys.domain.building.dto.MyRankingResponse;
 import koreaUniv.koreaUnivRankSys.domain.building.dto.RankingDto;
 import koreaUniv.koreaUnivRankSys.domain.building.domain.MemorialHallRecord;
 import koreaUniv.koreaUnivRankSys.domain.building.repository.MemorialHallRecordRepository;
 import koreaUniv.koreaUnivRankSys.domain.building.repository.ranking.MemorialHallRankingQueryRepository;
+import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
 import koreaUniv.koreaUnivRankSys.global.exception.CustomException;
 import koreaUniv.koreaUnivRankSys.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +24,8 @@ public class MemorialHallRecordService {
     private final MemorialHallRankingQueryRepository memorialHallRankingQueryRepository;
 
     @Transactional
-    public Long trackStudyTime(String userId, long studyTime) {
-        MemorialHallRecord findRecord = findByMemberUserId(userId);
+    public Long trackStudyTime(Member member, Long studyTime) {
+        MemorialHallRecord findRecord = findByMemberUserId(member.getUserId());
         findRecord.updateStudyTime(studyTime);
         return findRecord.getId();
     }
@@ -48,6 +50,15 @@ public class MemorialHallRecordService {
 
     public List<RankingDto> findWeeklyRankings() {
         return memorialHallRankingQueryRepository.findRankingsByWeeklyStudyTime();
+    }
+
+    public List<RankingDto> findMonthlyRankings() {
+        return memorialHallRankingQueryRepository.findRankingsByMonthlyStudyTime();
+    }
+
+    public MyRankingResponse findMyRankingByTotalStudyTime(String nickName) {
+        return memorialHallRankingQueryRepository.findMyRankingByTotalStudyTime(nickName)
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_RECORD_NOTFOUND));
     }
 
 }
