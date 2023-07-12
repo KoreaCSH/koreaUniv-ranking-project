@@ -19,7 +19,6 @@ public class College {
     @Column(name = "college_id")
     private Long id;
 
-    @Column(name = "college_name")
     private String name;
 
 }

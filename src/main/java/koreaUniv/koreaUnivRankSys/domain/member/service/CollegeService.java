@@ -26,5 +26,4 @@ public class CollegeService {
         return collegeRepository.findAll();
     }
 
-
 }
