@@ -22,6 +22,10 @@ public enum ErrorCode {
     RECORD_NOTFOUND(HttpStatus.NOT_FOUND, "공부 기록이 없습니다."),
     MEMBER_RECORD_NOTFOUND(HttpStatus.NOT_FOUND, "회원의 공부 기록이 없습니다."),
 
+
+    COLLEGE_NOTFOUND(HttpStatus.NOT_FOUND, "단과대학을 찾을 수 없습니다."),
+    DEPARTMENT_NOTFOUND(HttpStatus.NOT_FOUND, "학과를 찾을 수 없습니다."),
+
     REFRESH_TOKEN_NOTFOUND(HttpStatus.NOT_FOUND, "Refresh Token 을 찾을 수 없습니다."),
     REFRESH_TOKEN_NOT_MATCH(HttpStatus.BAD_REQUEST, "Refresh Token 이 일치하지 않습니다."),
     TOKEN_EXPIRED(HttpStatus.BAD_REQUEST, "이미 로그아웃된 토큰입니다.");
