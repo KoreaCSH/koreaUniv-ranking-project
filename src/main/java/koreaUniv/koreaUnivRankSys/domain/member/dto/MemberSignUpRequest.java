@@ -1,6 +1,8 @@
 package koreaUniv.koreaUnivRankSys.domain.member.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import koreaUniv.koreaUnivRankSys.domain.member.domain.College;
+import koreaUniv.koreaUnivRankSys.domain.member.domain.Department;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.MemberInfoStatus;
 import lombok.*;
@@ -34,7 +36,12 @@ public class MemberSignUpRequest {
     @Size(min = 2, max = 10, message = "닉네임은 2~10자 이어야 합니다.")
     private String nickName;
 
+    @Schema(description = "단과대학", example = "select 태그로 넘겨주기")
+    @NotBlank(message = "단과대학을 선택해주세요.")
     private String collegeName;
+
+    @Schema(description = "학과", example = "select 태그로 넘겨주기")
+    @NotBlank(message = "학과를 선택해주세요.")
     private String departmentName;
 
     @Schema(description = "회원정보 공개 여부", example = "String 타입인 Y or N 을 넘겨주세요.")
@@ -46,7 +53,7 @@ public class MemberSignUpRequest {
     @Schema(description = "프로필 사진", example = "MultipartFile 타입 및 jpeg, png 등의 이미지 파일")
     private MultipartFile profileImage;
 
-    public Member toEntity(String password, MemberInfoStatus infoStatus) {
+    public Member toEntity(String password, MemberInfoStatus infoStatus, College college, Department department) {
         return Member.builder()
                 .userId(userId)
                 .email(email + "@korea.ac.kr")
@@ -54,6 +61,8 @@ public class MemberSignUpRequest {
                 .memberInfoStatus(infoStatus)
                 .profileMessage(profileMessage)
                 .nickName(nickName)
+                .college(college)
+                .department(department)
                 .build();
     }
 

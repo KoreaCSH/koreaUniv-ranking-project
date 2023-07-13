@@ -6,7 +6,6 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
-import koreaUniv.koreaUnivRankSys.domain.member.domain.College;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Department;
 import koreaUniv.koreaUnivRankSys.domain.member.repository.DepartmentRepository;
 import koreaUniv.koreaUnivRankSys.global.exception.CustomException;
@@ -17,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 @RequiredArgsConstructor
 public class DepartmentService {
+
     private final DepartmentRepository departmentRepository;
 
     public Department findByName(String name) {
@@ -28,12 +28,4 @@ public class DepartmentService {
         return departmentRepository.findByCollegeName(collegeName);
     }
 
-    public Department findByName(String name) {
-        return departmentRepository.findByName(name).get();
-        // 예외 처리 필요
-    }
-
-    public List<Department> findByCollege(College college) {
-        return departmentRepository.findByCollege(college);
-    }
 }

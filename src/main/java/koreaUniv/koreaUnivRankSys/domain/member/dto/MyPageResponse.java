@@ -6,6 +6,7 @@ import lombok.*;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MyPageResponse {
 
     private MemberInfoResponse memberInfoResponse;
@@ -38,8 +39,8 @@ public class MyPageResponse {
 
         public MemberInfoResponse(Member member) {
             this.nickName = member.getNickName();
-            //this.CollegeName = member.getCollege().getName();
-            //this.departmentName = member.getDepartment().getName();
+            this.CollegeName = member.getCollege().getName();
+            this.departmentName = member.getDepartment().getName();
 
             if(member.getMemberImage() != null) {
                 this.imageUrl = member.getMemberImage().getPath();

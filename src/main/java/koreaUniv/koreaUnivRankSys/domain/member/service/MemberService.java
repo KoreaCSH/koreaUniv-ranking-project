@@ -1,11 +1,9 @@
 package koreaUniv.koreaUnivRankSys.domain.member.service;
 
 import koreaUniv.koreaUnivRankSys.domain.mail.service.MailAuthInfoService;
-import koreaUniv.koreaUnivRankSys.domain.member.domain.MemberInfoStatus;
+import koreaUniv.koreaUnivRankSys.domain.member.domain.*;
 import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberSignUpRequest;
 import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberUpdateRequest;
-import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
-import koreaUniv.koreaUnivRankSys.domain.member.domain.MemberImage;
 import koreaUniv.koreaUnivRankSys.domain.member.repository.MemberRepository;
 import koreaUniv.koreaUnivRankSys.global.exception.CustomException;
 import koreaUniv.koreaUnivRankSys.global.exception.ErrorCode;
@@ -26,14 +24,16 @@ public class MemberService {
     private final MemberImageService memberImageService;
     private final PasswordEncoder passwordEncoder;
     private final MailAuthInfoService mailAuthInfoService;
+    private final CollegeService collegeService;
+    private final DepartmentService departmentService;
 
     /**
-     *
      * @param request 회원가입 요청 객체
      * @return 회원가입을 완료한 Member 의 id
      */
     @Transactional
     public Long join(MemberSignUpRequest request) {
+        // validate userId 중복, nickName 중복, 인증 이메일 중복
         validateDuplicateMember(request.getUserId());
         validateDuplicateMemberNickName(request.getNickName());
         mailAuthInfoService.validateMailAuth(request.getEmail() + "@korea.ac.kr");
@@ -44,11 +44,12 @@ public class MemberService {
         MemberInfoStatus infoStatus = MemberInfoStatus.N;
         if(request.getMemberInfoStatus().equals("Y")) {
             infoStatus = MemberInfoStatus.Y;
-        } else {
-            infoStatus = MemberInfoStatus.N;
         }
 
-        Member member = request.toEntity(password, infoStatus);
+        College college = collegeService.findByName(request.getCollegeName());
+        Department department = departmentService.findByName(request.getDepartmentName());
+
+        Member member = request.toEntity(password, infoStatus, college, department);
 
         // 프로필사진 설정했다면 저장, 그렇지 않다면 null 저장
         if(request.getProfileImage() != null && !request.getProfileImage().isEmpty()) {
