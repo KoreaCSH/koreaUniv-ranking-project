@@ -8,6 +8,11 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+/**
+ * 건물 내에서의 공부 기록을 저장하는 Entity
+ * 과제 : 어떻게 슈퍼타입 (중복되는 공부 기록 관련 필드 저장) 과 서브타입을 나누어서 공부 기록을 관리할 수 있을까?
+ * 과제의 필요성 : 확장성이 떨어진다, Member Entity 의 연관관계가 과중하다.
+ */
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -45,6 +50,10 @@ public class CentralLibraryRecord extends BaseEntity {
         this.monthlyStudyTime += studyTime;
         this.totalStudyTime += studyTime;
         this.member.getMemberStudyTime().trackMemberStudyTime(studyTime);
+    }
+
+    public void resetDailyStudyTime() {
+        this.dailyStudyTime = 0L;
     }
 
     public void resetWeeklyStudyTime() {

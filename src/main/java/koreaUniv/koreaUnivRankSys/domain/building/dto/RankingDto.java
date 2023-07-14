@@ -11,6 +11,9 @@ import lombok.Getter;
 @Builder
 public class RankingDto {
 
+    @Schema(description = "회원 고유 ID", type = "long")
+    private Long memberId;
+
     @Schema(description = "랭킹", type = "long")
     private Long ranking;
 
