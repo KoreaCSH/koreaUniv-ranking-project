@@ -20,7 +20,7 @@ public class CentralLibraryRankingQueryRepository {
     // 아니면 rank() 함수가 있기 때문에 view 로 만들 수 없나?
 
     public List<RankingDto> findRankingsByTotalStudyTime() {
-        return jdbcTemplate.query("select path, nick_name, total_study_time, " +
+        return jdbcTemplate.query("select member_id, path, nick_name, total_study_time, " +
                 "row_number() over (order by total_study_time desc) as \'ranking\' " +
                 "from (member natural left outer join member_image) join central_library_record " +
                 "where member.central_library_record_id = central_library_record.central_library_record_id",
@@ -28,7 +28,7 @@ public class CentralLibraryRankingQueryRepository {
     }
 
     public List<RankingDto> findRankingsByDailyStudyTime() {
-        return jdbcTemplate.query("select path, nick_name, daily_study_time, " +
+        return jdbcTemplate.query("select member_id, path, nick_name, daily_study_time, " +
                         "row_number() over (order by daily_study_time desc) as \'ranking\' " +
                         "from (member natural left outer join member_image) join central_library_record " +
                         "where member.central_library_record_id = central_library_record.central_library_record_id",
@@ -39,7 +39,7 @@ public class CentralLibraryRankingQueryRepository {
     // Member 와 Building Entity 모두 BaseEntity 를 상속받았기에, 이름이 같은 컬럼 2개가 추가 되어 natural join 이 정상적으로 동작하지 않았다.
     // 그로 인해, natural join 이 아닌 join where 로 변경 불가피
     public List<RankingDto> findRankingsByWeeklyStudyTime() {
-        return jdbcTemplate.query("select path, nick_name, weekly_study_time, row_number() over (order by weekly_study_time desc) as 'ranking' " +
+        return jdbcTemplate.query("select member_id, path, nick_name, weekly_study_time, row_number() over (order by weekly_study_time desc) as 'ranking' " +
                         "from (member natural left outer join member_image) join central_library_record " +
                         "where member.central_library_record_id = central_library_record.central_library_record_id",
                 new WeeklyRankingDtoRowMapper());
@@ -47,7 +47,7 @@ public class CentralLibraryRankingQueryRepository {
     }
 
     public List<RankingDto> findRankingsByMonthlyStudyTime() {
-        return jdbcTemplate.query("select path, nick_name, monthly_study_time, " +
+        return jdbcTemplate.query("select member_id, path, nick_name, monthly_study_time, " +
                         "row_number() over (order by monthly_study_time desc) as \'ranking\' " +
                         "from (member natural left outer join member_image) join central_library_record " +
                         "where member.central_library_record_id = central_library_record.central_library_record_id",

@@ -17,7 +17,7 @@ public class MemorialHallRankingQueryRepository {
     private final JdbcTemplate jdbcTemplate;
 
     public List<RankingDto> findRankingsByTotalStudyTime() {
-        return jdbcTemplate.query("select path, nick_name, total_study_time, " +
+        return jdbcTemplate.query("select member_id, path, nick_name, total_study_time, " +
                         "row_number() over (order by total_study_time desc) as \'ranking\' " +
                         "from (member natural left outer join member_image) join memorial_hall_record " +
                         "where member.memorial_hall_record_id = memorial_hall_record.memorial_hall_record_id",
@@ -26,7 +26,7 @@ public class MemorialHallRankingQueryRepository {
     }
 
     public List<RankingDto> findRankingsByDailyStudyTime() {
-        return jdbcTemplate.query("select path, nick_name, daily_study_time, " +
+        return jdbcTemplate.query("select member_id, path, nick_name, daily_study_time, " +
                         "row_number() over (order by daily_study_time desc) as \'ranking\' " +
                         "from (member natural left outer join member_image) join memorial_hall_record " +
                         "where member.memorial_hall_record_id = memorial_hall_record.memorial_hall_record_id",
@@ -35,7 +35,7 @@ public class MemorialHallRankingQueryRepository {
     }
 
     public List<RankingDto> findRankingsByWeeklyStudyTime() {
-        return jdbcTemplate.query("select path, nick_name, weekly_study_time, " +
+        return jdbcTemplate.query("select member_id, path, nick_name, weekly_study_time, " +
                         "row_number() over (order by weekly_study_time desc) as \'ranking\' " +
                         "from (member natural left outer join member_image) join memorial_hall_record " +
                         "where member.memorial_hall_record_id = memorial_hall_record.memorial_hall_record_id",
@@ -44,7 +44,7 @@ public class MemorialHallRankingQueryRepository {
     }
 
     public List<RankingDto> findRankingsByMonthlyStudyTime() {
-        return jdbcTemplate.query("select path, nick_name, monthly_study_time, " +
+        return jdbcTemplate.query("select member_id, path, nick_name, monthly_study_time, " +
                         "row_number() over (order by monthly_study_time desc) as \'ranking\' " +
                         "from (member natural left outer join member_image) join memorial_hall_record " +
                         "where member.memorial_hall_record_id = memorial_hall_record.memorial_hall_record_id",

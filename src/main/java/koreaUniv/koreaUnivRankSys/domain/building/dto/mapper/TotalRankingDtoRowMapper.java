@@ -12,6 +12,7 @@ public class TotalRankingDtoRowMapper implements RowMapper<RankingDto> {
     public RankingDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 
         return RankingDto.builder()
+                .memberId(rs.getLong("member_id"))
                 .nickName(rs.getString("nick_name"))
                 .imageUrl(rs.getString("path"))
                 .studyTime(rs.getLong("total_study_time"))

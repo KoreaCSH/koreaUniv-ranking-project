@@ -11,6 +11,7 @@ public class MonthlyRankingDtoRowMapper implements RowMapper<RankingDto> {
     @Override
     public RankingDto mapRow(ResultSet rs, int rowNum) throws SQLException {
         return RankingDto.builder()
+                .memberId(rs.getLong("member_id"))
                 .nickName(rs.getString("nick_name"))
                 .imageUrl(rs.getString("path"))
                 .studyTime(rs.getLong("monthly_study_time"))
