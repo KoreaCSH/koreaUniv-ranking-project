@@ -3,6 +3,7 @@ package koreaUniv.koreaUnivRankSys.domain.member.domain;
 import koreaUniv.koreaUnivRankSys.domain.building.domain.*;
 import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberUpdateRequest;
 import koreaUniv.koreaUnivRankSys.global.batch.domain.building.CentralLibraryRecordHistory;
+import koreaUniv.koreaUnivRankSys.global.batch.domain.building.CentralSquareRecordHistory;
 import koreaUniv.koreaUnivRankSys.global.common.BaseEntity;
 import lombok.*;
 import org.springframework.util.StringUtils;
@@ -61,6 +62,9 @@ public class Member extends BaseEntity {
 
     @OneToMany(mappedBy = "member")
     private List<CentralLibraryRecordHistory> centralLibraryRecordHistory = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<CentralSquareRecordHistory> centralSquareRecordHistory = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "member_image_id")
