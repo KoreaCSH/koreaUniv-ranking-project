@@ -1,5 +1,6 @@
 package koreaUniv.koreaUnivRankSys.global.batch.domain.building;
 
+import koreaUniv.koreaUnivRankSys.global.common.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor
 @ToString
-public class CentralLibraryTop3 {
+public class CentralLibraryTop3 extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
