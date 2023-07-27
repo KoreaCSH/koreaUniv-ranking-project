@@ -62,7 +62,7 @@ class CentralLibraryTop3RepositoryTest {
         centralLibraryTop3Repository.save(record2);
         centralLibraryTop3Repository.save(record5);
 
-        List<CentralLibraryTop3> top3 = centralLibraryTop3Repository.findTop3ByStudyDateDescAndRanking(PageRequest.of(0, 3));
+        List<CentralLibraryTop3> top3 = centralLibraryTop3Repository.findTop3();
 
         Assertions.assertThat(top3.size()).isEqualTo(3);
         Assertions.assertThat(top3.get(0).getNickName()).isEqualTo("test1");
