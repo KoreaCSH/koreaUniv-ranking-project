@@ -10,6 +10,7 @@ import koreaUniv.koreaUnivRankSys.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -37,25 +38,52 @@ public class CentralLibraryRecordService {
     }
 
     public List<RankingDto> findTotalRankings() {
-        return centralLibraryRankingQueryRepository.findRankingsByTotalStudyTime();
+
+        List<RankingDto> rankings = centralLibraryRankingQueryRepository.findRankingsByTotalStudyTime();
+
+        if(CollectionUtils.isEmpty(rankings)) {
+            throw new CustomException(ErrorCode.RANKING_NOTFOUND);
+        }
+
+        return rankings;
     }
 
     public List<RankingDto> findDailyRankings() {
-        return centralLibraryRankingQueryRepository.findRankingsByDailyStudyTime();
+
+        List<RankingDto> rankings = centralLibraryRankingQueryRepository.findRankingsByDailyStudyTime();
+
+        if(CollectionUtils.isEmpty(rankings)) {
+            throw new CustomException(ErrorCode.RANKING_NOTFOUND);
+        }
+
+        return rankings;
     }
 
     public List<RankingDto> findWeeklyRankings() {
-        return centralLibraryRankingQueryRepository.findRankingsByWeeklyStudyTime();
+
+        List<RankingDto> rankings = centralLibraryRankingQueryRepository.findRankingsByWeeklyStudyTime();
+
+        if(CollectionUtils.isEmpty(rankings)) {
+            throw new CustomException(ErrorCode.RANKING_NOTFOUND);
+        }
+
+        return rankings;
     }
 
     public List<RankingDto> findMonthlyRankings() {
-        return centralLibraryRankingQueryRepository.findRankingsByMonthlyStudyTime();
+
+        List<RankingDto> rankings = centralLibraryRankingQueryRepository.findRankingsByMonthlyStudyTime();
+
+        if(CollectionUtils.isEmpty(rankings)) {
+            throw new CustomException(ErrorCode.RANKING_NOTFOUND);
+        }
+
+        return rankings;
     }
 
     public MyRankingResponse findMyRankingByTotalStudyTime(String nickName) {
         return centralLibraryRankingQueryRepository.findMyRankingByTotalStudyTime(nickName)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_RECORD_NOTFOUND));
     }
-
 
 }

@@ -12,6 +12,7 @@ import koreaUniv.koreaUnivRankSys.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -41,19 +42,47 @@ public class MemorialHallRecordService {
     }
 
     public List<RankingDto> findTotalRankings() {
-        return memorialHallRankingQueryRepository.findRankingsByTotalStudyTime();
+
+        List<RankingDto> rankings = memorialHallRankingQueryRepository.findRankingsByTotalStudyTime();
+
+        if(CollectionUtils.isEmpty(rankings)) {
+            throw new CustomException(ErrorCode.RANKING_NOTFOUND);
+        }
+
+        return rankings;
     }
 
     public List<RankingDto> findDailyRankings() {
-        return memorialHallRankingQueryRepository.findRankingsByDailyStudyTime();
+
+        List<RankingDto> rankings = memorialHallRankingQueryRepository.findRankingsByDailyStudyTime();
+
+        if(CollectionUtils.isEmpty(rankings)) {
+            throw new CustomException(ErrorCode.RANKING_NOTFOUND);
+        }
+
+        return rankings;
     }
 
     public List<RankingDto> findWeeklyRankings() {
-        return memorialHallRankingQueryRepository.findRankingsByWeeklyStudyTime();
+
+        List<RankingDto> rankings = memorialHallRankingQueryRepository.findRankingsByWeeklyStudyTime();
+
+        if(CollectionUtils.isEmpty(rankings)) {
+            throw new CustomException(ErrorCode.RANKING_NOTFOUND);
+        }
+
+        return rankings;
     }
 
     public List<RankingDto> findMonthlyRankings() {
-        return memorialHallRankingQueryRepository.findRankingsByMonthlyStudyTime();
+
+        List<RankingDto> rankings = memorialHallRankingQueryRepository.findRankingsByMonthlyStudyTime();
+
+        if(CollectionUtils.isEmpty(rankings)) {
+            throw new CustomException(ErrorCode.RANKING_NOTFOUND);
+        }
+
+        return rankings;
     }
 
     public MyRankingResponse findMyRankingByTotalStudyTime(String nickName) {

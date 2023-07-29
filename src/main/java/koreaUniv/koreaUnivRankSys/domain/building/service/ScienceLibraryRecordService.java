@@ -11,6 +11,7 @@ import koreaUniv.koreaUnivRankSys.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -40,19 +41,43 @@ public class ScienceLibraryRecordService {
     }
 
     public List<RankingDto> findTotalRankings() {
-        return scienceLibraryRankingQueryRepository.findRankingsByTotalStudyTime();
+        List<RankingDto> rankings = scienceLibraryRankingQueryRepository.findRankingsByTotalStudyTime();
+
+        if(CollectionUtils.isEmpty(rankings)) {
+            throw new CustomException(ErrorCode.RANKING_NOTFOUND);
+        }
+
+        return rankings;
     }
 
     public List<RankingDto> findDailyRankings() {
-        return scienceLibraryRankingQueryRepository.findRankingsByDailyStudyTime();
+        List<RankingDto> rankings = scienceLibraryRankingQueryRepository.findRankingsByDailyStudyTime();
+
+        if(CollectionUtils.isEmpty(rankings)) {
+            throw new CustomException(ErrorCode.RANKING_NOTFOUND);
+        }
+
+        return rankings;
     }
 
     public List<RankingDto> findWeeklyRankings() {
-        return scienceLibraryRankingQueryRepository.findRankingsByWeeklyStudyTime();
+        List<RankingDto> rankings = scienceLibraryRankingQueryRepository.findRankingsByWeeklyStudyTime();
+
+        if(CollectionUtils.isEmpty(rankings)) {
+            throw new CustomException(ErrorCode.RANKING_NOTFOUND);
+        }
+
+        return rankings;
     }
 
     public List<RankingDto> findMonthlyRankings() {
-        return scienceLibraryRankingQueryRepository.findRankingsByMonthlyStudyTime();
+        List<RankingDto> rankings = scienceLibraryRankingQueryRepository.findRankingsByMonthlyStudyTime();
+
+        if(CollectionUtils.isEmpty(rankings)) {
+            throw new CustomException(ErrorCode.RANKING_NOTFOUND);
+        }
+
+        return rankings;
     }
 
     public MyRankingResponse findMyRankingByTotalStudyTime(String nickName) {

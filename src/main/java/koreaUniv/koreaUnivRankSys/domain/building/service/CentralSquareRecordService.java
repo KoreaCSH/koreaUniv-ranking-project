@@ -11,6 +11,7 @@ import koreaUniv.koreaUnivRankSys.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -40,19 +41,47 @@ public class CentralSquareRecordService {
     }
 
     public List<RankingDto> findTotalRankings() {
-        return centralSquareRankingQueryRepository.findRankingsByTotalStudyTime();
+
+        List<RankingDto> rankings = centralSquareRankingQueryRepository.findRankingsByTotalStudyTime();
+
+        if(CollectionUtils.isEmpty(rankings)) {
+            throw new CustomException(ErrorCode.RANKING_NOTFOUND);
+        }
+
+        return rankings;
     }
 
     public List<RankingDto> findDailyRankings() {
-        return centralSquareRankingQueryRepository.findRankingsByDailyStudyTime();
+
+        List<RankingDto> rankings = centralSquareRankingQueryRepository.findRankingsByDailyStudyTime();
+
+        if(CollectionUtils.isEmpty(rankings)) {
+            throw new CustomException(ErrorCode.RANKING_NOTFOUND);
+        }
+
+        return rankings;
     }
 
     public List<RankingDto> findWeeklyRankings() {
-        return centralSquareRankingQueryRepository.findRankingsByWeeklyStudyTime();
+
+        List<RankingDto> rankings = centralSquareRankingQueryRepository.findRankingsByWeeklyStudyTime();
+
+        if(CollectionUtils.isEmpty(rankings)) {
+            throw new CustomException(ErrorCode.RANKING_NOTFOUND);
+        }
+
+        return rankings;
     }
 
     public List<RankingDto> findMonthlyRankings() {
-        return centralSquareRankingQueryRepository.findRankingsByMonthlyStudyTime();
+
+        List<RankingDto> rankings = centralSquareRankingQueryRepository.findRankingsByMonthlyStudyTime();
+
+        if(CollectionUtils.isEmpty(rankings)) {
+            throw new CustomException(ErrorCode.RANKING_NOTFOUND);
+        }
+
+        return rankings;
     }
 
     public MyRankingResponse findMyRankingByTotalStudyTime(String nickName) {

@@ -11,6 +11,7 @@ import koreaUniv.koreaUnivRankSys.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -40,19 +41,47 @@ public class HanaSquareRecordService {
     }
 
     public List<RankingDto> findTotalRankings() {
-        return hanaSquareRankingQueryRepository.findRankingsByTotalStudyTime();
+
+        List<RankingDto> rankings = hanaSquareRankingQueryRepository.findRankingsByTotalStudyTime();
+
+        if(CollectionUtils.isEmpty(rankings)) {
+            throw new CustomException(ErrorCode.RANKING_NOTFOUND);
+        }
+
+        return rankings;
     }
 
     public List<RankingDto> findDailyRankings() {
-        return hanaSquareRankingQueryRepository.findRankingsByDailyStudyTime();
+
+        List<RankingDto> rankings = hanaSquareRankingQueryRepository.findRankingsByDailyStudyTime();
+
+        if(CollectionUtils.isEmpty(rankings)) {
+            throw new CustomException(ErrorCode.RANKING_NOTFOUND);
+        }
+
+        return rankings;
     }
 
     public List<RankingDto> findWeeklyRankings() {
-        return hanaSquareRankingQueryRepository.findRankingsByWeeklyStudyTime();
+
+        List<RankingDto> rankings = hanaSquareRankingQueryRepository.findRankingsByWeeklyStudyTime();
+
+        if(CollectionUtils.isEmpty(rankings)) {
+            throw new CustomException(ErrorCode.RANKING_NOTFOUND);
+        }
+
+        return rankings;
     }
 
     public List<RankingDto> findMonthlyRankings() {
-        return hanaSquareRankingQueryRepository.findRankingsByMonthlyStudyTime();
+
+        List<RankingDto> rankings = hanaSquareRankingQueryRepository.findRankingsByMonthlyStudyTime();
+
+        if(CollectionUtils.isEmpty(rankings)) {
+            throw new CustomException(ErrorCode.RANKING_NOTFOUND);
+        }
+
+        return rankings;
     }
 
     public MyRankingResponse findMyRankingByTotalStudyTime(String nickName) {
