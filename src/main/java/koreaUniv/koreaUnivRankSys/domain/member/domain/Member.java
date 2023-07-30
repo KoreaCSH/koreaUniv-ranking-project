@@ -1,9 +1,9 @@
 package koreaUniv.koreaUnivRankSys.domain.member.domain;
 
 import koreaUniv.koreaUnivRankSys.domain.building.domain.*;
-import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberUpdateRequest;
-import koreaUniv.koreaUnivRankSys.global.batch.domain.building.CentralLibraryRecordHistory;
-import koreaUniv.koreaUnivRankSys.global.batch.domain.building.CentralSquareRecordHistory;
+import koreaUniv.koreaUnivRankSys.web.member.dto.MemberUpdateRequest;
+import koreaUniv.koreaUnivRankSys.batch.domain.building.history.CentralLibraryRecordHistory;
+import koreaUniv.koreaUnivRankSys.batch.domain.building.history.CentralSquareRecordHistory;
 import koreaUniv.koreaUnivRankSys.global.common.BaseEntity;
 import lombok.*;
 import org.springframework.util.StringUtils;

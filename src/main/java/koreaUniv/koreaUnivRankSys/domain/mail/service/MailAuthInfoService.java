@@ -2,7 +2,7 @@ package koreaUniv.koreaUnivRankSys.domain.mail.service;
 
 import koreaUniv.koreaUnivRankSys.domain.mail.domain.MailAuthInfo;
 import koreaUniv.koreaUnivRankSys.domain.mail.domain.MailAuthStatus;
-import koreaUniv.koreaUnivRankSys.domain.mail.dto.AuthCodeRequest;
+import koreaUniv.koreaUnivRankSys.web.mail.dto.AuthCodeRequest;
 import koreaUniv.koreaUnivRankSys.domain.mail.repository.MailAuthInfoRepository;
 import koreaUniv.koreaUnivRankSys.global.exception.CustomException;
 import koreaUniv.koreaUnivRankSys.global.exception.ErrorCode;

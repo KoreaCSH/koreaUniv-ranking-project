@@ -1,8 +1,7 @@
 package koreaUniv.koreaUnivRankSys.domain.building.repository.ranking;
 
-import koreaUniv.koreaUnivRankSys.domain.building.dto.MyRankingResponse;
-import koreaUniv.koreaUnivRankSys.domain.building.dto.RankingDto;
-import koreaUniv.koreaUnivRankSys.domain.building.service.MemorialHallRecordService;
+import koreaUniv.koreaUnivRankSys.web.building.dto.MyRankingResponse;
+import koreaUniv.koreaUnivRankSys.web.building.dto.RankingDto;
 import koreaUniv.koreaUnivRankSys.domain.building.service.ScienceLibraryRecordService;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
 import koreaUniv.koreaUnivRankSys.domain.member.repository.MemberRepository;
@@ -16,8 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional

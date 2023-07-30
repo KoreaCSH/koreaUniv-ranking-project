@@ -1,8 +1,8 @@
 package koreaUniv.koreaUnivRankSys.domain.building.service;
 
 import koreaUniv.koreaUnivRankSys.domain.building.domain.CentralSquareRecord;
-import koreaUniv.koreaUnivRankSys.domain.building.dto.MyRankingResponse;
-import koreaUniv.koreaUnivRankSys.domain.building.dto.RankingDto;
+import koreaUniv.koreaUnivRankSys.web.building.dto.MyRankingResponse;
+import koreaUniv.koreaUnivRankSys.web.building.dto.RankingDto;
 import koreaUniv.koreaUnivRankSys.domain.building.repository.CentralSquareRecordRepository;
 import koreaUniv.koreaUnivRankSys.domain.building.repository.ranking.CentralSquareRankingQueryRepository;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;

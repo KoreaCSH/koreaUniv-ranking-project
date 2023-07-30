@@ -1,6 +1,6 @@
 package koreaUniv.koreaUnivRankSys.domain.auth.service;
 
-import koreaUniv.koreaUnivRankSys.domain.auth.dto.AccessTokenDto;
+import koreaUniv.koreaUnivRankSys.web.auth.dto.AccessTokenDto;
 import koreaUniv.koreaUnivRankSys.global.exception.CustomException;
 import koreaUniv.koreaUnivRankSys.global.exception.ErrorCode;
 import koreaUniv.koreaUnivRankSys.global.jwt.JwtProvider;

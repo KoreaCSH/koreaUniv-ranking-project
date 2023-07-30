@@ -2,7 +2,7 @@ package koreaUniv.koreaUnivRankSys.domain.member.service;
 
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.MemberStudyTime;
-import koreaUniv.koreaUnivRankSys.domain.member.dto.MyPageResponse;
+import koreaUniv.koreaUnivRankSys.web.member.dto.MyPageResponse;
 import koreaUniv.koreaUnivRankSys.domain.member.repository.MemberRepository;
 import koreaUniv.koreaUnivRankSys.domain.member.repository.MemberStudyTimeRepository;
 import koreaUniv.koreaUnivRankSys.global.exception.CustomException;

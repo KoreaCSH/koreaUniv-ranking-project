@@ -1,7 +1,7 @@
 package koreaUniv.koreaUnivRankSys.global.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import koreaUniv.koreaUnivRankSys.domain.auth.dto.AuthRequest;
+import koreaUniv.koreaUnivRankSys.web.auth.dto.AuthRequest;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

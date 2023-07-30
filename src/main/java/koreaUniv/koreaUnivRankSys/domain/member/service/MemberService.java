@@ -2,8 +2,8 @@ package koreaUniv.koreaUnivRankSys.domain.member.service;
 
 import koreaUniv.koreaUnivRankSys.domain.mail.service.MailAuthInfoService;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.*;
-import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberSignUpRequest;
-import koreaUniv.koreaUnivRankSys.domain.member.dto.MemberUpdateRequest;
+import koreaUniv.koreaUnivRankSys.web.member.dto.MemberSignUpRequest;
+import koreaUniv.koreaUnivRankSys.web.member.dto.MemberUpdateRequest;
 import koreaUniv.koreaUnivRankSys.domain.member.repository.MemberRepository;
 import koreaUniv.koreaUnivRankSys.global.exception.CustomException;
 import koreaUniv.koreaUnivRankSys.global.exception.ErrorCode;
