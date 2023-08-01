@@ -4,7 +4,6 @@ import koreaUniv.koreaUnivRankSys.global.common.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.EntityListeners;
@@ -15,7 +14,6 @@ import java.time.LocalDate;
 @MappedSuperclass
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@ToString
 public abstract class Top3 extends BaseEntity {
 
     private String nickName;

@@ -10,12 +10,14 @@ import koreaUniv.koreaUnivRankSys.batch.domain.building.top3.CentralLibraryTop3;
 import koreaUniv.koreaUnivRankSys.batch.repository.building.top3.CentralLibraryTop3Repository;
 import koreaUniv.koreaUnivRankSys.global.exception.CustomException;
 import koreaUniv.koreaUnivRankSys.global.exception.ErrorCode;
+import koreaUniv.koreaUnivRankSys.web.building.dto.Top3Dto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -106,9 +108,15 @@ public class CentralLibraryRecordService {
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_RECORD_NOTFOUND));
     }
 
-    public List<Top3> findTop3ByWeeklyStudyTime() {
+    /**
+     * @return 중앙도서관 weeklyStudyTime 기준 랭킹 top3 리스트
+     */
+    public List<Top3Dto> findTop3ByWeeklyStudyTime() {
 
-        List<Top3> top3 = centralLibraryTop3Repository.findTop3();
+        List<Top3Dto> top3 = centralLibraryTop3Repository.findTop3()
+                .stream()
+                .map(t -> Top3Dto.of(t))
+                .collect(Collectors.toList());
 
         if(CollectionUtils.isEmpty(top3)) {
             throw new CustomException(ErrorCode.RANKING_NOTFOUND);

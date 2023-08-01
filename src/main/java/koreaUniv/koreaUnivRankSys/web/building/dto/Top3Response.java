@@ -1,6 +1,5 @@
 package koreaUniv.koreaUnivRankSys.web.building.dto;
 
-import koreaUniv.koreaUnivRankSys.batch.domain.building.top3.Top3;
 import lombok.*;
 
 import java.util.List;
@@ -11,10 +10,10 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Top3Response {
 
-    private List<Top3> top3;
+    private List<Top3Dto> top3;
     private Integer count;
 
-    public static Top3Response of(List<Top3> top3) {
+    public static Top3Response of(List<Top3Dto> top3) {
         return Top3Response.builder()
                 .top3(top3)
                 .count(top3.size())

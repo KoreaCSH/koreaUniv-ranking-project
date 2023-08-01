@@ -87,7 +87,7 @@ public class CentralLibraryController {
     @GetMapping("/top3")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Top3Response> getTop3() {
-        List<Top3> top3 = centralLibraryRecordService.findTop3ByWeeklyStudyTime();
+        List<Top3Dto> top3 = centralLibraryRecordService.findTop3ByWeeklyStudyTime();
 
         return ResponseEntity.ok().body(Top3Response.of(top3));
     }
