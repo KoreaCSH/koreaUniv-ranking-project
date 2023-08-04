@@ -2,9 +2,13 @@ package koreaUniv.koreaUnivRankSys.domain.building.repository.ranking;
 
 import koreaUniv.koreaUnivRankSys.web.building.dto.MyRankingResponse;
 import koreaUniv.koreaUnivRankSys.web.building.dto.RankingDto;
+import koreaUniv.koreaUnivRankSys.web.building.dto.StudyTimeCriteria;
 import koreaUniv.koreaUnivRankSys.web.building.dto.mapper.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,11 +20,26 @@ public class CentralLibraryRankingQueryRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
     // 해당 쿼리들도 View 로 만들어서 select 연산만 하는 것이 더 빠를까?
     // 아니면 rank() 함수가 있기 때문에 view 로 만들 수 없나?
 
     // 사실 중복되는 코드가 대부분이다.
     // total 인지, daily 인지, week 인지를 매개변수로 넘겨 동적쿼리로 작동하게 코드를 작성할 순 없을까?
+
+    // select 할 컬럼과 order by 에 조건을 동적으로 걸어야 했기에, NamedParameterJdbcTemplate 을 사용할 수 없었다.
+    // 아래의 방법은 SQL injection
+    public List<RankingDto> findRankings(StudyTimeCriteria criteria) {
+
+        String sql = String.format("select member_id, path, nick_name, %s, " +
+                "row_number() over (order by %s desc) as \'ranking\' " +
+                "from (member natural left outer join member_image) join central_library_record " +
+                "where member.central_library_record_id = central_library_record.central_library_record_id",
+                criteria.getCriteria(), criteria.getCriteria());
+
+        return jdbcTemplate.query(sql, new RankingDtoRowMapper(criteria.getCriteria()));
+    }
 
     public List<RankingDto> findRankingsByTotalStudyTime() {
         return jdbcTemplate.query("select member_id, path, nick_name, total_study_time, " +
