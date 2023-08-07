@@ -1,6 +1,5 @@
 package koreaUniv.koreaUnivRankSys.domain.member.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import koreaUniv.koreaUnivRankSys.global.common.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -37,6 +36,9 @@ public class MemberStudyTime extends BaseEntity {
         return memberStudyTime;
     }
 
+    /**
+     *  연관관계 관련 메서드
+     */
     public void setMember(Member member) {
             this.member = member;
         }

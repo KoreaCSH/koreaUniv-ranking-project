@@ -1,5 +1,6 @@
 package koreaUniv.koreaUnivRankSys.domain.member.domain;
 
+import koreaUniv.koreaUnivRankSys.batch.domain.member.MemberStudyTimeHistory;
 import koreaUniv.koreaUnivRankSys.domain.building.domain.*;
 import koreaUniv.koreaUnivRankSys.web.member.dto.MemberUpdateRequest;
 import koreaUniv.koreaUnivRankSys.batch.domain.building.history.CentralLibraryRecordHistory;
@@ -59,6 +60,9 @@ public class Member extends BaseEntity {
     @JoinColumn(name = "member_study_time_id")
     //@JsonIgnore
     private MemberStudyTime memberStudyTime;
+
+    @OneToMany(mappedBy = "member")
+    private List<MemberStudyTimeHistory> memberStudyTimeHistory = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
     private List<CentralLibraryRecordHistory> centralLibraryRecordHistory = new ArrayList<>();
