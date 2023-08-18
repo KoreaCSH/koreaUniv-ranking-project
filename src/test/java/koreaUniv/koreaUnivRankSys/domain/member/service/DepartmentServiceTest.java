@@ -2,6 +2,7 @@ package koreaUniv.koreaUnivRankSys.domain.member.service;
 
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Department;
 import koreaUniv.koreaUnivRankSys.global.exception.CustomException;
+import koreaUniv.koreaUnivRankSys.web.member.dto.DepartmentDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +38,9 @@ class DepartmentServiceTest {
 
     @Test
     void 학부로_학과_조회() {
-        List<Department> departments = departmentService.findByCollegeName("사범대학");
+        List<DepartmentDto> departments = departmentService.findByCollegeName("사범대학");
 
-        for(Department department : departments) {
+        for(DepartmentDto department : departments) {
             System.out.println(department.getName());
         }
 

@@ -7,13 +7,13 @@ import koreaUniv.koreaUnivRankSys.global.exception.ErrorCode;
 import koreaUniv.koreaUnivRankSys.web.member.dto.CollegeDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class CollegeService {
 

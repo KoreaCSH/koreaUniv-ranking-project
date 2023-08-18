@@ -1,9 +1,9 @@
 package koreaUniv.koreaUnivRankSys.domain.member.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-import javax.transaction.Transactional;
-
+import koreaUniv.koreaUnivRankSys.web.member.dto.DepartmentDto;
 import org.springframework.stereotype.Service;
 
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Department;
@@ -11,9 +11,10 @@ import koreaUniv.koreaUnivRankSys.domain.member.repository.DepartmentRepository;
 import koreaUniv.koreaUnivRankSys.global.exception.CustomException;
 import koreaUniv.koreaUnivRankSys.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class DepartmentService {
 
@@ -24,8 +25,12 @@ public class DepartmentService {
                 .orElseThrow(() -> new CustomException(ErrorCode.DEPARTMENT_NOTFOUND));
     }
 
-    public List<Department> findByCollegeName(String collegeName) {
-        return departmentRepository.findByCollegeName(collegeName);
+    public List<DepartmentDto> findByCollegeName(String collegeName) {
+
+        return departmentRepository.findByCollegeName(collegeName)
+                .stream()
+                .map(d -> DepartmentDto.of(d))
+                .collect(Collectors.toList());
     }
 
 }
