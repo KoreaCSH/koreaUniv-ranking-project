@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CollegeDto {
 
-    private String name;
+    private String collegeName;
 
     public static CollegeDto of(College college) {
         CollegeDto collegeDto = new CollegeDto();
-        collegeDto.name = college.getName();
+        collegeDto.collegeName = college.getName();
         return collegeDto;
     }
 
