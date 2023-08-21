@@ -1,6 +1,5 @@
 package koreaUniv.koreaUnivRankSys.batch.domain.building.history;
 
-import koreaUniv.koreaUnivRankSys.batch.domain.building.history.BuildingRecordHistory;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
 import lombok.AccessLevel;
 import lombok.Getter;

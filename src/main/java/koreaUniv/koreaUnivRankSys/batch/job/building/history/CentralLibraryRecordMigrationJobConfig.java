@@ -51,6 +51,13 @@ public class CentralLibraryRecordMigrationJobConfig {
     private final MemberService memberService;
     private final DataSource dataSource;
 
+    /**
+     *
+     * @param centralLibraryRecordMigrationStep 중앙도서관 dailyStudyTime 이관 step
+     * @param centralLibraryDailyStudyTimeUpdateStep 중앙도서관 dailyStudyTime 이관 후 0 으로 초기화하는 step
+     * @return
+     * task - FAIL 시 수행 할 step 구현 해야 함
+     */
     @Bean
     public Job centralLibraryRecordMigrationJob(Step centralLibraryRecordMigrationStep,
                                                 Step centralLibraryDailyStudyTimeUpdateStep) {
