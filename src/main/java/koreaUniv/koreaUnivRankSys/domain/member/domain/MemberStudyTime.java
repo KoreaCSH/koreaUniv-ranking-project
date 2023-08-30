@@ -58,4 +58,8 @@ public class MemberStudyTime extends BaseEntity {
         this.memberWeeklyStudyTime = 0L;
     }
 
+    public void resetMemberMonthlyStudyTime() {
+        this.memberMonthlyStudyTime = 0L;
+    }
+
 }
