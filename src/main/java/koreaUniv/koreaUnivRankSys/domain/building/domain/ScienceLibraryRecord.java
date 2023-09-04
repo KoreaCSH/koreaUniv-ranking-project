@@ -47,4 +47,8 @@ public class ScienceLibraryRecord extends BaseEntity {
         this.member.getMemberStudyTime().trackMemberStudyTime(studyTime);
     }
 
+    public void resetDailyStudyTime() {
+        this.dailyStudyTime = 0L;
+    }
+
 }
