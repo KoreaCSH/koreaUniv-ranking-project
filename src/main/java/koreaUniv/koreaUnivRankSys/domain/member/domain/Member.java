@@ -1,11 +1,9 @@
 package koreaUniv.koreaUnivRankSys.domain.member.domain;
 
-import koreaUniv.koreaUnivRankSys.batch.domain.building.history.EducationHallRecordHistory;
+import koreaUniv.koreaUnivRankSys.batch.domain.building.history.*;
 import koreaUniv.koreaUnivRankSys.batch.domain.member.MemberStudyTimeHistory;
 import koreaUniv.koreaUnivRankSys.domain.building.domain.*;
 import koreaUniv.koreaUnivRankSys.web.member.dto.MemberUpdateRequest;
-import koreaUniv.koreaUnivRankSys.batch.domain.building.history.CentralLibraryRecordHistory;
-import koreaUniv.koreaUnivRankSys.batch.domain.building.history.CentralSquareRecordHistory;
 import koreaUniv.koreaUnivRankSys.global.common.BaseEntity;
 import lombok.*;
 import org.springframework.util.StringUtils;
@@ -73,6 +71,15 @@ public class Member extends BaseEntity {
 
     @OneToMany(mappedBy = "member")
     private List<EducationHallRecordHistory> educationHallRecordHistory = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<HanaSquareRecordHistory> hanaSquareRecordHistory = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<MemorialHallRecordHistory> memorialHallRecordHistory = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<ScienceLibraryRecordHistory> scienceLibraryRecordHistory = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "member_image_id")
