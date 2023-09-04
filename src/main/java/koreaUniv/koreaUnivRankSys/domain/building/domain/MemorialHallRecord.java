@@ -47,4 +47,8 @@ public class MemorialHallRecord extends BaseEntity {
         this.member.getMemberStudyTime().trackMemberStudyTime(studyTime);
     }
 
+    public void resetDailyStudyTime() {
+        this.dailyStudyTime = 0L;
+    }
+
 }
