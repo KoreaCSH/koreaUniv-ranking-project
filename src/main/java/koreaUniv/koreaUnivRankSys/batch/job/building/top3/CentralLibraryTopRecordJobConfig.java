@@ -4,7 +4,7 @@ import koreaUniv.koreaUnivRankSys.domain.building.domain.CentralLibraryRecord;
 import koreaUniv.koreaUnivRankSys.domain.building.repository.CentralLibraryRecordRepository;
 import koreaUniv.koreaUnivRankSys.batch.domain.building.top3.CentralLibraryTop3;
 import koreaUniv.koreaUnivRankSys.batch.repository.building.top3.CentralLibraryTop3Repository;
-import koreaUniv.koreaUnivRankSys.batch.domain.building.top3.CentralLibraryTop3RowMapper;
+import koreaUniv.koreaUnivRankSys.batch.domain.building.top3.mapper.CentralLibraryTop3RowMapper;
 import koreaUniv.koreaUnivRankSys.batch.common.JobLoggerListener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

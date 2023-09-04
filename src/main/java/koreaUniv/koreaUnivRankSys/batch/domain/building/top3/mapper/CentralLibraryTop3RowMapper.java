@@ -1,5 +1,6 @@
-package koreaUniv.koreaUnivRankSys.batch.domain.building.top3;
+package koreaUniv.koreaUnivRankSys.batch.domain.building.top3.mapper;
 
+import koreaUniv.koreaUnivRankSys.batch.domain.building.top3.CentralLibraryTop3;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
