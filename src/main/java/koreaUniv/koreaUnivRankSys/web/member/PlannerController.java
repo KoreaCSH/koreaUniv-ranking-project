@@ -1,5 +1,7 @@
 package koreaUniv.koreaUnivRankSys.web.member;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import koreaUniv.koreaUnivRankSys.domain.auth.service.AuthMember;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
 import koreaUniv.koreaUnivRankSys.domain.member.service.PlannerService;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "플래너 API - 쿼리스트링으로 날짜 넘겨줄 것", description = "PlannerController")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/planner")
@@ -19,6 +22,7 @@ public class PlannerController {
 
     private final PlannerService plannerService;
 
+    @Operation(summary = "플래너 조회", description = "getPlans")
     @GetMapping("/plans")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<PlannerResponse> getPlans(@AuthMember Member member, PlannerRequest plannerRequest) {

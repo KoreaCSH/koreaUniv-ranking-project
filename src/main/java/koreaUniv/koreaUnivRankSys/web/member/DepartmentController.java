@@ -1,5 +1,7 @@
 package koreaUniv.koreaUnivRankSys.web.member;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import koreaUniv.koreaUnivRankSys.domain.member.service.DepartmentService;
 import koreaUniv.koreaUnivRankSys.global.exception.CustomException;
 import koreaUniv.koreaUnivRankSys.global.exception.ErrorCode;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "학과 API", description = "DepartmentController")
 @Validated
 @RestController
 @RequestMapping("/api/department")
@@ -20,7 +23,8 @@ public class DepartmentController {
 
     private final DepartmentService departmentService;
 
-    @GetMapping("/departments/{collegeName}")
+    @Operation(summary = "학과 조회", description = "getDepartmentList")
+    @GetMapping("/departmentList/{collegeName}")
     public ResponseEntity<DepartmentResponse> getDepartmentList(@PathVariable String collegeName) {
 
         if(collegeName.isBlank()) {
