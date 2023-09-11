@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -99,6 +101,34 @@ class MemberStudyTimeHistoryRepositoryTest {
 
         List<MemberStudyTimeHistory> histories = member1.getMemberStudyTimeHistory();
         System.out.println(histories);
+    }
+
+    @Test
+    void memberId_StudyDate_조회() {
+
+        Member member1 = Member.builder()
+                .userId("testId1")
+                .nickName("test1")
+                .email("test@email.com")
+                .build();
+
+        memberRepository.save(member1);
+
+        MemberStudyTime memberStudyTime = MemberStudyTime.createStudyTime();
+        memberStudyTime.setMember(member1);
+
+        memberStudyTimeRepository.save(memberStudyTime);
+
+        MemberStudyTimeHistory record1 = MemberStudyTimeHistory.builder()
+                .memberStudyTime(memberStudyTime)
+                .build();
+
+        memberStudyTimeHistoryRepository.save(record1);
+
+        MemberStudyTimeHistory history = memberStudyTimeHistoryRepository
+                .findByMemberIdAndStudyDate(member1.getId(), LocalDate.now().minusDays(1)).get();
+
+        Assertions.assertThat(record1).isEqualTo(history);
     }
 
 }

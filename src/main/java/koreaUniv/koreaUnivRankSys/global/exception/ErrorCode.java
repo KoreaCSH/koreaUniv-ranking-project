@@ -31,7 +31,10 @@ public enum ErrorCode {
     // JWT 관련 예외
     REFRESH_TOKEN_NOTFOUND(HttpStatus.NOT_FOUND, "Refresh Token 을 찾을 수 없습니다."),
     REFRESH_TOKEN_NOT_MATCH(HttpStatus.BAD_REQUEST, "Refresh Token 이 일치하지 않습니다."),
-    TOKEN_EXPIRED(HttpStatus.BAD_REQUEST, "이미 로그아웃된 토큰입니다.");
+    TOKEN_EXPIRED(HttpStatus.BAD_REQUEST, "이미 로그아웃된 토큰입니다."),
+
+    // 날짜 관련 예외
+    INVALID_DATE(HttpStatus.BAD_REQUEST, "유효하지 않은 날짜입니다.");
 
     private HttpStatus httpStatus;
     private String message;
