@@ -22,7 +22,7 @@ public class CentralSquareRecordHistory extends BuildingRecordHistory {
     private Member member;
 
     public CentralSquareRecordHistory(Member member, Long ranking, Long studyTime) {
-        super(ranking, studyTime);
+        super(ranking, studyTime, BuildingName.CS);
         setMember(member);
     }
 

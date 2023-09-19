@@ -22,7 +22,7 @@ public class ScienceLibraryRecordHistory extends BuildingRecordHistory {
     private Member member;
 
     public ScienceLibraryRecordHistory(Member member, Long ranking, Long studyTime) {
-        super(ranking, studyTime);
+        super(ranking, studyTime, BuildingName.SL);
         setMember(member);
     }
 

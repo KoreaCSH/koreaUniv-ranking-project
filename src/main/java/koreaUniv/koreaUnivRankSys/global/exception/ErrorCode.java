@@ -16,6 +16,7 @@ public enum ErrorCode {
     NOT_MATCH_PASSWORD(HttpStatus.BAD_REQUEST, "새 비밀번호와 비밀번호 확인이 일치하지 않습니다."),
     COLLEGE_NOTFOUND(HttpStatus.NOT_FOUND, "단과대학을 찾을 수 없습니다."),
     DEPARTMENT_NOTFOUND(HttpStatus.NOT_FOUND, "학과를 찾을 수 없습니다."),
+    HIGHLIGHT_NOTFOUND(HttpStatus.NOT_FOUND, "하이라이트를 조회할 수 없습니다."),
 
     // 메일 인증 관련 예외
     EMAIL_DUPLICATED(HttpStatus.CONFLICT, "이미 인증이 완료된 이메일입니다."),

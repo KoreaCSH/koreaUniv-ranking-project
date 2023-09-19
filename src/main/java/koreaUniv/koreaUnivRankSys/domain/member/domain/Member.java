@@ -57,8 +57,11 @@ public class Member extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "member_study_time_id")
-    //@JsonIgnore
     private MemberStudyTime memberStudyTime;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "member_highlight_id")
+    private MemberHighlight memberHighlight;
 
     @OneToMany(mappedBy = "member")
     private List<MemberStudyTimeHistory> memberStudyTimeHistory = new ArrayList<>();
@@ -112,6 +115,7 @@ public class Member extends BaseEntity {
         this.setHanaSquareRecord(HanaSquareRecord.createHanaSquareRecord());
         this.setScienceLibraryRecord(ScienceLibraryRecord.createScienceLibraryRecord());
         this.setMemberStudyTime(MemberStudyTime.createStudyTime());
+        this.setMemberHighlight(MemberHighlight.createMemberHighlight());
         this.memberImage = memberImage;
         this.college = college;
         this.department = department;
@@ -151,6 +155,11 @@ public class Member extends BaseEntity {
     private void setMemberStudyTime(MemberStudyTime memberStudyTime) {
         this.memberStudyTime = memberStudyTime;
         memberStudyTime.setMember(this);
+    }
+
+    private void setMemberHighlight(MemberHighlight memberHighlight) {
+        this.memberHighlight = memberHighlight;
+        memberHighlight.setMember(this);
     }
 
     public void setMemberImage(MemberImage memberImage) {

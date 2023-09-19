@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
 public class MemberStudyTime extends BaseEntity {
 
     @Id
@@ -40,8 +39,8 @@ public class MemberStudyTime extends BaseEntity {
      *  연관관계 관련 메서드
      */
     public void setMember(Member member) {
-            this.member = member;
-        }
+        this.member = member;
+    }
 
     public void trackMemberStudyTime(Long studyTime) {
         this.memberDailyStudyTime += studyTime;

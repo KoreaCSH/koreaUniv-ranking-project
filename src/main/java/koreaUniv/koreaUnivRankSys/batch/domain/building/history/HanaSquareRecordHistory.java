@@ -22,7 +22,7 @@ public class HanaSquareRecordHistory extends BuildingRecordHistory {
     private Member member;
 
     public HanaSquareRecordHistory(Member member, Long ranking, Long studyTime) {
-        super(ranking, studyTime);
+        super(ranking, studyTime, BuildingName.HS);
         setMember(member);
     }
 

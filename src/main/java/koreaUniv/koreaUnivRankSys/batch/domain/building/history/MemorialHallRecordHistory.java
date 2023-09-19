@@ -22,7 +22,7 @@ public class MemorialHallRecordHistory extends BuildingRecordHistory {
     private Member member;
 
     public MemorialHallRecordHistory(Member member, Long ranking, Long studyTime) {
-        super(ranking, studyTime);
+        super(ranking, studyTime, BuildingName.MH);
         setMember(member);
     }
 

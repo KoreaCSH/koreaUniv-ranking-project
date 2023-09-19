@@ -20,7 +20,7 @@ public class CentralLibraryRecordHistory extends BuildingRecordHistory {
     private Member member;
 
     public CentralLibraryRecordHistory(Member member, Long ranking, Long studyTime) {
-        super(ranking, studyTime);
+        super(ranking, studyTime, BuildingName.CL);
         setMember(member);
     }
 

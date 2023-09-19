@@ -13,16 +13,28 @@ import java.time.LocalDate;
 @MappedSuperclass
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public abstract class BuildingRecordHistory extends BaseEntity {
+public abstract class BuildingRecordHistory extends BaseEntity implements Comparable<BuildingRecordHistory> {
 
     private Long ranking;
     private Long studyTime;
     private LocalDate studyDate;
 
-    public BuildingRecordHistory(Long ranking, Long studyTime) {
+    @Enumerated(EnumType.STRING)
+    private BuildingName buildingName;
+
+    public BuildingRecordHistory(Long ranking, Long studyTime, BuildingName buildingName) {
         this.ranking = ranking;
         this.studyTime = studyTime;
+        this.buildingName = buildingName;
         this.studyDate = LocalDate.now().minusDays(1);
     }
 
+    @Override
+    public int compareTo(BuildingRecordHistory o) {
+        if(this.ranking.compareTo(o.ranking) == 0) {
+            return this.studyDate.compareTo(o.studyDate);
+        }
+
+        return this.ranking.compareTo(o.ranking);
+    }
 }
