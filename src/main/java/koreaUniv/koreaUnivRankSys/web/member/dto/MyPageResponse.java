@@ -1,8 +1,11 @@
 package koreaUniv.koreaUnivRankSys.web.member.dto;
 
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
+import koreaUniv.koreaUnivRankSys.domain.member.domain.MemberHighlight;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.MemberStudyTime;
 import lombok.*;
+
+import java.time.LocalDate;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -11,20 +14,23 @@ public class MyPageResponse {
 
     private MemberInfoResponse memberInfoResponse;
     private MemberStudyTimeResponse memberStudyTimeResponse;
+    private MemberHighlightResponse memberHighlightResponse;
 
     @Builder
-    public MyPageResponse(Member member, MemberStudyTime memberStudyTime) {
+    private MyPageResponse(Member member, MemberStudyTime memberStudyTime, MemberHighlight memberHighlight) {
         this.memberInfoResponse = new MemberInfoResponse(member);
         this.memberStudyTimeResponse = new MemberStudyTimeResponse(memberStudyTime);
+        this.memberHighlightResponse = new MemberHighlightResponse(memberHighlight);
     }
 
     // 추후 학부 , 학과 추가
     // 하이라이트 - 최고 랭킹 추가
 
-    public static MyPageResponse of(Member member, MemberStudyTime memberStudyTime) {
+    public static MyPageResponse of(Member member, MemberStudyTime memberStudyTime, MemberHighlight memberHighlight) {
         return MyPageResponse.builder()
                 .member(member)
                 .memberStudyTime(memberStudyTime)
+                .memberHighlight(memberHighlight)
                 .build();
     }
 
@@ -64,6 +70,22 @@ public class MyPageResponse {
             this.memberWeeklyStudyTime = memberStudyTime.getMemberWeeklyStudyTime();
             this.memberMonthlyStudyTime = memberStudyTime.getMemberMonthlyStudyTime();
             this.memberTotalStudyTime = memberStudyTime.getMemberTotalStudyTime();
+        }
+
+    }
+
+    @Getter
+    @NoArgsConstructor
+    public static class MemberHighlightResponse {
+
+        private String buildingName;
+        private Long ranking;
+        private LocalDate studyDate;
+
+        public MemberHighlightResponse(MemberHighlight memberHighlight) {
+            this.buildingName = memberHighlight.getBuildingName();
+            this.ranking = memberHighlight.getRanking();
+            this.studyDate = memberHighlight.getStudyDate();
         }
 
     }

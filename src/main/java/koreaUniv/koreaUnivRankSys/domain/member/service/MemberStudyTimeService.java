@@ -1,7 +1,9 @@
 package koreaUniv.koreaUnivRankSys.domain.member.service;
 
 import koreaUniv.koreaUnivRankSys.domain.member.domain.Member;
+import koreaUniv.koreaUnivRankSys.domain.member.domain.MemberHighlight;
 import koreaUniv.koreaUnivRankSys.domain.member.domain.MemberStudyTime;
+import koreaUniv.koreaUnivRankSys.domain.member.repository.MemberHighlightRepository;
 import koreaUniv.koreaUnivRankSys.web.member.dto.MyPageResponse;
 import koreaUniv.koreaUnivRankSys.domain.member.repository.MemberRepository;
 import koreaUniv.koreaUnivRankSys.domain.member.repository.MemberStudyTimeRepository;
@@ -17,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberStudyTimeService {
 
     private final MemberStudyTimeRepository memberStudyTimeRepository;
+    private final MemberHighlightRepository memberHighlightRepository;
     private final MemberRepository memberRepository;
 
     public MyPageResponse getMyPage(Member member) {
@@ -26,15 +29,20 @@ public class MemberStudyTimeService {
         Member findMember = memberRepository.findByUserId(member.getUserId())
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOTFOUND));
 
-        MemberStudyTime findMemberStudyTime = findByUserId(member.getUserId());
+        MemberStudyTime findMemberStudyTime = findMemberStudyTimeByUserId(findMember.getUserId());
+        MemberHighlight findMemberHighlight = findMemberHighlightById(findMember.getId());
 
-        return MyPageResponse.of(findMember, findMemberStudyTime);
+        return MyPageResponse.of(findMember, findMemberStudyTime, findMemberHighlight);
     }
 
-    public MemberStudyTime findByUserId(String userId) {
+    public MemberStudyTime findMemberStudyTimeByUserId(String userId) {
 
         return memberStudyTimeRepository.findByMemberUserId(userId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_RECORD_NOTFOUND));
+    }
+
+    public MemberHighlight findMemberHighlightById(Long id) {
+        return memberHighlightRepository.findByMemberId(id).get();
     }
 
 }
