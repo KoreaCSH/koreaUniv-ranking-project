@@ -51,4 +51,8 @@ public class HanaSquareRecord extends BaseEntity {
         this.dailyStudyTime = 0L;
     }
 
+    public void resetWeeklyStudyTime() {
+        this.weeklyStudyTime = 0L;
+    }
+
 }
