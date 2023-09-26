@@ -55,4 +55,8 @@ public class ScienceLibraryRecord extends BaseEntity {
         this.weeklyStudyTime = 0L;
     }
 
+    public void resetMonthlyStudyTime() {
+        this.monthlyStudyTime = 0L;
+    }
+
 }
